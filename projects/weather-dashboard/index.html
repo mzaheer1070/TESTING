@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101a35">
+    <title>Weather Dashboard Pro</title>
+
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/scenes.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body data-scene="idle" data-theme="dark">
+    <div id="cinematicSky" aria-hidden="true">
+        <div class="sky-gradient"></div>
+        <div class="sky-stars"></div>
+        <div class="sky-aurora"></div>
+        <div class="sky-sun"></div>
+        <div class="sky-moon"></div>
+        <div class="sky-cloud cloud-one"></div>
+        <div class="sky-cloud cloud-two"></div>
+        <div class="sky-cloud cloud-three"></div>
+        <div class="sky-horizon"></div>
+        <div class="sky-rays"></div>
+        <div class="sky-lens-flare"></div>
+    </div>
+
+    <div id="cinematicGrain" aria-hidden="true"></div>
+    <div id="cinematicVignette" aria-hidden="true"></div>
+
+    <canvas id="weatherCanvas" aria-hidden="true"></canvas>
+    <div id="windEffect" aria-hidden="true"></div>
+    <div id="lightningFlash" aria-hidden="true"></div>
+
+    <main class="container">
+        <header class="header">
+            <div class="brand-mark">✦</div>
+            <h1>Weather Dashboard <span>Pro</span></h1>
+            <p class="subtitle">Real-time weather with cinematic effects</p>
+
+            <div class="header-controls">
+                <button id="unitToggle" class="unit-toggle" type="button" aria-label="Toggle Temperature Units" title="Toggle °C / °F">
+                    🌡️ <span id="unitToggleLabel">°C</span>
+                </button>
+                <button id="soundToggle" class="sound-toggle" type="button" aria-pressed="false">
+                    🔇 Ambient sound off
+                </button>
+                <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false">
+                    ☀️ Light mode
+                </button>
+            </div>
+        </header>
+
+        <section class="search-section" aria-label="Weather search">
+            <div class="search-box">
+                <label class="sr-only" for="searchInput">Search for a city</label>
+                <div class="search-field">
+                    <span class="search-symbol" aria-hidden="true">⌕</span>
+                    <input id="searchInput" class="search-input" type="search"
+                        placeholder="Search city, country or region (Press '/' to search)" autocomplete="off"
+                        aria-autocomplete="list" aria-controls="citySuggestions"
+                        aria-expanded="false">
+                    <button id="searchBtn" class="search-btn" type="button"
+                        aria-label="Search for city" title="Search">🔍</button>
+                </div>
+
+                <button id="locationBtn" class="location-btn" type="button"
+                    title="Use my location" aria-label="Use my current location">📍</button>
+            </div>
+
+            <!-- Quick Favorites & Preset Cities -->
+            <div class="quick-cities-bar" id="quickCitiesBar" aria-label="Favorite and quick access cities">
+                <div class="quick-cities-label">
+                    <span>⚡ Quick Access</span>
+                </div>
+                <div class="quick-cities-list" id="quickCitiesList">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <div id="citySuggestions" class="city-suggestions" role="listbox"></div>
+            <div id="errorMessage" class="error-message" role="alert"></div>
+        </section>
+
+        <div id="loadingSpinner" class="loading-spinner hidden" aria-live="polite">
+            <div class="spinner"></div>
+            <p>Loading weather & air quality data<span class="loading-dots">...</span></p>
+        </div>
+
+        <section id="weatherDashboard" class="weather-dashboard hidden" aria-live="polite">
+            <section class="current-weather glass-panel">
+                <div class="location-info">
+                    <div class="location-header-row">
+                        <div>
+                            <p class="eyebrow">CURRENT CONDITIONS</p>
+                            <h2 id="cityName" class="city-name"></h2>
+                        </div>
+                        <button id="favoriteBtn" class="favorite-btn" type="button" title="Pin city to quick access" aria-label="Pin city to quick access">
+                            <span class="star-icon">☆</span>
+                            <span class="fav-label">Pin</span>
+                        </button>
+                    </div>
+                    <p id="currentDate" class="current-date"></p>
+                </div>
+
+                <div class="weather-main">
+                    <div class="temp-section">
+                        <div id="temperature" class="temperature">--°C</div>
+                        <div id="weatherIcon" class="weather-icon">🌤️</div>
+                    </div>
+                    <div class="weather-details">
+                        <p id="weatherDescription" class="weather-description"></p>
+                        <div class="feels-like">
+                            <span>Feels like</span>
+                            <strong id="feelsLike" class="feels-like-temp">--°C</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weather-stats">
+                    <div class="stat-card"><span class="stat-icon">💧</span><div><p class="stat-label">Humidity</p><p id="humidity" class="stat-value">--</p></div></div>
+                    <div class="stat-card"><span class="stat-icon">💨</span><div><p class="stat-label">Wind Speed</p><p id="windSpeed" class="stat-value">--</p></div></div>
+                    <div class="stat-card"><span class="stat-icon">🌊</span><div><p class="stat-label">Pressure</p><p id="pressure" class="stat-value">--</p></div></div>
+                    <div class="stat-card"><span class="stat-icon">👁️</span><div><p class="stat-label">Visibility</p><p id="visibility" class="stat-value">--</p></div></div>
+                    <div class="stat-card"><span class="stat-icon">🌅</span><div><p class="stat-label">Sunrise</p><p id="sunrise" class="stat-value">--</p></div></div>
+                    <div class="stat-card"><span class="stat-icon">🌇</span><div><p class="stat-label">Sunset</p><p id="sunset" class="stat-value">--</p></div></div>
+                    <div class="stat-card"><span class="stat-icon">☁️</span><div><p class="stat-label">Cloud cover</p><p id="cloudCover" class="stat-value">--</p></div></div>
+                    <div class="stat-card"><span class="stat-icon">🌧️</span><div><p class="stat-label">Precipitation</p><p id="precipitation" class="stat-value">--</p></div></div>
+                </div>
+            </section>
+
+            <!-- Air Quality & Environmental Health Panel -->
+            <section id="airQualitySection" class="air-quality-section glass-panel">
+                <div class="aqi-header">
+                    <div>
+                        <p class="eyebrow">ENVIRONMENTAL HEALTH</p>
+                        <h3 class="section-title">🍃 Air Quality & UV Index</h3>
+                    </div>
+                    <div id="aqiBadge" class="aqi-badge aqi-good">
+                        <span class="aqi-dot"></span>
+                        <span id="aqiStatusText">AQI --</span>
+                    </div>
+                </div>
+
+                <div class="aqi-grid">
+                    <div class="aqi-metric-card">
+                        <div class="aqi-card-top">
+                            <span class="aqi-card-title">Air Quality Index (AQI)</span>
+                            <span id="aqiNumber" class="aqi-score-num">--</span>
+                        </div>
+                        <div class="aqi-bar-track">
+                            <div id="aqiBarFill" class="aqi-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <p id="aqiAdvice" class="aqi-advice-text">Analyzing atmospheric particles...</p>
+                    </div>
+
+                    <div class="aqi-metric-card">
+                        <div class="aqi-card-top">
+                            <span class="aqi-card-title">UV Radiation Index</span>
+                            <span id="uvIndexVal" class="aqi-score-num">--</span>
+                        </div>
+                        <div class="aqi-bar-track">
+                            <div id="uvBarFill" class="aqi-bar-fill uv-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <p id="uvAdvice" class="aqi-advice-text">UV radiation level guidance...</p>
+                    </div>
+                </div>
+
+                <div class="pollutant-grid">
+                    <div class="pollutant-pill">
+                        <span class="pollutant-name">PM2.5</span>
+                        <strong id="pm25Val" class="pollutant-val">-- µg/m³</strong>
+                    </div>
+                    <div class="pollutant-pill">
+                        <span class="pollutant-name">PM10</span>
+                        <strong id="pm10Val" class="pollutant-val">-- µg/m³</strong>
+                    </div>
+                    <div class="pollutant-pill">
+                        <span class="pollutant-name">Ozone (O₃)</span>
+                        <strong id="ozoneVal" class="pollutant-val">-- µg/m³</strong>
+                    </div>
+                    <div class="pollutant-pill">
+                        <span class="pollutant-name">NO₂</span>
+                        <strong id="no2Val" class="pollutant-val">-- µg/m³</strong>
+                    </div>
+                    <div class="pollutant-pill">
+                        <span class="pollutant-name">SO₂</span>
+                        <strong id="so2Val" class="pollutant-val">-- µg/m³</strong>
+                    </div>
+                    <div class="pollutant-pill">
+                        <span class="pollutant-name">CO</span>
+                        <strong id="coVal" class="pollutant-val">-- µg/m³</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="forecast-section glass-panel">
+                <p class="eyebrow">LOOKING AHEAD</p>
+                <h3 class="section-title">📅 Daily Forecast</h3>
+                <div id="forecastContainer" class="forecast-container"></div>
+            </section>
+
+            <section id="mapSection" class="map-section glass-panel">
+                <div>
+                    <p class="eyebrow">EXPLORE THE AREA</p>
+                    <h3 class="section-title">🗺️ Location Map</h3>
+                    <p>Your selected location, powered by OpenStreetMap.</p>
+                </div>
+
+                <div class="map-insights">
+                    <div><span>☁️ Cloud cover</span><strong id="mapCloud">--</strong></div>
+                    <div><span>🌧️ Rain now</span><strong id="mapRain">--</strong></div>
+                    <div><span>💨 Wind</span><strong id="mapWind">--</strong></div>
+                    <div><span>👁️ Visibility</span><strong id="mapVisibility">--</strong></div>
+                </div>
+
+                <div id="weatherMap"></div>
+            </section>
+        </section>
+
+        <section id="emptyState" class="empty-state">
+            <div class="empty-icon">✦</div>
+            <p>Search for a city to see weather information</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a></p>
+    </footer>
+
+    <script src="js/autocomplete.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/weather-effects.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

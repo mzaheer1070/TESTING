@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App | Muhammad Zaheer</title>
+    <link rel="stylesheet" href="../shared/project-site.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="portfolio-bridge">
+    <div class="portfolio-bridge-inner">
+        <a class="bridge-brand" data-root-href="index.html">Muhammad Zaheer</a>
+        <nav class="bridge-nav" aria-label="Portfolio navigation">
+            <a data-root-href="index.html">Home</a>
+            <a data-root-href="projects.html">Projects</a>
+            <a data-root-href="about.html">About</a>
+            <a data-root-href="contact.html">Contact</a>
+        </nav>
+        <p class="bridge-badge">Live project · Weather App</p>
+    </div>
+</header>
+
+<header class="site-bar">
+    <a class="back-link" data-root-href="projects.html">← All projects</a>
+    <a class="back-link" data-root-href="index.html">Portfolio home</a>
+</header>
+
+<main class="app-wrap">
+    <h1>Weather App</h1>
+    <p>Live weather for any city — powered by the Open-Meteo API (free, no API key).</p>
+
+    <section class="card weather-card">
+        <p class="weather-status" id="weather-status" hidden></p>
+        <form class="search-row" id="weather-form">
+            <label class="sr-only" for="city-input">City name</label>
+            <input id="city-input" type="text" placeholder="e.g. London, Karachi, Tokyo" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div class="unit-toggle" role="group" aria-label="Temperature unit">
+            <button type="button" class="unit-btn is-active" data-unit="c">°C</button>
+            <button type="button" class="unit-btn" data-unit="f">°F</button>
+        </div>
+
+        <div class="weather-result" id="weather-result" hidden>
+            <p class="city-name" id="city-name"></p>
+            <p class="temp" id="temp"></p>
+            <p class="condition" id="condition"></p>
+            <ul class="meta">
+                <li><span>Humidity</span> <strong id="humidity"></strong></li>
+                <li><span>Wind</span> <strong id="wind"></strong></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<script src="../../js/portfolio-links.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

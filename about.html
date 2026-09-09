@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About - Web and software developer creating high-performance applications, API tools, and intuitive interfaces.">
+    <title>About | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body data-page="about">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+        <a class="brand" href="index.html" aria-label="Portfolio Homepage">
+            <span class="brand-dot" aria-hidden="true"></span>
+            <span>Portfolio</span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-panel" id="primary-navigation">
+            <div class="nav-status-widget" aria-label="Current developer local time & availability">
+                <span class="status-beacon" aria-hidden="true"></span>
+                <span data-live-clock>Loading...</span>
+            </div>
+
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link is-active" href="about.html">About</a>
+            <a class="nav-link" href="projects.html">Projects</a>
+            <a class="nav-link" href="contact.html">Contact</a>
+
+            <button class="palette-trigger-nav" type="button" data-open-palette aria-label="Open Command Search (Ctrl+K)">
+                <span>🔍 Search</span>
+                <span class="palette-trigger-kbd">⌘K</span>
+            </button>
+
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle Light / Dark Mode" title="Toggle Light / Dark Mode">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            
+            <button class="cinematic-toggle-nav" type="button" data-cinematic-toggle aria-label="Toggle Cinematic Mode" title="Cinematic Director's View (Shift+C)">
+                <span>🎬</span>
+                <span class="cinematic-label">Cinema</span>
+            </button>
+
+            <button class="sound-toggle-nav" type="button" data-sound-toggle aria-label="Toggle Sound Effects" title="Cinematic Audio FX">
+                <span class="sound-icon">🔊</span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<main id="main">
+    <section class="page-hero">
+        <div class="container" data-reveal>
+            <span class="eyebrow">About & Philosophy</span>
+            <h1>Crafting fast, intuitive web applications and tools.</h1>
+            <p>I engineer software with an emphasis on clarity, responsiveness, maintainable code architecture, and high performance without reliance on bloated frameworks.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="about-layout">
+                <!-- Left Profile Card -->
+                <aside class="profile-panel" data-reveal>
+                    <div class="profile-avatar-wrap">
+                        <img src="Images/MEss.jpeg" alt="Muhammad Zaheer - Developer portrait" loading="eager" onerror="if(this.src.indexOf('images/')===-1){this.src='images/MEss.jpeg';}">
+                        <div class="profile-badge-active" title="Status: Available for opportunities">
+                            <span class="beacon-dot"></span>
+                            <span>AVAILABLE</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info">
+                        <h2>Muhammad Zaheer</h2>
+                        <p class="profile-tagline">Web & Software Developer</p>
+                    </div>
+
+                    <div class="profile-stats-mini">
+                        <div>
+                            <span class="mini-stat-num">4</span>
+                            <span class="mini-stat-label">Live Apps</span>
+                        </div>
+                        <div>
+                            <span class="mini-stat-num">100%</span>
+                            <span class="mini-stat-label">Pure Code</span>
+                        </div>
+                        <div>
+                            <span class="mini-stat-num">&lt;0.5s</span>
+                            <span class="mini-stat-label">Load Time</span>
+                        </div>
+                    </div>
+
+                    <ul class="profile-meta-list" aria-label="Profile metadata">
+                        <li class="profile-meta-item">
+                            <span class="profile-meta-icon" aria-hidden="true">💻</span>
+                            <span>Specialization: Web Apps, UI & Tools</span>
+                        </li>
+                        <li class="profile-meta-item">
+                            <span class="profile-meta-icon" aria-hidden="true">⚡</span>
+                            <span>Core: Vanilla JS, REST APIs, CSS Grid</span>
+                        </li>
+                        <li class="profile-meta-item">
+                            <span class="profile-meta-icon" aria-hidden="true">📍</span>
+                            <span>Location: Available Worldwide (Remote)</span>
+                        </li>
+                        <li class="profile-meta-item">
+                            <span class="profile-meta-icon" aria-hidden="true">✉️</span>
+                            <span>Email: mzaheerlion@gmail.com</span>
+                        </li>
+                    </ul>
+
+                    <div class="profile-actions-col">
+                        <a class="btn primary" href="projects.html">Explore Projects →</a>
+                        <button class="btn secondary" type="button" onclick="copyToClipboard('mzaheerlion@gmail.com', 'Developer email copied: mzaheerlion@gmail.com')">
+                            📋 Copy Email
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Right Interactive Details Panel -->
+                <div class="detail-panel" data-reveal>
+                    <div class="tabs" role="tablist" aria-label="About navigation tabs" data-tabs>
+                        <button class="tab-button is-active" type="button" role="tab" aria-selected="true" aria-controls="story-panel" id="story-tab" data-tab="story-panel">Philosophy</button>
+                        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="skills-panel" id="skills-tab" data-tab="skills-panel">Technical Skills</button>
+                        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="goals-panel" id="goals-tab" data-tab="goals-panel">Development Focus</button>
+                    </div>
+
+                    <!-- Tab 1: Philosophy -->
+                    <div class="tab-panel" id="story-panel" role="tabpanel" aria-labelledby="story-tab">
+                        <h2>How I Approach Software Engineering</h2>
+                        <p>
+                            Great software begins with a clear understanding of the user's objective. I believe the best web experiences come from lightweight, highly optimized code that boots instantly, renders smoothly, and provides immediate visual feedback.
+                        </p>
+                        
+                        <div class="philosophy-grid">
+                            <div class="philosophy-card">
+                                <span class="philosophy-num">01</span>
+                                <div class="philosophy-body">
+                                    <strong>Zero-Bloat Performance</strong>
+                                    <span>Prioritizing native browser capabilities, standard DOM APIs, and streamlined CSS over massive client-side bundles.</span>
+                                </div>
+                            </div>
+
+                            <div class="philosophy-card">
+                                <span class="philosophy-num">02</span>
+                                <div class="philosophy-body">
+                                    <strong>Real APIs & Live Data</strong>
+                                    <span>Writing robust asynchronous networking logic with true error recovery, retry handling, and intuitive caching layers.</span>
+                                </div>
+                            </div>
+
+                            <div class="philosophy-card">
+                                <span class="philosophy-num">03</span>
+                                <div class="philosophy-body">
+                                    <strong>Accessible & Resilient UI</strong>
+                                    <span>Constructing semantic HTML with full keyboard navigation, WCAG AA color contrast, and seamless responsive adaptability.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Skills -->
+                    <div class="tab-panel" id="skills-panel" role="tabpanel" aria-labelledby="skills-tab" hidden>
+                        <h2>Proficiencies & Capabilities</h2>
+                        <p>A breakdown of technical proficiencies and tooling experience across client-side architecture and data persistence:</p>
+
+                        <div class="skill-meters-list">
+                            <div class="skill-meter">
+                                <div class="skill-meter-header">
+                                    <span>Modern JavaScript (ES6+, DOM Manipulation, Async/Await)</span>
+                                    <span>92%</span>
+                                </div>
+                                <div class="meter-bar"><div class="meter-fill" style="--value: 92%"></div></div>
+                            </div>
+
+                            <div class="skill-meter">
+                                <div class="skill-meter-header">
+                                    <span>Semantic HTML5 & Responsive CSS3 (Flexbox, CSS Grid)</span>
+                                    <span>95%</span>
+                                </div>
+                                <div class="meter-bar"><div class="meter-fill" style="--value: 95%"></div></div>
+                            </div>
+
+                            <div class="skill-meter">
+                                <div class="skill-meter-header">
+                                    <span>REST APIs, HTTP Probing & Asynchronous Networking</span>
+                                    <span>88%</span>
+                                </div>
+                                <div class="meter-bar"><div class="meter-fill" style="--value: 88%"></div></div>
+                            </div>
+
+                            <div class="skill-meter">
+                                <div class="skill-meter-header">
+                                    <span>Data Persistence (Firestore, Cloud SQL, LocalStorage)</span>
+                                    <span>82%</span>
+                                </div>
+                                <div class="meter-bar"><div class="meter-fill" style="--value: 82%"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="tech-category-block">
+                            <span class="tech-category-title">Core Technology Stack</span>
+                            <div class="tech-badge-cloud">
+                                <span class="tech-badge">⚡ JavaScript ES6+</span>
+                                <span class="tech-badge">🌐 HTML5 Semantics</span>
+                                <span class="tech-badge">🎨 Modern CSS3 / Flex / Grid</span>
+                                <span class="tech-badge">📡 RESTful APIs & Fetch</span>
+                                <span class="tech-badge">🌤️ OpenWeather API</span>
+                                <span class="tech-badge">💾 LocalStorage State</span>
+                                <span class="tech-badge">🔥 Firebase Firestore</span>
+                                <span class="tech-badge">🗄️ PostgreSQL / Cloud SQL</span>
+                                <span class="tech-badge">🛠️ Git & Version Control</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Goals -->
+                    <div class="tab-panel" id="goals-panel" role="tabpanel" aria-labelledby="goals-tab" hidden>
+                        <h2>Current Portfolio Highlights & Roadmap</h2>
+                        <p>
+                            Actively engineering and maintaining responsive interactive tools, real-time status dashboards, and utility applications:
+                        </p>
+
+                        <div class="highlight-timeline">
+                            <div class="timeline-card">
+                                <div class="timeline-card-header">
+                                    <strong>Weather Dashboard (Full Suite)</strong>
+                                    <button class="btn-preview" type="button" data-preview-project="weather-dashboard">⚡ Live Sandbox</button>
+                                </div>
+                                <p>8-day forecasting with geolocation detection, Air Quality Index (PM2.5, NO₂, Ozone), UV index, and temperature conversions.</p>
+                            </div>
+
+                            <div class="timeline-card">
+                                <div class="timeline-card-header">
+                                    <strong>API Status & Health Prober</strong>
+                                    <button class="btn-preview" type="button" data-preview-project="api-dashboard">⚡ Live Sandbox</button>
+                                </div>
+                                <p>Automated endpoint health monitoring with millisecond latency tracking and status graphs.</p>
+                            </div>
+
+                            <div class="timeline-card">
+                                <div class="timeline-card-header">
+                                    <strong>Interactive Productivity Hub</strong>
+                                    <button class="btn-preview" type="button" data-preview-project="todo-app">⚡ Live Sandbox</button>
+                                </div>
+                                <p>Local persistence task organizer with category filtering and keyboard workflow support.</p>
+                            </div>
+
+                            <div class="timeline-card">
+                                <div class="timeline-card-header">
+                                    <strong>Minimal Weather App</strong>
+                                    <button class="btn-preview" type="button" data-preview-project="weather-app">⚡ Live Sandbox</button>
+                                </div>
+                                <p>Streamlined client-side weather utility providing instantaneous city temperature lookups and condition badges.</p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 10px;">
+                            <a class="btn primary" href="projects.html">Explore All Projects in Catalog →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Engineering Values Bento Grid -->
+            <section class="about-bento-section" data-reveal>
+                <div class="section-header">
+                    <span class="eyebrow">Core Standards</span>
+                    <h2>Engineering Values & Craft</h2>
+                    <p class="lead-text">Guiding principles behind every interface, API integration, and user interaction.</p>
+                </div>
+
+                <div class="about-bento-grid">
+                    <div class="about-bento-card">
+                        <div class="about-bento-icon" aria-hidden="true">🚀</div>
+                        <h3>Speed & Efficiency</h3>
+                        <p>Sub-second initial paint times, hardware-accelerated transitions, and zero unnecessary scripts.</p>
+                    </div>
+
+                    <div class="about-bento-card">
+                        <div class="about-bento-icon" aria-hidden="true">🧩</div>
+                        <h3>Modular Architecture</h3>
+                        <p>Clean directory hierarchies, decoupled component logic, and clear separation of data and presentation.</p>
+                    </div>
+
+                    <div class="about-bento-card">
+                        <div class="about-bento-icon" aria-hidden="true">📡</div>
+                        <h3>Real Data Integrations</h3>
+                        <p>Connecting real HTTP endpoints, structured JSON payloads, and graceful error handling states.</p>
+                    </div>
+
+                    <div class="about-bento-card">
+                        <div class="about-bento-icon" aria-hidden="true">♿</div>
+                        <h3>Accessibility & Polish</h3>
+                        <p>Full keyboard navigation, high contrast typography, ARIA standards, and responsive fluidity across all screens.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Call to Action Banner -->
+            <div class="about-cta-banner" data-reveal>
+                <div class="about-cta-text">
+                    <h3>Interested in collaborating on a project?</h3>
+                    <p>Whether you need a web app, a clean REST API integration, or a responsive redesign, let's talk.</p>
+                </div>
+                <div class="about-cta-actions">
+                    <a class="btn primary" href="contact.html">Get in Touch →</a>
+                    <button class="btn secondary" type="button" data-open-terminal aria-label="Open Terminal (~)">
+                        <span>💻 CLI Terminal</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-content">
+        <div class="footer-links">
+            <a class="footer-link" href="index.html">Home</a>
+            <a class="footer-link" href="about.html">About</a>
+            <a class="footer-link" href="projects.html">Projects</a>
+            <a class="footer-link" href="contact.html">Contact</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 Portfolio. Built with clean HTML5, modern CSS3, and JavaScript.</p>
+    </div>
+</footer>
+</body>
+</html>

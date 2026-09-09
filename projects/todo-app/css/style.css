@@ -1,0 +1,81 @@
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.todo-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+}
+
+.filter-btn.is-active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #0f1419;
+}
+
+.todo-list {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.todo-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.todo-list li.is-done span {
+    text-decoration: line-through;
+    color: var(--muted);
+}
+
+.todo-list input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+}
+
+.todo-list span {
+    flex: 1;
+}
+
+.delete-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
+
+.empty-msg {
+    color: var(--muted);
+    text-align: center;
+    padding: 12px 0 4px;
+}

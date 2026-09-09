@@ -1,0 +1,6 @@
+{
+  "name": "Developer Portfolio",
+  "description": "Personal portfolio featuring interactive web applications, API dashboards, weather forecasts, and contact form.",
+  "requestFramePermissions": ["camera", "geolocation", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

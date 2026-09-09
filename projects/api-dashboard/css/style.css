@@ -1,0 +1,111 @@
+.app-wrap--wide {
+    width: min(960px, calc(100% - 32px));
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+}
+
+.stat-box span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+}
+
+.stat-box strong {
+    font-size: 1.7rem;
+    color: var(--primary);
+}
+
+.log-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.log-head h2 {
+    font-size: 1.1rem;
+}
+
+.log-list {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.log-list li {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.92rem;
+}
+
+.status {
+    font-weight: 800;
+    text-align: center;
+    border-radius: 999px;
+    padding: 4px 8px;
+}
+
+.status.ok {
+    background: color-mix(in srgb, var(--primary) 25%, transparent);
+    color: var(--primary);
+}
+
+.status.warn {
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
+    color: var(--accent);
+}
+
+.status.error {
+    background: color-mix(in srgb, #ff6b6b 30%, transparent);
+    color: #ff8a8a;
+}
+
+.dashboard-status {
+    margin-bottom: 20px;
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+.dashboard-status[data-type="success"] {
+    color: var(--primary);
+}
+
+.dashboard-status[data-type="warn"] {
+    color: var(--accent);
+}
+
+.log-empty {
+    grid-template-columns: 1fr !important;
+    color: var(--muted);
+    justify-content: center;
+}
+
+@media (max-width: 720px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .log-list li {
+        grid-template-columns: 1fr;
+    }
+}
