@@ -2194,10 +2194,20 @@ function setupGeminiChatbot() {
                 </div>
             </div>
             <div class="gemini-chat-header-actions">
+                <button type="button" class="gemini-chat-header-btn" id="geminiChatSettingsToggle" title="Gemini API Key Settings" aria-label="Settings">⚙️</button>
                 <button type="button" class="gemini-chat-header-btn" id="geminiChatClear" title="Clear Conversation" aria-label="Clear chat">🗑️</button>
                 <button type="button" class="gemini-chat-header-btn" id="geminiChatClose" title="Close Chat" aria-label="Close chat">✕</button>
             </div>
         </header>
+
+        <div class="gemini-chat-settings-panel" id="geminiSettingsPanel" hidden>
+            <p><strong>GitHub Pages Mode</strong>: To connect live to Gemini without a backend server, optionally paste your free Gemini API key below. It will stay saved strictly in your browser's localStorage.</p>
+            <div class="gemini-key-input-row">
+                <input type="password" id="geminiCustomKeyInput" class="gemini-key-input" placeholder="AIzaSy... (Gemini API Key)" autocomplete="off" />
+                <button type="button" class="gemini-key-save-btn" id="geminiSaveKeyBtn">Save</button>
+                <button type="button" class="gemini-key-clear-btn" id="geminiClearKeyBtn">Clear</button>
+            </div>
+        </div>
 
         <div class="gemini-chat-messages" id="geminiChatMessages" tabindex="0">
             <!-- Messages injected dynamically -->
@@ -2236,11 +2246,112 @@ function setupGeminiChatbot() {
     const sendBtn = document.getElementById("geminiChatSendBtn");
     const closeBtn = document.getElementById("geminiChatClose");
     const clearBtn = document.getElementById("geminiChatClear");
+    const settingsToggleBtn = document.getElementById("geminiChatSettingsToggle");
+    const settingsPanel = document.getElementById("geminiSettingsPanel");
+    const customKeyInput = document.getElementById("geminiCustomKeyInput");
+    const saveKeyBtn = document.getElementById("geminiSaveKeyBtn");
+    const clearKeyBtn = document.getElementById("geminiClearKeyBtn");
     const suggestedPrompts = document.getElementById("geminiSuggestedPrompts");
 
     // Conversation state maintained for multi-turn history
     let conversationHistory = [];
     const STORAGE_KEY = "zaheer-ai-chat-history";
+    const API_KEY_STORAGE = "zaheer_gemini_client_api_key";
+
+    // Prepopulate custom key input if stored
+    const savedCustomKey = localStorage.getItem(API_KEY_STORAGE) || "";
+    if (customKeyInput && savedCustomKey) {
+        customKeyInput.value = savedCustomKey;
+    }
+
+    // High-fidelity Portfolio Knowledge Base (Offline / Static GitHub Pages Engine)
+    function generatePortfolioSmartResponse(userQuery) {
+        const q = userQuery.toLowerCase().trim();
+
+        // 1. Contact / Hiring / Email
+        if (q.includes("hire") || q.includes("contact") || q.includes("email") || q.includes("reach") || q.includes("message") || q.includes("phone") || q.includes("linkedin") || q.includes("touch")) {
+            return `You can get in touch with **Muhammad Zaheer** directly through multiple channels:\n\n` +
+                   `* 📧 **Direct Email**: [mzaheerlion@gmail.com](mailto:mzaheerlion@gmail.com)\n` +
+                   `* 📬 **Contact Form**: Head over to the [Contact Page](contact.html) to send an instant message\n` +
+                   `* 🌐 **Status**: Currently **Available** for full-time, contract, and freelance opportunities worldwide!`;
+        }
+
+        // 2. Skills / Stack / Technologies
+        if (q.includes("skill") || q.includes("stack") || q.includes("technolog") || q.includes("languages") || q.includes("framework") || q.includes("tools")) {
+            return `**Muhammad Zaheer** specializes in modern full-stack and frontend engineering:\n\n` +
+                   `* ⚡ **Frontend & Core**: JavaScript (ES6+), TypeScript, React, HTML5, CSS3/Modern Flex & Grid, Responsive UI Architecture\n` +
+                   `* 🎨 **Styling & Motion**: Tailwind CSS, Design Tokens, Smooth Animations, Sound/Audio FX Design\n` +
+                   `* 🛠️ **Backend & Tooling**: Node.js, Express.js, REST APIs, Open-Meteo Integration, Git, Vite, Bash/CLI\n` +
+                   `* 🎯 **Architecture**: Accessibility (a11y), Performance Optimization, Zero-bloat native APIs, Cross-browser ergonomics`;
+        }
+
+        // 3. Projects
+        if (q.includes("project") || q.includes("work") || q.includes("portfolio") || q.includes("app") || q.includes("built") || q.includes("created")) {
+            return `Here are Muhammad Zaheer's featured applications:\n\n` +
+                   `* 🚀 **API Status & Metrics Dashboard**: Real-time telemetry monitoring, system health checks, latency sparklines, and uptime meters.\n` +
+                   `* ✅ **Interactive Todo Application**: Productivity manager with local persistence, tag categorizations, and filter views.\n` +
+                   `* 🌤️ **Minimal & Pro Weather Dashboards**: Accurate meteorological queries via the live Open-Meteo API with temperature trends.\n\n` +
+                   `Check out the full interactive directory on the [Projects Page](projects.html)!`;
+        }
+
+        // 4. Bio / About / Experience
+        if (q.includes("who are you") || q.includes("about") || q.includes("background") || q.includes("experience") || q.includes("bio") || q.includes("who is")) {
+            return `**Muhammad Zaheer** is a software developer dedicated to crafting high-performance, intuitive web applications and developer tools.\n\n` +
+                   `He emphasizes clean, responsive typography, resilient state management, and intuitive user experiences without unnecessary framework overhead. Discover his complete journey on the [About Page](about.html).`;
+        }
+
+        // 5. Weather
+        if (q.includes("weather")) {
+            return `You can explore Muhammad's **Live Weather Dashboard** on the Projects page, or even test live weather right in this portfolio by opening the bottom-left **Terminal (>_)** and typing: \`weather London\` or \`weather Tokyo\`!`;
+        }
+
+        // 6. Greetings
+        if (q === "hi" || q === "hello" || q === "hey" || q.startsWith("hello") || q.startsWith("hi ") || q.includes("good morning") || q.includes("good evening")) {
+            return `Hello! I am **Zaheer AI**, Muhammad Zaheer's portfolio assistant.\n\n` +
+                   `I can guide you through his **projects**, **technical skills**, **background**, or share his **contact details** if you want to collaborate! What would you like to know?`;
+        }
+
+        // 7. Contextual Fallback
+        return `Muhammad Zaheer is a Frontend & Full-Stack Developer proficient in **JavaScript, TypeScript, React, Node.js, and Modern UI Engineering**.\n\n` +
+               `* To review his applications, visit [Projects](projects.html)\n` +
+               `* To learn about his engineering philosophy, visit [About](about.html)\n` +
+               `* To discuss opportunities or hire Muhammad, email [mzaheerlion@gmail.com](mailto:mzaheerlion@gmail.com) or use the [Contact Page](contact.html)!`;
+    }
+
+    // Direct client-side Gemini API caller (for static hosting like GitHub Pages when user configures key)
+    async function callGeminiDirectly(apiKey, history) {
+        const formattedContents = history.map(m => ({
+            role: m.role === "assistant" || m.role === "model" ? "model" : "user",
+            parts: [{ text: m.content || "" }]
+        }));
+
+        const systemText = `You are "Zaheer AI", an intelligent, polite, and articulate AI portfolio assistant representing Muhammad Zaheer (Frontend & Full-Stack Web Developer).
+Greet visitors warmly and answer questions about Muhammad Zaheer's skills (React, TypeScript, Node.js, Tailwind, APIs), projects (API Status Dashboard, Interactive Todo, Weather Dashboards), and contact info (mzaheerlion@gmail.com). Keep responses concise (2-4 sentences or clean bullet points).`;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                system_instruction: {
+                    parts: [{ text: systemText }]
+                },
+                contents: formattedContents,
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 500
+                }
+            })
+        });
+
+        if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.error?.message || `HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        return candidate || "Hello! How can I assist you with Muhammad Zaheer's portfolio today?";
+    }
 
     // Format simple markdown into clean HTML
     function formatMarkdown(text) {
@@ -2356,40 +2467,56 @@ function setupGeminiChatbot() {
 
         if (window.CinematicAudio) CinematicAudio.playClick();
 
-        try {
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    messages: conversationHistory
-                })
-            });
+        let botReply = "";
+        const customKey = (localStorage.getItem(API_KEY_STORAGE) || "").trim();
 
-            if (!response.ok) {
-                const errData = await response.json().catch(() => ({}));
-                throw new Error(errData.error || `Server returned ${response.status}`);
+        // 1. If custom key is provided, call Gemini directly via client
+        if (customKey) {
+            try {
+                botReply = await callGeminiDirectly(customKey, conversationHistory);
+            } catch (geminiErr) {
+                console.warn("Direct Gemini call failed:", geminiErr);
+                // Fallback to smart knowledge engine
+                botReply = generatePortfolioSmartResponse(trimmed);
             }
+        } else {
+            // 2. Try backend /api/chat (works in AI Studio and dynamic servers)
+            try {
+                const response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        messages: conversationHistory
+                    })
+                });
 
-            const data = await response.json();
-            const botReply = data.reply || "I received your message! How else can I help you explore Muhammad's portfolio?";
-
-            removeTypingIndicator();
-            conversationHistory.push({ role: "assistant", content: botReply });
-            appendMessageUI("assistant", botReply);
-            saveHistory();
-
-            if (window.CinematicAudio) CinematicAudio.playChime();
-        } catch (err) {
-            console.error("Chatbot request error:", err);
-            removeTypingIndicator();
-            const fallbackReply = "I am having trouble connecting to the Gemini service right now. Please verify your GEMINI_API_KEY or contact Muhammad directly via mzaheerlion@gmail.com!";
-            conversationHistory.push({ role: "assistant", content: fallbackReply });
-            appendMessageUI("assistant", fallbackReply);
-            saveHistory();
-        } finally {
-            if (sendBtn) sendBtn.disabled = false;
-            if (chatInput) chatInput.focus();
+                if (response.ok) {
+                    const data = await response.json();
+                    botReply = data.reply || "";
+                } else {
+                    // Static host (like GitHub Pages where /api/chat returns 404)
+                    botReply = generatePortfolioSmartResponse(trimmed);
+                }
+            } catch (err) {
+                // Static host (e.g. GitHub Pages) fallback to smart portfolio engine
+                console.info("Using built-in portfolio AI knowledge engine for GitHub Pages.");
+                botReply = generatePortfolioSmartResponse(trimmed);
+            }
         }
+
+        if (!botReply) {
+            botReply = generatePortfolioSmartResponse(trimmed);
+        }
+
+        removeTypingIndicator();
+        conversationHistory.push({ role: "assistant", content: botReply });
+        appendMessageUI("assistant", botReply);
+        saveHistory();
+
+        if (window.CinematicAudio) CinematicAudio.playChime();
+
+        if (sendBtn) sendBtn.disabled = false;
+        if (chatInput) chatInput.focus();
     }
 
     function toggleChat(forceState) {
@@ -2419,6 +2546,42 @@ function setupGeminiChatbot() {
     // Event listeners
     launcher.addEventListener("click", () => toggleChat(true));
     closeBtn.addEventListener("click", () => toggleChat(false));
+
+    // Settings toggle
+    if (settingsToggleBtn && settingsPanel) {
+        settingsToggleBtn.addEventListener("click", () => {
+            const isHidden = settingsPanel.hasAttribute("hidden");
+            if (isHidden) {
+                settingsPanel.removeAttribute("hidden");
+                if (customKeyInput) customKeyInput.focus();
+            } else {
+                settingsPanel.setAttribute("hidden", "true");
+            }
+        });
+    }
+
+    if (saveKeyBtn && customKeyInput) {
+        saveKeyBtn.addEventListener("click", () => {
+            const val = customKeyInput.value.trim();
+            if (val) {
+                localStorage.setItem(API_KEY_STORAGE, val);
+                showToast("Gemini API Key saved for GitHub Pages!", "✨");
+                if (settingsPanel) settingsPanel.setAttribute("hidden", "true");
+            } else {
+                localStorage.removeItem(API_KEY_STORAGE);
+                showToast("Key cleared — using built-in portfolio AI engine", "ℹ️");
+            }
+        });
+    }
+
+    if (clearKeyBtn && customKeyInput) {
+        clearKeyBtn.addEventListener("click", () => {
+            customKeyInput.value = "";
+            localStorage.removeItem(API_KEY_STORAGE);
+            showToast("API Key removed", "🗑️");
+            if (settingsPanel) settingsPanel.setAttribute("hidden", "true");
+        });
+    }
 
     clearBtn.addEventListener("click", () => {
         conversationHistory = [];

@@ -3728,6 +3728,79 @@ body.cinematic-mode .site-header {
     height: 16px;
 }
 
+/* Chat Settings Panel */
+.gemini-chat-settings-panel {
+    padding: 16px 20px;
+    background: var(--surface-strong);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.85rem;
+}
+
+.gemini-chat-settings-panel[hidden] {
+    display: none !important;
+}
+
+.gemini-chat-settings-panel p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.gemini-key-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.gemini-key-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 0.84rem;
+    color: var(--text);
+    outline: none;
+    font-family: var(--font-mono);
+}
+
+.gemini-key-input:focus {
+    border-color: var(--primary);
+}
+
+.gemini-key-save-btn {
+    padding: 8px 14px;
+    background: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.82rem;
+}
+
+.gemini-key-clear-btn {
+    padding: 8px 12px;
+    background: var(--surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.82rem;
+}
+
+.gemini-badge-mode {
+    font-size: 0.72rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-full);
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    font-weight: 700;
+}
+
 @media (max-width: 640px) {
     .gemini-chat-launcher {
         bottom: 16px;
