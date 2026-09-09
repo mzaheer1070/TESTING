@@ -1539,6 +1539,9 @@ function setupCommandPalette() {
         }},
 
         // Quick Tools & Actions
+        { title: "Ask Zaheer AI (Gemini Chat Assistant)", category: "Actions", icon: "✨", action: () => {
+            if (window.openGeminiChat) window.openGeminiChat();
+        }},
         { title: "Toggle Light / Dark Theme Mode", category: "Actions", icon: "🌗", action: () => {
             const currentTheme = document.documentElement.dataset.theme || "dark";
             const nextTheme = currentTheme === "dark" ? "light" : "dark";
@@ -1765,6 +1768,7 @@ function setupDeveloperTerminal() {
   <span class="cmd-highlight">projects</span>    - List interactive web applications with links
   <span class="cmd-highlight">skills</span>      - Display technical proficiency breakdown
   <span class="cmd-highlight">about</span>       - Show developer bio and core philosophy
+  <span class="cmd-highlight">ai [question]</span>   - Chat with Zaheer AI (Gemini Assistant)
   <span class="cmd-highlight">weather [city]</span>- Live query via Open-Meteo API (e.g. weather Tokyo)
   <span class="cmd-highlight">theme [light|dark]</span> - Switch between Light and Dark mode
   <span class="cmd-highlight">cinema</span>      - Toggle 21:9 Director's cut cinematic letterbox
@@ -1775,6 +1779,16 @@ function setupDeveloperTerminal() {
   <span class="cmd-highlight">clear</span>       - Clear terminal screen
   <span class="cmd-highlight">exit</span>        - Close terminal drawer
                 `);
+                break;
+
+            case "ai":
+            case "chat":
+            case "gemini":
+            case "ask":
+                if (window.openGeminiChat) {
+                    window.openGeminiChat(arg || "");
+                    appendLine(`Launched Zaheer AI Chatbot... ${arg ? `Asking: "<em>${arg}</em>"` : ""}`);
+                }
                 break;
 
             case "theme":
@@ -2142,6 +2156,312 @@ function setupContactForm() {
 }
 
 /* ==========================================================================
+   GEMINI AI CHATBOT SYSTEM
+   ========================================================================== */
+
+function setupGeminiChatbot() {
+    // If chat container already exists, return
+    if (document.getElementById("geminiChatModal")) return;
+
+    // 1. Create Floating Launcher Button
+    const launcher = document.createElement("button");
+    launcher.id = "geminiChatLauncher";
+    launcher.className = "gemini-chat-launcher";
+    launcher.setAttribute("type", "button");
+    launcher.setAttribute("aria-label", "Ask Zaheer AI (Portfolio Assistant)");
+    launcher.setAttribute("title", "Chat with Zaheer AI (Powered by Gemini)");
+    launcher.innerHTML = `
+        <span class="gemini-launcher-icon">✨</span>
+        <span class="gemini-launcher-label">Ask Zaheer AI</span>
+        <span class="gemini-chat-badge">Gemini</span>
+    `;
+    document.body.appendChild(launcher);
+
+    // 2. Create Chat Drawer Dialog
+    const modal = document.createElement("div");
+    modal.id = "geminiChatModal";
+    modal.className = "gemini-chat-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-label", "Zaheer AI Chat Assistant");
+    modal.setAttribute("hidden", "true");
+    modal.innerHTML = `
+        <header class="gemini-chat-header">
+            <div class="gemini-chat-header-info">
+                <div class="gemini-chat-avatar" aria-hidden="true">✨</div>
+                <div class="gemini-chat-title-group">
+                    <h3>Zaheer AI <span class="gemini-status-dot" title="Online"></span></h3>
+                    <p>Muhammad Zaheer's AI Representative</p>
+                </div>
+            </div>
+            <div class="gemini-chat-header-actions">
+                <button type="button" class="gemini-chat-header-btn" id="geminiChatClear" title="Clear Conversation" aria-label="Clear chat">🗑️</button>
+                <button type="button" class="gemini-chat-header-btn" id="geminiChatClose" title="Close Chat" aria-label="Close chat">✕</button>
+            </div>
+        </header>
+
+        <div class="gemini-chat-messages" id="geminiChatMessages" tabindex="0">
+            <!-- Messages injected dynamically -->
+        </div>
+
+        <div class="gemini-suggested-prompts" id="geminiSuggestedPrompts">
+            <button type="button" class="gemini-prompt-chip" data-prompt="What are Muhammad Zaheer's main technical skills?">🛠️ Core Skills</button>
+            <button type="button" class="gemini-prompt-chip" data-prompt="Show me his featured portfolio projects.">🚀 Featured Projects</button>
+            <button type="button" class="gemini-prompt-chip" data-prompt="How can I get in touch or hire him?">📬 Contact & Hire</button>
+        </div>
+
+        <footer class="gemini-chat-footer">
+            <form class="gemini-chat-input-form" id="geminiChatForm">
+                <input 
+                    type="text" 
+                    id="geminiChatInput" 
+                    class="gemini-chat-input" 
+                    placeholder="Ask about projects, skills, or background..." 
+                    autocomplete="off"
+                    aria-label="Your message to Zaheer AI"
+                />
+                <button type="submit" class="gemini-chat-send-btn" id="geminiChatSendBtn" aria-label="Send Message">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+        </footer>
+    `;
+    document.body.appendChild(modal);
+
+    const messagesContainer = document.getElementById("geminiChatMessages");
+    const chatForm = document.getElementById("geminiChatForm");
+    const chatInput = document.getElementById("geminiChatInput");
+    const sendBtn = document.getElementById("geminiChatSendBtn");
+    const closeBtn = document.getElementById("geminiChatClose");
+    const clearBtn = document.getElementById("geminiChatClear");
+    const suggestedPrompts = document.getElementById("geminiSuggestedPrompts");
+
+    // Conversation state maintained for multi-turn history
+    let conversationHistory = [];
+    const STORAGE_KEY = "zaheer-ai-chat-history";
+
+    // Format simple markdown into clean HTML
+    function formatMarkdown(text) {
+        if (!text) return "";
+        let escaped = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
+        // Bold **text**
+        escaped = escaped.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        // Italic *text*
+        escaped = escaped.replace(/\*(.*?)\*/g, "<em>$1</em>");
+        // Bullet lists
+        const lines = escaped.split("\n");
+        let html = "";
+        let inList = false;
+
+        for (const line of lines) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
+                if (!inList) {
+                    html += "<ul>";
+                    inList = true;
+                }
+                html += `<li>${trimmed.substring(2)}</li>`;
+            } else {
+                if (inList) {
+                    html += "</ul>";
+                    inList = false;
+                }
+                if (trimmed.length > 0) {
+                    html += `<p>${trimmed}</p>`;
+                }
+            }
+        }
+        if (inList) html += "</ul>";
+        return html;
+    }
+
+    function appendMessageUI(role, content) {
+        const row = document.createElement("div");
+        row.className = `gemini-message-row is-${role === "user" ? "user" : "bot"}`;
+
+        const bubble = document.createElement("div");
+        bubble.className = "gemini-message-bubble";
+        bubble.innerHTML = formatMarkdown(content);
+
+        row.appendChild(bubble);
+        messagesContainer.appendChild(row);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const typingEl = document.createElement("div");
+        typingEl.id = "geminiTyping";
+        typingEl.className = "gemini-message-row is-bot";
+        typingEl.innerHTML = `
+            <div class="gemini-typing-indicator" aria-label="Zaheer AI is thinking...">
+                <span></span><span></span><span></span>
+            </div>
+        `;
+        messagesContainer.appendChild(typingEl);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const typing = document.getElementById("geminiTyping");
+        if (typing) typing.remove();
+    }
+
+    function loadHistory() {
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                conversationHistory = JSON.parse(saved);
+            }
+        } catch (e) {
+            conversationHistory = [];
+        }
+
+        messagesContainer.innerHTML = "";
+
+        if (conversationHistory.length === 0) {
+            // Initial greeting
+            const initialGreeting = "Hello! I am **Zaheer AI**, Muhammad Zaheer's interactive portfolio assistant.\n\nAsk me anything about his technical stack, live projects, architecture, or how to get in touch!";
+            conversationHistory.push({ role: "assistant", content: initialGreeting });
+        }
+
+        conversationHistory.forEach(msg => {
+            appendMessageUI(msg.role, msg.content);
+        });
+    }
+
+    function saveHistory() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(conversationHistory));
+        } catch (e) {}
+    }
+
+    async function sendMessage(userText) {
+        const trimmed = userText.trim();
+        if (!trimmed) return;
+
+        // Append user message
+        conversationHistory.push({ role: "user", content: trimmed });
+        appendMessageUI("user", trimmed);
+        saveHistory();
+
+        if (chatInput) chatInput.value = "";
+        if (sendBtn) sendBtn.disabled = true;
+        showTypingIndicator();
+
+        if (window.CinematicAudio) CinematicAudio.playClick();
+
+        try {
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    messages: conversationHistory
+                })
+            });
+
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.error || `Server returned ${response.status}`);
+            }
+
+            const data = await response.json();
+            const botReply = data.reply || "I received your message! How else can I help you explore Muhammad's portfolio?";
+
+            removeTypingIndicator();
+            conversationHistory.push({ role: "assistant", content: botReply });
+            appendMessageUI("assistant", botReply);
+            saveHistory();
+
+            if (window.CinematicAudio) CinematicAudio.playChime();
+        } catch (err) {
+            console.error("Chatbot request error:", err);
+            removeTypingIndicator();
+            const fallbackReply = "I am having trouble connecting to the Gemini service right now. Please verify your GEMINI_API_KEY or contact Muhammad directly via mzaheerlion@gmail.com!";
+            conversationHistory.push({ role: "assistant", content: fallbackReply });
+            appendMessageUI("assistant", fallbackReply);
+            saveHistory();
+        } finally {
+            if (sendBtn) sendBtn.disabled = false;
+            if (chatInput) chatInput.focus();
+        }
+    }
+
+    function toggleChat(forceState) {
+        const isCurrentlyOpen = modal.classList.contains("is-open");
+        const shouldOpen = typeof forceState === "boolean" ? forceState : !isCurrentlyOpen;
+
+        if (shouldOpen) {
+            modal.removeAttribute("hidden");
+            // Allow CSS transition
+            requestAnimationFrame(() => {
+                modal.classList.add("is-open");
+                if (chatInput) chatInput.focus();
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            });
+            launcher.style.display = "none";
+            if (window.CinematicAudio) CinematicAudio.playClick();
+        } else {
+            modal.classList.remove("is-open");
+            setTimeout(() => {
+                modal.setAttribute("hidden", "true");
+                launcher.style.display = "flex";
+            }, 300);
+            if (window.CinematicAudio) CinematicAudio.playClick();
+        }
+    }
+
+    // Event listeners
+    launcher.addEventListener("click", () => toggleChat(true));
+    closeBtn.addEventListener("click", () => toggleChat(false));
+
+    clearBtn.addEventListener("click", () => {
+        conversationHistory = [];
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        loadHistory();
+        showToast("Chat conversation cleared", "🗑️");
+    });
+
+    chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        sendMessage(chatInput.value);
+    });
+
+    // Suggested prompt chips
+    suggestedPrompts.querySelectorAll("[data-prompt]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const promptText = btn.getAttribute("data-prompt");
+            if (promptText) {
+                sendMessage(promptText);
+            }
+        });
+    });
+
+    // Close on Escape key
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("is-open")) {
+            toggleChat(false);
+        }
+    });
+
+    // Expose global helper for Command Palette and Terminal
+    window.openGeminiChat = (prefilledQuery) => {
+        toggleChat(true);
+        if (prefilledQuery && typeof prefilledQuery === "string") {
+            setTimeout(() => sendMessage(prefilledQuery), 200);
+        }
+    };
+
+    // Initialize conversation
+    loadHistory();
+}
+
+/* ==========================================================================
    INITIALIZATION
    ========================================================================== */
 
@@ -2165,5 +2485,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setupCommandPalette();
     setupDeveloperTerminal();
     setupContactForm();
+    setupGeminiChatbot();
 });
 
