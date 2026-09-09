@@ -2266,56 +2266,126 @@ function setupGeminiChatbot() {
 
     // High-fidelity Portfolio Knowledge Base (Offline / Static GitHub Pages Engine)
     function generatePortfolioSmartResponse(userQuery) {
-        const q = userQuery.toLowerCase().trim();
+        // Normalize query: lower case, remove punctuation except spaces
+        const raw = (userQuery || "").toLowerCase().trim();
+        const q = raw.replace(/[^\w\s]/g, " ");
+        const tokens = q.split(/\s+/).filter(Boolean);
 
-        // 1. Contact / Hiring / Email
-        if (q.includes("hire") || q.includes("contact") || q.includes("email") || q.includes("reach") || q.includes("message") || q.includes("phone") || q.includes("linkedin") || q.includes("touch")) {
-            return `You can get in touch with **Muhammad Zaheer** directly through multiple channels:\n\n` +
+        const hasAny = (...words) => words.some(w => q.includes(w) || tokens.includes(w));
+        const hasAll = (...words) => words.every(w => q.includes(w) || tokens.includes(w));
+
+        // 1. Casual / Greetings / Identity of Assistant
+        if (tokens.length <= 3 && (hasAny("hi", "hello", "hey", "sup", "yo", "hola", "salam", "morning", "evening", "afternoon", "bro", "dude", "buddy", "man") || raw === "hi" || raw === "hello")) {
+            return `Hello there! I am **Zaheer AI**, Muhammad Zaheer's interactive portfolio assistant.\n\n` +
+                   `I can answer questions about:\n` +
+                   `* 🚀 **Projects**: *API Status Dashboard, Todo App, Weather Pro*\n` +
+                   `* ⚡ **Skills & Stack**: *JavaScript, TypeScript, React, Tailwind, Node.js*\n` +
+                   `* 📍 **Location & Availability**: *Remote / worldwide*\n` +
+                   `* 📬 **Contact & Hire**: *Direct email & inquiry options*\n\n` +
+                   `What would you like to explore?`;
+        }
+
+        if (hasAny("what are you doing", "what do you do", "what is your purpose", "who are you", "what are u doing")) {
+            return `I am **Zaheer AI**, an AI assistant built into Muhammad Zaheer's portfolio.\n\n` +
+                   `My role is to represent Muhammad, answer questions about his software engineering experience, demonstrate his interactive web applications, and help prospective clients or employers connect directly with him.`;
+        }
+
+        // 2. Origin / Location / Where is he from / Nationality / Remote
+        if (hasAny("where he is from", "where is he from", "where from", "location", "country", "city", "where do you live", "where does he live", "based", "relocate", "remote")) {
+            return `**Muhammad Zaheer** is based in **Pakistan** and works with clients and engineering teams **worldwide (Remote & Hybrid)**.\n\n` +
+                   `* 📍 **Availability**: Open to global remote full-time positions, contract engagements, and freelance projects.\n` +
+                   `* 🌐 **Timezone Flexibility**: Experienced with asynchronous workflows and distributed teams.\n` +
+                   `* ✉️ **Direct Contact**: [mzaheerlion@gmail.com](mailto:mzaheerlion@gmail.com)`;
+        }
+
+        // 3. Specific Project: API Status Dashboard
+        if (hasAny("api dashboard", "api status", "telemetry", "endpoint", "prober", "http prober") || (hasAny("api") && hasAny("dashboard", "project", "status", "detail", "tell", "explain", "about"))) {
+            return `### 📊 API Status & Metrics Dashboard\n\n` +
+                   `A real-time telemetry and endpoint health monitor built by Muhammad Zaheer.\n\n` +
+                   `* **Key Capabilities**: Live REST API probing (GitHub, JSONPlaceholder), real-time millisecond round-trip latency calculation, HTTP status indicators (200 OK, 404, 500), and auto-refresh polling every 30 seconds.\n` +
+                   `* **Stack**: Vanilla JS (ES6+), Fetch API, CSS Grid, High-contrast responsive HUD.\n` +
+                   `* **Try it live**: Launch it from the [Projects Page](projects.html) or run it inside the sandbox view!`;
+        }
+
+        // 4. Specific Project: Todo Application
+        if (hasAny("todo", "to do", "task", "tasks", "task manager", "todo app", "todos")) {
+            return `### ✅ Interactive Todo Application\n\n` +
+                   `A productivity and task management app engineered for seamless client-side performance.\n\n` +
+                   `* **Key Capabilities**: Instant task creation with priority tagging, status filters (All, Active, Completed), real-time item counters, and keyboard accessibility.\n` +
+                   `* **Persistence**: Full local storage persistence—your tasks remain saved across browser refreshes and sessions.\n` +
+                   `* **Stack**: HTML5, Modern CSS, DOM State Management, LocalStorage API.\n` +
+                   `* **Try it live**: Explore it directly on the [Projects Page](projects.html)!`;
+        }
+
+        // 5. Specific Project: Weather Apps (Pro Dashboard & Minimal App)
+        if (hasAny("weather", "meteorol", "climate", "forecast", "aqi", "temperature")) {
+            return `### 🌤️ Weather Dashboard Pro & Minimal Weather App\n\n` +
+                   `Muhammad has built two distinct weather applications powered by live meteorological data:\n\n` +
+                   `1. **Weather Dashboard Pro**: Features live Air Quality Index (PM2.5, NO₂, Ozone), UV index recommendations, 8-day forecasts, °C/°F toggle, and spatial audio rain/wind soundscapes.\n` +
+                   `2. **Minimal Weather App**: A streamlined, lightweight city lookup for rapid conditions and temperature checks.\n\n` +
+                   `💡 *Bonus*: You can also test live weather right now in the bottom-left **Terminal (>_)** by typing: \`weather Tokyo\` or \`weather London\`!`;
+        }
+
+        // 6. Upcoming Projects / Roadmap / Future work
+        if (hasAny("upcoming", "roadmap", "future", "next", "coming soon", "in progress", "wip")) {
+            return `### 🚀 Upcoming Projects & Roadmap\n\n` +
+                   `Muhammad is currently actively engineering:\n\n` +
+                   `* ⚡ **Next-Gen AI Portfolio Workflows**: Deep generative UI tools integrated with the Gemini API.\n` +
+                   `* 📈 **Advanced Real-time Analytics Visualizer**: Canvas-based live streaming data visualizer with WebSocket support.\n` +
+                   `* 🧩 **Design System Component Library**: Accessible, headless accessible UI components crafted with zero external bloat.\n\n` +
+                   `Stay updated on new releases by visiting the [Projects Page](projects.html)!`;
+        }
+
+        // 7. General Projects List
+        if (hasAny("project", "projects", "work", "portfolio", "apps", "built", "created", "showcase", "demos")) {
+            return `### 🚀 Featured Applications by Muhammad Zaheer\n\n` +
+                   `1. **Weather Dashboard Pro**: Real-time atmospheric analytics with live AQI, UV index, and spatial audio.\n` +
+                   `2. **API Status Dashboard**: Real-time HTTP health monitor with millisecond latency and status tracking.\n` +
+                   `3. **Todo Application**: State-managed productivity tool with local storage persistence and filter views.\n` +
+                   `4. **Minimal Weather App**: Fast, lightweight weather lookup utility.\n\n` +
+                   `👉 Visit the [Projects Page](projects.html) to launch each app live or test them in the interactive sandbox!`;
+        }
+
+        // 8. Technical Skills / Tech Stack
+        if (hasAny("skill", "skills", "stack", "tech", "technolog", "languages", "framework", "frameworks", "tools", "frontend", "backend")) {
+            return `### 🛠️ Technical Skills & Proficiencies\n\n` +
+                   `* **Frontend**: JavaScript (ES6+), TypeScript, React, HTML5 semantic structure, CSS3 Flexbox & Grid\n` +
+                   `* **Styling & UI**: Tailwind CSS, CSS Custom Properties (Tokens), Responsive Design, Accessibility (WCAG)\n` +
+                   `* **Backend & APIs**: Node.js, Express.js, REST API integrations, Fetch API, Gemini API, Open-Meteo\n` +
+                   `* **Engineering Practices**: Git, GitHub Actions/CI/CD, Performance Optimization, Clean Architecture\n\n` +
+                   `For an in-depth breakdown with proficiency metrics, check the [About Page](about.html).`;
+        }
+
+        // 9. Contact / Hire / Freelance / Pricing / Email
+        if (hasAny("hire", "contact", "email", "reach", "message", "touch", "call", "collaborat", "job", "offer", "freelance", "contract", "salary", "rate")) {
+            return `### 📬 Connect with Muhammad Zaheer\n\n` +
+                   `Muhammad is actively considering **full-time remote positions**, **contract roles**, and **freelance projects**:\n\n` +
                    `* 📧 **Direct Email**: [mzaheerlion@gmail.com](mailto:mzaheerlion@gmail.com)\n` +
-                   `* 📬 **Contact Form**: Head over to the [Contact Page](contact.html) to send an instant message\n` +
-                   `* 🌐 **Status**: Currently **Available** for full-time, contract, and freelance opportunities worldwide!`;
+                   `* 💬 **Online Form**: Send an immediate message via the [Contact Page](contact.html)\n` +
+                   `* ⚡ **Response Time**: Usually within 24 hours.`;
         }
 
-        // 2. Skills / Stack / Technologies
-        if (q.includes("skill") || q.includes("stack") || q.includes("technolog") || q.includes("languages") || q.includes("framework") || q.includes("tools")) {
-            return `**Muhammad Zaheer** specializes in modern full-stack and frontend engineering:\n\n` +
-                   `* ⚡ **Frontend & Core**: JavaScript (ES6+), TypeScript, React, HTML5, CSS3/Modern Flex & Grid, Responsive UI Architecture\n` +
-                   `* 🎨 **Styling & Motion**: Tailwind CSS, Design Tokens, Smooth Animations, Sound/Audio FX Design\n` +
-                   `* 🛠️ **Backend & Tooling**: Node.js, Express.js, REST APIs, Open-Meteo Integration, Git, Vite, Bash/CLI\n` +
-                   `* 🎯 **Architecture**: Accessibility (a11y), Performance Optimization, Zero-bloat native APIs, Cross-browser ergonomics`;
+        // 10. Bio / About / Philosophy / Education / Experience
+        if (hasAny("about", "bio", "experience", "background", "philosophy", "story", "education", "degree", "qualification", "who is muhammad")) {
+            return `### 👨‍💻 About Muhammad Zaheer\n\n` +
+                   `Muhammad Zaheer is a dedicated software developer passionate about building fast, intuitive web applications that prioritize user experience and performance.\n\n` +
+                   `* **Philosophy**: Craft software with pure, resilient code that loads under 0.5s without unnecessary dependencies.\n` +
+                   `* **Focus**: High-performance UI engineering, interactive dashboards, and pragmatic full-stack solutions.\n` +
+                   `* Read the full story on the [About Page](about.html).`;
         }
 
-        // 3. Projects
-        if (q.includes("project") || q.includes("work") || q.includes("portfolio") || q.includes("app") || q.includes("built") || q.includes("created")) {
-            return `Here are Muhammad Zaheer's featured applications:\n\n` +
-                   `* 🚀 **API Status & Metrics Dashboard**: Real-time telemetry monitoring, system health checks, latency sparklines, and uptime meters.\n` +
-                   `* ✅ **Interactive Todo Application**: Productivity manager with local persistence, tag categorizations, and filter views.\n` +
-                   `* 🌤️ **Minimal & Pro Weather Dashboards**: Accurate meteorological queries via the live Open-Meteo API with temperature trends.\n\n` +
-                   `Check out the full interactive directory on the [Projects Page](projects.html)!`;
+        // 11. Polite / Casual Remarks (e.g. "thanks", "cool", "nice", "ok", "great")
+        if (hasAny("thanks", "thank you", "cool", "awesome", "nice", "great", "ok", "good", "perfect", "got it")) {
+            return `You're very welcome! Feel free to ask anything else about Muhammad's work, or test out his projects in the [Projects section](projects.html). Let me know how I can help!`;
         }
 
-        // 4. Bio / About / Experience
-        if (q.includes("who are you") || q.includes("about") || q.includes("background") || q.includes("experience") || q.includes("bio") || q.includes("who is")) {
-            return `**Muhammad Zaheer** is a software developer dedicated to crafting high-performance, intuitive web applications and developer tools.\n\n` +
-                   `He emphasizes clean, responsive typography, resilient state management, and intuitive user experiences without unnecessary framework overhead. Discover his complete journey on the [About Page](about.html).`;
-        }
-
-        // 5. Weather
-        if (q.includes("weather")) {
-            return `You can explore Muhammad's **Live Weather Dashboard** on the Projects page, or even test live weather right in this portfolio by opening the bottom-left **Terminal (>_)** and typing: \`weather London\` or \`weather Tokyo\`!`;
-        }
-
-        // 6. Greetings
-        if (q === "hi" || q === "hello" || q === "hey" || q.startsWith("hello") || q.startsWith("hi ") || q.includes("good morning") || q.includes("good evening")) {
-            return `Hello! I am **Zaheer AI**, Muhammad Zaheer's portfolio assistant.\n\n` +
-                   `I can guide you through his **projects**, **technical skills**, **background**, or share his **contact details** if you want to collaborate! What would you like to know?`;
-        }
-
-        // 7. Contextual Fallback
-        return `Muhammad Zaheer is a Frontend & Full-Stack Developer proficient in **JavaScript, TypeScript, React, Node.js, and Modern UI Engineering**.\n\n` +
-               `* To review his applications, visit [Projects](projects.html)\n` +
-               `* To learn about his engineering philosophy, visit [About](about.html)\n` +
-               `* To discuss opportunities or hire Muhammad, email [mzaheerlion@gmail.com](mailto:mzaheerlion@gmail.com) or use the [Contact Page](contact.html)!`;
+        // 12. Contextual Default (Intelligent summary with actionable suggestions)
+        return `I can help you explore Muhammad Zaheer's work! Here are some quick topics you can ask me about:\n\n` +
+               `* 🛠️ **"What are your core skills?"** (React, TypeScript, Node.js, Tailwind)\n` +
+               `* 📊 **"Tell me about the API Status Dashboard"** or **"Weather Dashboard"**\n` +
+               `* 📍 **"Where is he from?"** (Location & remote availability)\n` +
+               `* 📬 **"How can I hire or email Muhammad?"** ([mzaheerlion@gmail.com](mailto:mzaheerlion@gmail.com))\n\n` +
+               `What would you like to know more about?`;
     }
 
     // Direct client-side Gemini API caller (for static hosting like GitHub Pages when user configures key)
@@ -2361,34 +2431,47 @@ Greet visitors warmly and answer questions about Muhammad Zaheer's skills (React
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
 
+        // Markdown links [label](url)
+        escaped = escaped.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:var(--primary);text-decoration:underline;">$1</a>');
+
         // Bold **text**
         escaped = escaped.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
         // Italic *text*
         escaped = escaped.replace(/\*(.*?)\*/g, "<em>$1</em>");
-        // Bullet lists
+        // Inline code `code`
+        escaped = escaped.replace(/`([^`]+)`/g, '<code style="background:var(--surface);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.85em;">$1</code>');
+
+        // Bullet and numbered lists and headers
         const lines = escaped.split("\n");
         let html = "";
-        let inList = false;
+        let inUl = false;
+        let inOl = false;
 
         for (const line of lines) {
             const trimmed = line.trim();
-            if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
-                if (!inList) {
-                    html += "<ul>";
-                    inList = true;
-                }
+            if (trimmed.startsWith("### ")) {
+                if (inUl) { html += "</ul>"; inUl = false; }
+                if (inOl) { html += "</ol>"; inOl = false; }
+                html += `<h4 style="margin:8px 0 4px;font-size:0.96rem;font-weight:700;color:var(--text);">${trimmed.substring(4)}</h4>`;
+            } else if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
+                if (inOl) { html += "</ol>"; inOl = false; }
+                if (!inUl) { html += "<ul>"; inUl = true; }
                 html += `<li>${trimmed.substring(2)}</li>`;
+            } else if (/^\d+\.\s/.test(trimmed)) {
+                if (inUl) { html += "</ul>"; inUl = false; }
+                if (!inOl) { html += "<ol style='margin:6px 0 6px 18px;padding:0;'>"; inOl = true; }
+                const content = trimmed.replace(/^\d+\.\s/, "");
+                html += `<li style='margin-bottom:4px;'>${content}</li>`;
             } else {
-                if (inList) {
-                    html += "</ul>";
-                    inList = false;
-                }
+                if (inUl) { html += "</ul>"; inUl = false; }
+                if (inOl) { html += "</ol>"; inOl = false; }
                 if (trimmed.length > 0) {
                     html += `<p>${trimmed}</p>`;
                 }
             }
         }
-        if (inList) html += "</ul>";
+        if (inUl) html += "</ul>";
+        if (inOl) html += "</ol>";
         return html;
     }
 
