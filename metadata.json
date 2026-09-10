@@ -1,6 +1,6 @@
 {
   "name": "Developer Portfolio",
-  "description": "Personal portfolio featuring interactive web applications, API dashboards, weather forecasts, and contact form.",
+  "description": "Personal portfolio and resume of Muhammad Zaheer, Computer Science Student at NUTECH Islamabad, featuring interactive web applications, API dashboards, and resume download.",
   "requestFramePermissions": ["camera", "geolocation", "microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

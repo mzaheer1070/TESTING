@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Resume of Muhammad Zaheer - Computer Science Student at National University of Technology, Islamabad. Skills in Python, C/C++, Web Technologies, AI/ML, and Software Development.">
+    <title>Muhammad Zaheer | Resume (Computer Science Student)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body data-page="resume" class="resume-page-body">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header no-print">
+    <nav class="navbar" aria-label="Main navigation">
+        <a class="brand" href="index.html" aria-label="Portfolio Homepage">
+            <span class="brand-dot" aria-hidden="true"></span>
+            <span>Portfolio</span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-panel" id="primary-navigation">
+            <div class="nav-status-widget" aria-label="Current developer local time & availability">
+                <span class="status-beacon" aria-hidden="true"></span>
+                <span data-live-clock>Loading...</span>
+            </div>
+
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="projects.html">Projects</a>
+            <a class="nav-link is-active" href="resume.html">Resume</a>
+            <a class="nav-link" href="contact.html">Contact</a>
+
+            <button class="palette-trigger-nav" type="button" data-open-palette aria-label="Open Command Search (Ctrl+K)">
+                <span>🔍 Search</span>
+                <span class="palette-trigger-kbd">⌘K</span>
+            </button>
+
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle Light / Dark Mode" title="Toggle Light / Dark Mode">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            
+            <button class="cinematic-toggle-nav" type="button" data-cinematic-toggle aria-label="Toggle Cinematic Mode" title="Cinematic Director's View (Shift+C)">
+                <span>🎬</span>
+                <span class="cinematic-label">Cinema</span>
+            </button>
+
+            <button class="sound-toggle-nav" type="button" data-sound-toggle aria-label="Toggle Sound Effects" title="Cinematic Audio FX">
+                <span class="sound-icon">🔊</span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<main id="main" class="resume-main">
+    <!-- Action Toolbar (Hidden during Print) -->
+    <div class="resume-toolbar-container no-print">
+        <div class="container resume-toolbar">
+            <div class="resume-toolbar-left">
+                <a class="btn secondary btn-sm" href="about.html">← Back to About</a>
+                <span class="resume-toolbar-tag">Official Resume Document</span>
+            </div>
+            <div class="resume-toolbar-actions">
+                <button class="btn primary btn-download-resume" type="button" onclick="window.print()" id="downloadResumeBtn">
+                    <span>📥</span>
+                    <strong>Download Resume (PDF)</strong>
+                </button>
+                <a class="btn secondary" href="mailto:mzaheer1070@gmail.com">
+                    <span>✉️</span>
+                    <span>Email Zaheer</span>
+                </a>
+                <button class="btn secondary" type="button" onclick="copyToClipboard('+923023185767', 'Phone number copied: +92-302-3185767')">
+                    <span>📞</span>
+                    <span>Copy Phone</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resume Document Viewport -->
+    <div class="container resume-document-container">
+        <article class="resume-sheet" id="resumeSheet">
+            <!-- Header -->
+            <header class="resume-header">
+                <h1 class="resume-name">MUHAMMAD ZAHEER</h1>
+                <p class="resume-headline">Computer Science Student</p>
+                <div class="resume-contact-bar">
+                    <a href="mailto:mzaheer1070@gmail.com" class="resume-link">mzaheer1070@gmail.com</a>
+                    <span class="resume-sep">|</span>
+                    <a href="tel:+923023185767" class="resume-link">+92-302-3185767</a>
+                    <span class="resume-sep">|</span>
+                    <span>Islamabad, Pakistan</span>
+                </div>
+            </header>
+
+            <!-- Summary -->
+            <section class="resume-section">
+                <h2 class="resume-section-title">SUMMARY</h2>
+                <div class="resume-section-content">
+                    <p class="resume-text">
+                        Computer Science student at National University of Technology with hands-on experience in software
+                        development, machine learning fundamentals, data preprocessing, and web technologies. Skilled in Python,
+                        C/C++, SQL, Firebase, and AI-related workflows. Experienced in building academic and personal projects,
+                        including AI-powered applications and portfolio websites. Seeking internship opportunities in Software
+                        Development, AI/ML, Data Science, or related technology fields.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Key Skills -->
+            <section class="resume-section">
+                <h2 class="resume-section-title">KEY SKILLS</h2>
+                <div class="resume-section-content">
+                    <div class="resume-skills-grid">
+                        <div class="skills-col">
+                            <h3 class="skills-col-title">Languages</h3>
+                            <ul class="skills-bullet-list">
+                                <li>Python</li>
+                                <li>C</li>
+                                <li>C++</li>
+                                <li>SQL</li>
+                                <li>Kotlin</li>
+                                <li>JavaScript</li>
+                            </ul>
+                        </div>
+
+                        <div class="skills-col">
+                            <h3 class="skills-col-title">Web</h3>
+                            <ul class="skills-bullet-list">
+                                <li>HTML</li>
+                                <li>CSS</li>
+                                <li>JavaScript</li>
+                                <li>Firebase</li>
+                                <li>GitHub</li>
+                            </ul>
+                        </div>
+
+                        <div class="skills-col">
+                            <h3 class="skills-col-title">Databases</h3>
+                            <ul class="skills-bullet-list">
+                                <li>MySQL</li>
+                                <li>MongoDB</li>
+                                <li>Neo4j</li>
+                            </ul>
+                        </div>
+
+                        <div class="skills-col">
+                            <h3 class="skills-col-title">AI & Data Science</h3>
+                            <ul class="skills-bullet-list">
+                                <li>Data Cleaning</li>
+                                <li>Data Preprocessing</li>
+                                <li>Data Visualization</li>
+                                <li>Model Training</li>
+                                <li>Labeled vs. Unlabeled Data</li>
+                            </ul>
+                        </div>
+
+                        <div class="skills-col">
+                            <h3 class="skills-col-title">Tools</h3>
+                            <ul class="skills-bullet-list">
+                                <li>Linux</li>
+                                <li>Docker</li>
+                                <li>Firebase</li>
+                                <li>Google ML Kit</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section class="resume-section">
+                <h2 class="resume-section-title">PROJECTS</h2>
+                <div class="resume-section-content resume-projects-list">
+                    <article class="resume-project-item">
+                        <div class="resume-project-header">
+                            <h3 class="resume-project-title">AI Translation Mobile Application</h3>
+                        </div>
+                        <ul class="resume-project-points">
+                            <li>Developed an Android translation app with real-time language support.</li>
+                            <li>Used Google ML Kit for text translation.</li>
+                        </ul>
+                        <p class="resume-project-tech"><strong>Tech:</strong> Android, Java/Kotlin, ML Kit</p>
+                    </article>
+
+                    <article class="resume-project-item">
+                        <div class="resume-project-header">
+                            <h3 class="resume-project-title">Personal Portfolio Website</h3>
+                        </div>
+                        <ul class="resume-project-points">
+                            <li>Built and deployed a responsive portfolio website showcasing projects and skills.</li>
+                            <li>Integrated contact form using Firebase. Hosted on GitHub Pages.</li>
+                        </ul>
+                        <p class="resume-project-tech"><strong>Tech:</strong> HTML, CSS, JavaScript, Firebase</p>
+                    </article>
+
+                    <article class="resume-project-item">
+                        <div class="resume-project-header">
+                            <h3 class="resume-project-title">Weather Dashboard Pro & API Status Monitor</h3>
+                        </div>
+                        <ul class="resume-project-points">
+                            <li>Real-time meteorological forecast engine featuring Open-Meteo API, live AQI pollutants, UV safety index, and unit toggling.</li>
+                            <li>Built latency and uptime probing dashboard with automated REST endpoint health checking and millisecond metrics.</li>
+                        </ul>
+                        <p class="resume-project-tech"><strong>Tech:</strong> HTML5, CSS3, Modern JavaScript, REST APIs, LocalStorage</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section class="resume-section">
+                <h2 class="resume-section-title">EDUCATION</h2>
+                <div class="resume-section-content">
+                    <div class="resume-edu-item">
+                        <div class="resume-edu-header">
+                            <h3 class="resume-degree">Bachelor of Science in Computer Science</h3>
+                            <span class="resume-edu-date">Expected Graduation: June, 2027</span>
+                        </div>
+                        <p class="resume-school">National University of Technology, Islamabad</p>
+                        <p class="resume-coursework">
+                            <strong>Relevant Coursework:</strong> Data Structures & Algorithms, Database Systems, Machine Learning, Web Development, Object Oriented Programming
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Languages & Interests Grid -->
+            <div class="resume-two-col-section">
+                <!-- Languages -->
+                <section class="resume-section">
+                    <h2 class="resume-section-title">LANGUAGES</h2>
+                    <div class="resume-section-content">
+                        <ul class="resume-bullet-list-simple">
+                            <li><strong>Urdu</strong> — Native</li>
+                            <li><strong>English</strong> — Upper Intermediate (B2)</li>
+                            <li><strong>Punjabi</strong> — Native</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Interests -->
+                <section class="resume-section">
+                    <h2 class="resume-section-title">INTERESTS</h2>
+                    <div class="resume-section-content">
+                        <ul class="resume-bullet-list-simple">
+                            <li>Artificial Intelligence</li>
+                            <li>Machine Learning</li>
+                            <li>Mobile App Development</li>
+                            <li>Automation</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </article>
+    </div>
+</main>
+
+<footer class="site-footer no-print">
+    <div class="container footer-content">
+        <div class="footer-links">
+            <a class="footer-link" href="index.html">Home</a>
+            <a class="footer-link" href="about.html">About</a>
+            <a class="footer-link" href="projects.html">Projects</a>
+            <a class="footer-link" href="resume.html">Resume</a>
+            <a class="footer-link" href="contact.html">Contact</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 Muhammad Zaheer. Computer Science Student, National University of Technology (NUTECH).</p>
+    </div>
+</footer>
+
+<script>
+    // Auto-trigger print if requested via query parameter ?download=true
+    if (window.location.search.includes("download=true")) {
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                window.print();
+            }, 600);
+        });
+    }
+</script>
+</body>
+</html>

@@ -1403,7 +1403,12 @@ function setupCommandPalette() {
         { title: "Home Page", category: "Navigation", icon: "🏠", action: () => window.location.href = "index.html" },
         { title: "About & Skills", category: "Navigation", icon: "👤", action: () => window.location.href = "about.html" },
         { title: "Projects Hub", category: "Navigation", icon: "📁", action: () => window.location.href = "projects.html" },
+        { title: "Resume & Education", category: "Navigation", icon: "🎓", action: () => window.location.href = "resume.html" },
         { title: "Contact Developer", category: "Navigation", icon: "✉️", action: () => window.location.href = "contact.html" },
+
+        // Resume & Credentials
+        { title: "Download Resume (PDF)", category: "Resume", icon: "📥", action: () => window.location.href = "resume.html?download=true" },
+        { title: "View Resume Online", category: "Resume", icon: "📄", action: () => window.location.href = "resume.html" },
         
         // Projects Direct Launch
         { title: "Weather Dashboard Pro (Launch Site)", category: "Live Applications", icon: "🌤️", action: () => window.open("projects/weather-dashboard/index.html", "_blank", "noopener,noreferrer") },
@@ -1434,7 +1439,7 @@ function setupCommandPalette() {
             showToast(`Switched to ${nextTheme === "dark" ? "Dark" : "Light"} mode`, nextTheme === "dark" ? "🌙" : "☀️");
         }},
         { title: "Open Developer CLI Terminal", category: "Actions", icon: "💻", action: () => window.toggleDevTerminal && window.toggleDevTerminal(true) },
-        { title: "Copy Developer Email", category: "Actions", icon: "📋", action: () => copyToClipboard("mzaheerlion@gmail.com", "Email copied: mzaheerlion@gmail.com") },
+        { title: "Copy Developer Email", category: "Actions", icon: "📋", action: () => copyToClipboard("mzaheer1070@gmail.com", "Email copied: mzaheer1070@gmail.com") },
         { title: "Live Open-Meteo Weather Test", category: "Actions", icon: "⚡", action: () => {
             window.toggleDevTerminal && window.toggleDevTerminal(true);
             setTimeout(() => {
@@ -1650,9 +1655,10 @@ function setupDeveloperTerminal() {
             case "?":
                 appendLine(`
 <strong>Available Commands:</strong>
-  <span class="cmd-highlight">projects</span>    - List interactive web applications with links
+  <span class="cmd-highlight">resume</span>      - View academic credentials & download resume (PDF)
+  <span class="cmd-highlight">about</span>       - Show developer bio, university & degree details
   <span class="cmd-highlight">skills</span>      - Display technical proficiency breakdown
-  <span class="cmd-highlight">about</span>       - Show developer bio and core philosophy
+  <span class="cmd-highlight">projects</span>    - List interactive web applications with links
   <span class="cmd-highlight">ai [question]</span>   - Chat with Zaheer AI (Gemini Assistant)
   <span class="cmd-highlight">weather [city]</span>- Live query via Open-Meteo API (e.g. weather Tokyo)
   <span class="cmd-highlight">theme [light|dark]</span> - Switch between Light and Dark mode
@@ -1663,6 +1669,20 @@ function setupDeveloperTerminal() {
   <span class="cmd-highlight">matrix</span>      - Toggle digital matrix rain effect
   <span class="cmd-highlight">clear</span>       - Clear terminal screen
   <span class="cmd-highlight">exit</span>        - Close terminal drawer
+                `);
+                break;
+
+            case "resume":
+            case "cv":
+                appendLine(`
+<strong>Muhammad Zaheer — Official Resume:</strong>
+  Degree      : Bachelor of Science in Computer Science (BS CS)
+  University  : National University of Technology (NUTECH), Islamabad
+  Graduation  : June, 2027
+  Focus Areas : Software Development, Machine Learning, Data Preprocessing, Web Technologies
+  Core Skills : Python, C, C++, SQL, Kotlin, HTML5, CSS3, JavaScript (ES6+), Firebase
+  Direct Links: <a href="resume.html" class="term-link">📄 View Resume Online</a> | <a href="resume.html?download=true" class="term-link">📥 Download PDF</a>
+  Direct Email: <span class="cmd-highlight">mzaheer1070@gmail.com</span> | Phone: +92-302-3185767
                 `);
                 break;
 
@@ -1737,29 +1757,34 @@ function setupDeveloperTerminal() {
             case "skills":
                 appendLine(`
 <strong>Technical Proficiencies:</strong>
-  JavaScript (ES6+, DOM, Async)   [██████████████████░░] 90%
-  HTML5 Semantic & Responsive CSS [███████████████████░] 92%
-  REST APIs & Network Probing     [█████████████████░░░] 85%
-  Firestore & Cloud Persistence   [████████████████░░░░] 80%
+  Python & Machine Learning       [██████████████████░░] 88%
+  C & C++ Programming             [█████████████████░░░] 85%
+  JavaScript & Modern Web (ES6+)  [███████████████████░] 92%
+  SQL & Relational Databases      [████████████████░░░░] 82%
+  Firebase & Firestore            [████████████████░░░░] 80%
                 `);
                 break;
 
             case "about":
             case "whoami":
                 appendLine(`
-<strong>Muhammad Zaheer</strong> - Web & Software Developer
-Specializing in clean web applications, performant user interfaces, and reliable REST API tooling.
-Location: Pakistan (GMT+5) | Availability: Open to project collaborations & contract roles.
+<strong>Muhammad Zaheer</strong> - Computer Science Student & Software Developer
+Education   : BS Computer Science @ National University of Technology (NUTECH), Islamabad
+Graduation  : June, 2027
+Interests   : Software Development, AI/Machine Learning, Data Engineering, Web Architecture
+Location    : Islamabad, Pakistan | Availability: Seeking Internship & Project Opportunities.
                 `);
                 break;
 
             case "contact":
                 appendLine(`
-<strong>Contact Details:</strong>
-  Email: <span class="cmd-highlight">mzaheerlion@gmail.com</span>
-  Form: <a href="contact.html" class="term-link">Open contact.html form</a>
+<strong>Contact Details (Muhammad Zaheer):</strong>
+  Email : <span class="cmd-highlight">mzaheer1070@gmail.com</span>
+  Phone : <span class="cmd-highlight">+92-302-3185767</span>
+  Resume: <a href="resume.html" class="term-link">View Resume</a> | <a href="resume.html?download=true" class="term-link">Download PDF</a>
+  Form  : <a href="contact.html" class="term-link">Open contact.html form</a>
                 `);
-                copyToClipboard("mzaheerlion@gmail.com", "Email copied to clipboard!");
+                copyToClipboard("mzaheer1070@gmail.com", "Email copied: mzaheer1070@gmail.com");
                 break;
 
             case "weather":
@@ -2099,8 +2124,10 @@ function setupGeminiChatbot() {
         </div>
 
         <div class="gemini-suggested-prompts" id="geminiSuggestedPrompts">
+            <button type="button" class="gemini-prompt-chip" data-prompt="How can I download Muhammad Zaheer's resume?">📄 Download Resume</button>
+            <button type="button" class="gemini-prompt-chip" data-prompt="What degree and university does Muhammad attend?">🎓 Education & Degree</button>
             <button type="button" class="gemini-prompt-chip" data-prompt="What are Muhammad Zaheer's main technical skills?">🛠️ Core Skills</button>
-            <button type="button" class="gemini-prompt-chip" data-prompt="Show me his featured portfolio projects.">🚀 Featured Projects</button>
+            <button type="button" class="gemini-prompt-chip" data-prompt="Show me his featured portfolio projects.">🚀 Projects</button>
             <button type="button" class="gemini-prompt-chip" data-prompt="How can I get in touch or hire him?">📬 Contact & Hire</button>
         </div>
 
@@ -2211,17 +2238,29 @@ function setupGeminiChatbot() {
                    `💡 *Bonus*: You can also test live weather right now in the bottom-left **Terminal (>_)** by typing: \`weather Tokyo\` or \`weather London\`!`;
         }
 
-        // 6. Upcoming Projects / Roadmap / Future work
+        // 6. Resume, CV & Degree Inquiries
+        if (hasAny("resume", "cv", "download resume", "curriculum vitae", "education", "degree", "university", "nutech", "school", "graduat", "academics")) {
+            return `### 📄 Muhammad Zaheer — Resume & Education\n\n` +
+                   `* 🎓 **Degree**: Bachelor of Science in Computer Science (BS CS)\n` +
+                   `* 🏛️ **University**: National University of Technology (NUTECH), Islamabad\n` +
+                   `* 📅 **Expected Graduation**: June, 2027\n` +
+                   `* 🛠️ **Technical Core**: Python, C, C++, SQL, Kotlin, Web (HTML5/CSS3/JavaScript), Firebase, AI/ML\n` +
+                   `* 📥 **Download Resume (PDF)**: [Click here to Download PDF](resume.html?download=true)\n` +
+                   `* 👁️ **View Full Resume**: [Open Web Resume](resume.html)\n` +
+                   `* ✉️ **Contact**: [mzaheer1070@gmail.com](mailto:mzaheer1070@gmail.com) | +92-302-3185767`;
+        }
+
+        // 7. Upcoming Projects / Roadmap / Future work
         if (hasAny("upcoming", "roadmap", "future", "next", "coming soon", "in progress", "wip")) {
             return `### 🚀 Upcoming Projects & Roadmap\n\n` +
                    `Muhammad is currently actively engineering:\n\n` +
-                   `* ⚡ **Next-Gen AI Portfolio Workflows**: Deep generative UI tools integrated with the Gemini API.\n` +
+                   `* ⚡ **Machine Learning & AI Workflows**: Model pipelines, data preprocessing scripts, and generative AI interfaces.\n` +
                    `* 📈 **Advanced Real-time Analytics Visualizer**: Canvas-based live streaming data visualizer with WebSocket support.\n` +
                    `* 🧩 **Design System Component Library**: Accessible, headless accessible UI components crafted with zero external bloat.\n\n` +
                    `Stay updated on new releases by visiting the [Projects Page](projects.html)!`;
         }
 
-        // 7. General Projects List
+        // 8. General Projects List
         if (hasAny("project", "projects", "work", "portfolio", "apps", "built", "created", "showcase", "demos")) {
             return `### 🚀 Featured Applications by Muhammad Zaheer\n\n` +
                    `1. **Weather Dashboard Pro**: Real-time atmospheric analytics with live AQI, UV index, and spatial audio.\n` +
@@ -2231,46 +2270,49 @@ function setupGeminiChatbot() {
                    `👉 Visit the [Projects Page](projects.html) to launch each app live or test them in the interactive sandbox!`;
         }
 
-        // 8. Technical Skills / Tech Stack
+        // 9. Technical Skills / Tech Stack
         if (hasAny("skill", "skills", "stack", "tech", "technolog", "languages", "framework", "frameworks", "tools", "frontend", "backend")) {
             return `### 🛠️ Technical Skills & Proficiencies\n\n` +
-                   `* **Frontend**: JavaScript (ES6+), TypeScript, React, HTML5 semantic structure, CSS3 Flexbox & Grid\n` +
-                   `* **Styling & UI**: Tailwind CSS, CSS Custom Properties (Tokens), Responsive Design, Accessibility (WCAG)\n` +
-                   `* **Backend & APIs**: Node.js, Express.js, REST API integrations, Fetch API, Gemini API, Open-Meteo\n` +
-                   `* **Engineering Practices**: Git, GitHub Actions/CI/CD, Performance Optimization, Clean Architecture\n\n` +
-                   `For an in-depth breakdown with proficiency metrics, check the [About Page](about.html).`;
+                   `* **Programming Languages**: Python, C, C++, SQL, Kotlin, JavaScript (ES6+)\n` +
+                   `* **Web & UI Development**: HTML5 Semantic markup, CSS3 (Custom Tokens, Flexbox, Grid), Responsive Architecture, Tailwind CSS\n` +
+                   `* **AI & Machine Learning**: Data preprocessing (Pandas/NumPy), Model training fundamentals, Feature engineering\n` +
+                   `* **Cloud & Tools**: Firebase / Cloud Firestore, Git, GitHub, REST APIs\n\n` +
+                   `For the complete certified coursework and skills list, check the [Resume Page](resume.html) or [About Page](about.html).`;
         }
 
-        // 9. Contact / Hire / Freelance / Pricing / Email
-        if (hasAny("hire", "contact", "email", "reach", "message", "touch", "call", "collaborat", "job", "offer", "freelance", "contract", "salary", "rate")) {
+        // 10. Contact / Hire / Freelance / Pricing / Email
+        if (hasAny("hire", "contact", "email", "reach", "message", "touch", "call", "collaborat", "job", "offer", "freelance", "contract", "intern", "internship")) {
             return `### 📬 Connect with Muhammad Zaheer\n\n` +
-                   `Muhammad is actively considering **full-time remote positions**, **contract roles**, and **freelance projects**:\n\n` +
-                   `* 📧 **Direct Email**: [mzaheerlion@gmail.com](mailto:mzaheerlion@gmail.com)\n` +
+                   `Muhammad is currently open to **internship opportunities** in Software Development, AI/ML, and Data Science, as well as collaboration projects:\n\n` +
+                   `* 📧 **Direct Email**: [mzaheer1070@gmail.com](mailto:mzaheer1070@gmail.com)\n` +
+                   `* 📞 **Phone**: [+92-302-3185767](tel:+923023185767)\n` +
+                   `* 📄 **Resume Download**: [Download PDF](resume.html?download=true)\n` +
                    `* 💬 **Online Form**: Send an immediate message via the [Contact Page](contact.html)\n` +
                    `* ⚡ **Response Time**: Usually within 24 hours.`;
         }
 
-        // 10. Bio / About / Philosophy / Education / Experience
-        if (hasAny("about", "bio", "experience", "background", "philosophy", "story", "education", "degree", "qualification", "who is muhammad")) {
+        // 11. Bio / About / Philosophy / Education / Experience
+        if (hasAny("about", "bio", "experience", "background", "philosophy", "story", "qualification", "who is muhammad")) {
             return `### 👨‍💻 About Muhammad Zaheer\n\n` +
-                   `Muhammad Zaheer is a dedicated software developer passionate about building fast, intuitive web applications that prioritize user experience and performance.\n\n` +
-                   `* **Philosophy**: Craft software with pure, resilient code that loads under 0.5s without unnecessary dependencies.\n` +
-                   `* **Focus**: High-performance UI engineering, interactive dashboards, and pragmatic full-stack solutions.\n` +
-                   `* Read the full story on the [About Page](about.html).`;
+                   `Muhammad Zaheer is a **Computer Science Student** at the **National University of Technology (NUTECH), Islamabad** (graduating June 2027).\n\n` +
+                   `* **Academic Focus**: Software Engineering, Object-Oriented Programming, Machine Learning, Data Preprocessing, and Modern Web Applications.\n` +
+                   `* **Philosophy**: Craft clean, dependable software that prioritizes performance, accessible architecture, and pragmatic problem-solving.\n` +
+                   `* **Resume**: Read the full credential breakdown on the [Resume Page](resume.html) or [About Page](about.html).`;
         }
 
-        // 11. Polite / Casual Remarks (e.g. "thanks", "cool", "nice", "ok", "great")
+        // 12. Polite / Casual Remarks (e.g. "thanks", "cool", "nice", "ok", "great")
         if (hasAny("thanks", "thank you", "cool", "awesome", "nice", "great", "ok", "good", "perfect", "got it")) {
-            return `You're very welcome! Feel free to ask anything else about Muhammad's work, or test out his projects in the [Projects section](projects.html). Let me know how I can help!`;
+            return `You're very welcome! Feel free to ask anything else about Muhammad's coursework, projects, or [download his resume](resume.html?download=true).`;
         }
 
-        // 12. Contextual Default (Intelligent summary with actionable suggestions)
-        return `I can help you explore Muhammad Zaheer's work! Here are some quick topics you can ask me about:\n\n` +
-               `* 🛠️ **"What are your core skills?"** (React, TypeScript, Node.js, Tailwind)\n` +
-               `* 📊 **"Tell me about the API Status Dashboard"** or **"Weather Dashboard"**\n` +
-               `* 📍 **"Where is he from?"** (Location & remote availability)\n` +
-               `* 📬 **"How can I hire or email Muhammad?"** ([mzaheerlion@gmail.com](mailto:mzaheerlion@gmail.com))\n\n` +
-               `What would you like to know more about?`;
+        // 13. Contextual Default (Intelligent summary with actionable suggestions)
+        return `I can help you explore Muhammad Zaheer's academic profile and work! Here are some quick topics you can ask me about:\n\n` +
+               `* 📄 **"Download resume"** (Instant printable PDF download link)\n` +
+               `* 🎓 **"What university do you attend?"** (BS Computer Science @ NUTECH Islamabad)\n` +
+               `* 🛠️ **"What are your core skills?"** (Python, C/C++, SQL, JavaScript, Machine Learning)\n` +
+               `* 📊 **"Tell me about the Weather Dashboard or API Monitor"**\n` +
+               `* 📬 **"How can I contact Muhammad?"** ([mzaheer1070@gmail.com](mailto:mzaheer1070@gmail.com))\n\n` +
+               `What would you like to know?`;
     }
 
     // Direct client-side Gemini API caller (for static hosting like GitHub Pages when user configures key)
@@ -2280,8 +2322,8 @@ function setupGeminiChatbot() {
             parts: [{ text: m.content || "" }]
         }));
 
-        const systemText = `You are "Zaheer AI", an intelligent, polite, and articulate AI portfolio assistant representing Muhammad Zaheer (Frontend & Full-Stack Web Developer).
-Greet visitors warmly and answer questions about Muhammad Zaheer's skills (React, TypeScript, Node.js, Tailwind, APIs), projects (API Status Dashboard, Interactive Todo, Weather Dashboards), and contact info (mzaheerlion@gmail.com). Keep responses concise (2-4 sentences or clean bullet points).`;
+        const systemText = `You are "Zaheer AI", an intelligent, polite, and articulate AI portfolio assistant representing Muhammad Zaheer (Computer Science Student at National University of Technology - NUTECH, Islamabad; Software Developer).
+Greet visitors warmly and answer questions about Muhammad Zaheer's education (BS CS class of 2027), skills (Python, C/C++, SQL, JavaScript, HTML/CSS, Machine Learning preprocessing), projects (Weather Dashboard Pro, API Status Dashboard, Todo App), and resume download (resume.html). Direct email: mzaheer1070@gmail.com. Keep responses concise (2-4 sentences or clean bullet points).`;
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
             method: "POST",
