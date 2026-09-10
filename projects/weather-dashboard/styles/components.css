@@ -1042,3 +1042,45 @@ body[data-theme="light"] .pollutant-pill {
     font-weight: 800;
     color: var(--text);
 }
+
+/* Unified Navigation Bridge in Weather Dashboard */
+.weather-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 20px;
+    margin-bottom: 24px;
+    border-radius: 999px;
+    background: rgba(12, 23, 52, 0.48);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.weather-back-link {
+    color: var(--text);
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.weather-back-link:hover {
+    color: var(--accent);
+    transform: translateX(-3px);
+}
+
+.weather-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}

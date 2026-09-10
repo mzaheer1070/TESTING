@@ -12,43 +12,83 @@
 .todo-form {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.todo-form input {
+    height: 48px;
+    font-size: 1rem;
+}
+
+.todo-form button {
+    height: 48px;
+    padding: 0 26px;
 }
 
 .filter-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
 }
 
 .filter-btn {
-    background: transparent;
+    background: var(--surface-strong);
     border: 1px solid var(--border);
     color: var(--muted);
+    padding: 8px 18px;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+.filter-btn:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+    transform: none;
+    box-shadow: none;
 }
 
 .filter-btn.is-active {
     background: var(--primary);
     border-color: var(--primary);
-    color: #0f1419;
+    color: #000000;
+    font-weight: 800;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
 }
 
 .todo-list {
     list-style: none;
     display: grid;
-    gap: 8px;
+    gap: 10px;
 }
 
 .todo-list li {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    background: var(--bg);
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--surface-strong);
     border: 1px solid var(--border);
     border-radius: var(--radius);
+    transition: all 0.2s ease;
+}
+
+.todo-list li:hover {
+    border-color: var(--border-hover);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.todo-list li.is-done {
+    opacity: 0.65;
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .todo-list li.is-done span {
@@ -57,25 +97,42 @@
 }
 
 .todo-list input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     accent-color: var(--primary);
+    cursor: pointer;
+    margin: 0;
 }
 
 .todo-list span {
     flex: 1;
+    font-size: 0.98rem;
+    word-break: break-word;
 }
 
 .delete-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--accent);
-    padding: 6px 10px;
-    font-size: 0.85rem;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .empty-msg {
     color: var(--muted);
     text-align: center;
-    padding: 12px 0 4px;
+    padding: 32px 0 16px;
+    font-size: 0.95rem;
 }

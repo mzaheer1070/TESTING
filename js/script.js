@@ -971,22 +971,11 @@ function setupProjectFilters() {
 }
 
 /* ==========================================================================
-   EXPANDABLE CARD DETAILS
+   CARD DETAILS (STREAMLINED - DIRECT LAUNCH)
    ========================================================================== */
 
 function setupCardDetails() {
-    document.querySelectorAll(".project-card .card-toggle").forEach((button) => {
-        const card = button.closest(".project-card");
-        const details = card ? card.querySelector(".card-details") : null;
-        if (!details) return;
-
-        button.addEventListener("click", () => {
-            const expanded = button.getAttribute("aria-expanded") === "true";
-            button.setAttribute("aria-expanded", String(!expanded));
-            button.textContent = expanded ? "View Details" : "Hide Details";
-            details.hidden = expanded;
-        });
-    });
+    // Streamlined card layout: View Details and Live Sandbox removed in favor of direct Launch Site
 }
 
 /* ==========================================================================

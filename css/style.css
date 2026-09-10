@@ -1060,46 +1060,51 @@ h3 {
 
 .project-actions {
     display: flex;
-    gap: 10px;
     align-items: center;
-    padding-top: 16px;
+    padding-top: 18px;
     border-top: 1px solid var(--border);
+    margin-top: auto;
 }
 
-.project-actions .btn.primary {
-    flex: 1;
+.btn-launch {
+    width: 100%;
+    min-height: 48px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: var(--radius-full);
+}
+
+.btn-launch-sm {
+    width: 100%;
+    min-height: 42px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: var(--radius-full);
 }
 
 .card-toggle {
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    padding: 10px 16px;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    transition: all var(--transition);
-}
-
-.card-toggle:hover {
-    color: var(--text);
-    border-color: var(--border-hover);
-    background: var(--surface-hover);
+    display: none;
 }
 
 .card-details {
-    padding-top: 14px;
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    border-top: 1px dashed var(--border);
-    margin-top: 6px;
+    display: none;
 }
 
 /* Quick links cards on homepage */
 .home-project-links {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
     margin-top: 28px;
 }
 

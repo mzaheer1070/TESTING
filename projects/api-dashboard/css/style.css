@@ -1,89 +1,116 @@
 .app-wrap--wide {
-    width: min(960px, calc(100% - 32px));
+    width: min(1000px, calc(100% - 40px));
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-    margin-bottom: 24px;
+    gap: 16px;
+    margin-bottom: 28px;
 }
 
 .stat-box {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 18px;
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
+}
+
+.stat-box:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
 }
 
 .stat-box span {
     display: block;
     color: var(--muted);
-    font-size: 0.85rem;
-    margin-bottom: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
 }
 
 .stat-box strong {
-    font-size: 1.7rem;
+    font-size: 1.85rem;
+    font-weight: 800;
     color: var(--primary);
+    letter-spacing: -0.02em;
 }
 
 .log-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 16px;
+    margin-bottom: 18px;
 }
 
 .log-head h2 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
 .log-list {
     list-style: none;
     display: grid;
-    gap: 8px;
+    gap: 10px;
 }
 
 .log-list li {
     display: grid;
-    grid-template-columns: 72px 1fr auto;
-    gap: 12px;
+    grid-template-columns: 80px 1fr auto;
+    gap: 16px;
     align-items: center;
-    padding: 10px 12px;
-    background: var(--bg);
+    padding: 12px 18px;
+    background: var(--surface-strong);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     font-size: 0.92rem;
+    font-family: var(--font-mono);
+    transition: all 0.2s ease;
+}
+
+.log-list li:hover {
+    border-color: var(--border-hover);
+    transform: translateX(3px);
 }
 
 .status {
     font-weight: 800;
     text-align: center;
-    border-radius: 999px;
-    padding: 4px 8px;
+    border-radius: 9999px;
+    padding: 4px 10px;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
 }
 
 .status.ok {
-    background: color-mix(in srgb, var(--primary) 25%, transparent);
-    color: var(--primary);
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .status.warn {
-    background: color-mix(in srgb, var(--accent) 25%, transparent);
-    color: var(--accent);
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 .status.error {
-    background: color-mix(in srgb, #ff6b6b 30%, transparent);
-    color: #ff8a8a;
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .dashboard-status {
     margin-bottom: 20px;
     font-size: 0.92rem;
     color: var(--muted);
+    font-family: var(--font-mono);
 }
 
 .dashboard-status[data-type="success"] {
@@ -91,21 +118,24 @@
 }
 
 .dashboard-status[data-type="warn"] {
-    color: var(--accent);
+    color: #f59e0b;
 }
 
 .log-empty {
     grid-template-columns: 1fr !important;
     color: var(--muted);
     justify-content: center;
+    padding: 24px;
+    text-align: center;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
     .stats-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .log-list li {
         grid-template-columns: 1fr;
+        gap: 8px;
     }
 }
