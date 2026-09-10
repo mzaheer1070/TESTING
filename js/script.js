@@ -1328,7 +1328,7 @@ function setup3DTilt() {
 }
 
 /* ==========================================================================
-   INTERACTIVE PROJECT SANDBOX / PREVIEW MODAL
+   PROJECT LAUNCH UTILITIES & COMMAND PALETTE
    ========================================================================== */
 
 const PROJECTS_DATA = [
@@ -1363,111 +1363,7 @@ const PROJECTS_DATA = [
 ];
 
 function setupProjectSandboxModal() {
-    let modal = document.getElementById("sandboxModal");
-    if (!modal) {
-        modal = document.createElement("div");
-        modal.id = "sandboxModal";
-        modal.className = "sandbox-modal";
-        modal.innerHTML = `
-            <div class="sandbox-overlay" data-close-modal></div>
-            <div class="sandbox-dialog" role="dialog" aria-modal="true" aria-labelledby="sandboxTitle">
-                <div class="sandbox-header">
-                    <div class="sandbox-title-wrap">
-                        <span class="sandbox-badge">Interactive Live Sandbox</span>
-                        <h3 id="sandboxTitle" class="sandbox-title">Project Preview</h3>
-                    </div>
-                    <div class="sandbox-controls">
-                        <div class="device-switcher" role="group" aria-label="Device viewport size">
-                            <button class="device-btn is-active" data-size="100%" title="Desktop View (100%)">🖥️ Full</button>
-                            <button class="device-btn" data-size="768px" title="Tablet View (768px)">📱 Tablet</button>
-                            <button class="device-btn" data-size="390px" title="Mobile View (390px)">📲 Mobile</button>
-                        </div>
-                        <button class="sandbox-action-btn" id="reloadSandbox" title="Reload Frame">🔄</button>
-                        <a class="sandbox-action-btn" id="openExternalSandbox" href="#" target="_blank" rel="noopener noreferrer" title="Open in New Tab">↗</a>
-                        <button class="sandbox-action-btn close-btn" data-close-modal aria-label="Close Preview">✕</button>
-                    </div>
-                </div>
-                <div class="sandbox-frame-wrapper" id="sandboxFrameWrap">
-                    <div class="sandbox-loading" id="sandboxLoading">
-                        <div class="spinner"></div>
-                        <span>Booting live application...</span>
-                    </div>
-                    <iframe id="sandboxIframe" class="sandbox-iframe" title="Interactive Project Preview" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    }
-
-    const iframe = document.getElementById("sandboxIframe");
-    const loading = document.getElementById("sandboxLoading");
-    const title = document.getElementById("sandboxTitle");
-    const externalLink = document.getElementById("openExternalSandbox");
-    const reloadBtn = document.getElementById("reloadSandbox");
-    const frameWrap = document.getElementById("sandboxFrameWrap");
-    const deviceButtons = modal.querySelectorAll(".device-btn");
-
-    function openModal(url, projectTitle) {
-        title.textContent = projectTitle || "Live Sandbox Preview";
-        externalLink.href = url;
-        loading.style.display = "flex";
-        iframe.src = url;
-        
-        CinematicAudio.playModalOpen();
-
-        iframe.onload = () => {
-            loading.style.display = "none";
-            CinematicAudio.playChime();
-        };
-
-        modal.classList.add("is-open");
-        document.body.classList.add("modal-open");
-    }
-
-    function closeModal() {
-        CinematicAudio.playClick();
-        modal.classList.remove("is-open");
-        document.body.classList.remove("modal-open");
-        iframe.src = "about:blank";
-    }
-
-    modal.querySelectorAll("[data-close-modal]").forEach((el) => {
-        el.addEventListener("click", closeModal);
-    });
-
-    reloadBtn.addEventListener("click", () => {
-        loading.style.display = "flex";
-        iframe.src = iframe.src;
-    });
-
-    deviceButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-            deviceButtons.forEach((b) => b.classList.remove("is-active"));
-            btn.classList.add("is-active");
-            const size = btn.dataset.size;
-            iframe.style.width = size;
-        });
-    });
-
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.classList.contains("is-open")) {
-            closeModal();
-        }
-    });
-
-    // Attach to preview trigger buttons
-    document.querySelectorAll("[data-preview-project]").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const projectId = btn.dataset.previewProject;
-            const project = PROJECTS_DATA.find((p) => p.id === projectId);
-            if (project) {
-                openModal(project.url, project.title);
-            }
-        });
-    });
-
-    window.openProjectSandbox = openModal;
+    // Project cards now use direct Launch Site buttons for direct, clean navigation without iframe sandbox warnings.
 }
 
 /* ==========================================================================
@@ -1509,11 +1405,11 @@ function setupCommandPalette() {
         { title: "Projects Hub", category: "Navigation", icon: "📁", action: () => window.location.href = "projects.html" },
         { title: "Contact Developer", category: "Navigation", icon: "✉️", action: () => window.location.href = "contact.html" },
         
-        // Projects Live Sandbox
-        { title: "Weather Dashboard Pro (Live Sandbox)", category: "Live Applications", icon: "🌤️", action: () => window.openProjectSandbox ? window.openProjectSandbox("projects/weather-dashboard/index.html", "Weather Dashboard Pro") : window.open("projects/weather-dashboard/index.html", "_blank") },
-        { title: "API Status Dashboard (Live Sandbox)", category: "Live Applications", icon: "📊", action: () => window.openProjectSandbox ? window.openProjectSandbox("projects/api-dashboard/index.html", "API Status Dashboard") : window.location.href = "projects/api-dashboard/index.html" },
-        { title: "Todo Application (Live Sandbox)", category: "Live Applications", icon: "✅", action: () => window.openProjectSandbox ? window.openProjectSandbox("projects/todo-app/index.html", "Todo Application") : window.location.href = "projects/todo-app/index.html" },
-        { title: "Minimal Weather App (Live Sandbox)", category: "Live Applications", icon: "🌡️", action: () => window.openProjectSandbox ? window.openProjectSandbox("projects/weather-app/index.html", "Minimal Weather App") : window.location.href = "projects/weather-app/index.html" },
+        // Projects Direct Launch
+        { title: "Weather Dashboard Pro (Launch Site)", category: "Live Applications", icon: "🌤️", action: () => window.open("projects/weather-dashboard/index.html", "_blank", "noopener,noreferrer") },
+        { title: "API Status Dashboard (Launch Site)", category: "Live Applications", icon: "📊", action: () => window.open("projects/api-dashboard/index.html", "_blank", "noopener,noreferrer") },
+        { title: "Todo Application (Launch Site)", category: "Live Applications", icon: "✅", action: () => window.open("projects/todo-app/index.html", "_blank", "noopener,noreferrer") },
+        { title: "Minimal Weather App (Launch Site)", category: "Live Applications", icon: "🌡️", action: () => window.open("projects/weather-app/index.html", "_blank", "noopener,noreferrer") },
         
         // Interactive Atmosphere & Effects
         { title: "Toggle Cinematic Director's Cut (21:9)", category: "Atmosphere", icon: "🎬", action: () => {
