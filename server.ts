@@ -45,8 +45,7 @@ Your purpose:
      * Interactive Todo Application: Task manager with local storage persistence and priority filtering.
      * Minimal Weather App: Rapid city lookup via Open-Meteo API.
    - Resume & Documents:
-     * Full web resume available at resume.html
-     * One-click PDF download at resume.html?download=true
+     * One-click PDF download: Muhammad_Zaheer_Resume.pdf
    - Contact Info:
      * Email: mzaheer1070@gmail.com
      * Phone: +92-302-3185767

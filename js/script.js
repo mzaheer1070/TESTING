@@ -1403,12 +1403,18 @@ function setupCommandPalette() {
         { title: "Home Page", category: "Navigation", icon: "🏠", action: () => window.location.href = "index.html" },
         { title: "About & Skills", category: "Navigation", icon: "👤", action: () => window.location.href = "about.html" },
         { title: "Projects Hub", category: "Navigation", icon: "📁", action: () => window.location.href = "projects.html" },
-        { title: "Resume & Education", category: "Navigation", icon: "🎓", action: () => window.location.href = "resume.html" },
         { title: "Contact Developer", category: "Navigation", icon: "✉️", action: () => window.location.href = "contact.html" },
 
-        // Resume & Credentials
-        { title: "Download Resume (PDF)", category: "Resume", icon: "📥", action: () => window.location.href = "resume.html?download=true" },
-        { title: "View Resume Online", category: "Resume", icon: "📄", action: () => window.location.href = "resume.html" },
+        // Resume & Credentials Download
+        { title: "Download Resume (PDF)", category: "Actions", icon: "📥", action: () => {
+            const a = document.createElement("a");
+            a.href = "Muhammad_Zaheer_Resume.pdf";
+            a.download = "Muhammad_Zaheer_Resume.pdf";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast("Downloading Muhammad Zaheer's Resume (PDF)...", "📥");
+        }},
         
         // Projects Direct Launch
         { title: "Weather Dashboard Pro (Launch Site)", category: "Live Applications", icon: "🌤️", action: () => window.open("projects/weather-dashboard/index.html", "_blank", "noopener,noreferrer") },
@@ -1681,7 +1687,7 @@ function setupDeveloperTerminal() {
   Graduation  : June, 2027
   Focus Areas : Software Development, Machine Learning, Data Preprocessing, Web Technologies
   Core Skills : Python, C, C++, SQL, Kotlin, HTML5, CSS3, JavaScript (ES6+), Firebase
-  Direct Links: <a href="resume.html" class="term-link">📄 View Resume Online</a> | <a href="resume.html?download=true" class="term-link">📥 Download PDF</a>
+  Download PDF: <a href="Muhammad_Zaheer_Resume.pdf" download="Muhammad_Zaheer_Resume.pdf" class="term-link">📥 Click to Download Resume (PDF)</a>
   Direct Email: <span class="cmd-highlight">mzaheer1070@gmail.com</span> | Phone: +92-302-3185767
                 `);
                 break;
@@ -1781,7 +1787,7 @@ Location    : Islamabad, Pakistan | Availability: Seeking Internship & Project O
 <strong>Contact Details (Muhammad Zaheer):</strong>
   Email : <span class="cmd-highlight">mzaheer1070@gmail.com</span>
   Phone : <span class="cmd-highlight">+92-302-3185767</span>
-  Resume: <a href="resume.html" class="term-link">View Resume</a> | <a href="resume.html?download=true" class="term-link">Download PDF</a>
+  Resume: <a href="Muhammad_Zaheer_Resume.pdf" download="Muhammad_Zaheer_Resume.pdf" class="term-link">📥 Download PDF Resume</a>
   Form  : <a href="contact.html" class="term-link">Open contact.html form</a>
                 `);
                 copyToClipboard("mzaheer1070@gmail.com", "Email copied: mzaheer1070@gmail.com");
@@ -2245,8 +2251,7 @@ function setupGeminiChatbot() {
                    `* 🏛️ **University**: National University of Technology (NUTECH), Islamabad\n` +
                    `* 📅 **Expected Graduation**: June, 2027\n` +
                    `* 🛠️ **Technical Core**: Python, C, C++, SQL, Kotlin, Web (HTML5/CSS3/JavaScript), Firebase, AI/ML\n` +
-                   `* 📥 **Download Resume (PDF)**: [Click here to Download PDF](resume.html?download=true)\n` +
-                   `* 👁️ **View Full Resume**: [Open Web Resume](resume.html)\n` +
+                   `* 📥 **Download Resume (PDF)**: [Click here to Download PDF](Muhammad_Zaheer_Resume.pdf)\n` +
                    `* ✉️ **Contact**: [mzaheer1070@gmail.com](mailto:mzaheer1070@gmail.com) | +92-302-3185767`;
         }
 
@@ -2277,7 +2282,7 @@ function setupGeminiChatbot() {
                    `* **Web & UI Development**: HTML5 Semantic markup, CSS3 (Custom Tokens, Flexbox, Grid), Responsive Architecture, Tailwind CSS\n` +
                    `* **AI & Machine Learning**: Data preprocessing (Pandas/NumPy), Model training fundamentals, Feature engineering\n` +
                    `* **Cloud & Tools**: Firebase / Cloud Firestore, Git, GitHub, REST APIs\n\n` +
-                   `For the complete certified coursework and skills list, check the [Resume Page](resume.html) or [About Page](about.html).`;
+                   `You can also [Download the full Resume PDF](Muhammad_Zaheer_Resume.pdf) or check the [About Page](about.html).`;
         }
 
         // 10. Contact / Hire / Freelance / Pricing / Email
@@ -2286,7 +2291,7 @@ function setupGeminiChatbot() {
                    `Muhammad is currently open to **internship opportunities** in Software Development, AI/ML, and Data Science, as well as collaboration projects:\n\n` +
                    `* 📧 **Direct Email**: [mzaheer1070@gmail.com](mailto:mzaheer1070@gmail.com)\n` +
                    `* 📞 **Phone**: [+92-302-3185767](tel:+923023185767)\n` +
-                   `* 📄 **Resume Download**: [Download PDF](resume.html?download=true)\n` +
+                   `* 📄 **Resume Download**: [Download PDF](Muhammad_Zaheer_Resume.pdf)\n` +
                    `* 💬 **Online Form**: Send an immediate message via the [Contact Page](contact.html)\n` +
                    `* ⚡ **Response Time**: Usually within 24 hours.`;
         }
@@ -2297,17 +2302,17 @@ function setupGeminiChatbot() {
                    `Muhammad Zaheer is a **Computer Science Student** at the **National University of Technology (NUTECH), Islamabad** (graduating June 2027).\n\n` +
                    `* **Academic Focus**: Software Engineering, Object-Oriented Programming, Machine Learning, Data Preprocessing, and Modern Web Applications.\n` +
                    `* **Philosophy**: Craft clean, dependable software that prioritizes performance, accessible architecture, and pragmatic problem-solving.\n` +
-                   `* **Resume**: Read the full credential breakdown on the [Resume Page](resume.html) or [About Page](about.html).`;
+                   `* **Resume**: [Download the official PDF Resume](Muhammad_Zaheer_Resume.pdf) or explore the [About Page](about.html).`;
         }
 
         // 12. Polite / Casual Remarks (e.g. "thanks", "cool", "nice", "ok", "great")
         if (hasAny("thanks", "thank you", "cool", "awesome", "nice", "great", "ok", "good", "perfect", "got it")) {
-            return `You're very welcome! Feel free to ask anything else about Muhammad's coursework, projects, or [download his resume](resume.html?download=true).`;
+            return `You're very welcome! Feel free to ask anything else about Muhammad's coursework, projects, or [download his resume (PDF)](Muhammad_Zaheer_Resume.pdf).`;
         }
 
         // 13. Contextual Default (Intelligent summary with actionable suggestions)
         return `I can help you explore Muhammad Zaheer's academic profile and work! Here are some quick topics you can ask me about:\n\n` +
-               `* 📄 **"Download resume"** (Instant printable PDF download link)\n` +
+               `* 📄 **"Download resume"** ([Instant PDF Download](Muhammad_Zaheer_Resume.pdf))\n` +
                `* 🎓 **"What university do you attend?"** (BS Computer Science @ NUTECH Islamabad)\n` +
                `* 🛠️ **"What are your core skills?"** (Python, C/C++, SQL, JavaScript, Machine Learning)\n` +
                `* 📊 **"Tell me about the Weather Dashboard or API Monitor"**\n` +
@@ -2323,7 +2328,7 @@ function setupGeminiChatbot() {
         }));
 
         const systemText = `You are "Zaheer AI", an intelligent, polite, and articulate AI portfolio assistant representing Muhammad Zaheer (Computer Science Student at National University of Technology - NUTECH, Islamabad; Software Developer).
-Greet visitors warmly and answer questions about Muhammad Zaheer's education (BS CS class of 2027), skills (Python, C/C++, SQL, JavaScript, HTML/CSS, Machine Learning preprocessing), projects (Weather Dashboard Pro, API Status Dashboard, Todo App), and resume download (resume.html). Direct email: mzaheer1070@gmail.com. Keep responses concise (2-4 sentences or clean bullet points).`;
+Greet visitors warmly and answer questions about Muhammad Zaheer's education (BS CS class of 2027), skills (Python, C/C++, SQL, JavaScript, HTML/CSS, Machine Learning preprocessing), projects (Weather Dashboard Pro, API Status Dashboard, Todo App), and resume PDF download (Muhammad_Zaheer_Resume.pdf). Direct email: mzaheer1070@gmail.com. Keep responses concise (2-4 sentences or clean bullet points).`;
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
             method: "POST",
