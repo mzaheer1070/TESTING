@@ -311,6 +311,7 @@ html {
     scroll-behavior: smooth;
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
 }
 
 body {
@@ -486,7 +487,7 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 16px;
 }
 
 .brand {
@@ -499,6 +500,7 @@ h3 {
     color: var(--text);
     text-transform: uppercase;
     transition: opacity var(--transition);
+    flex-shrink: 0;
 }
 
 .brand:hover {
@@ -517,6 +519,7 @@ h3 {
     font-size: 0.8rem;
     font-weight: 900;
     box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+    flex-shrink: 0;
 }
 
 .brand-dot::after {
@@ -527,6 +530,8 @@ h3 {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
 }
 
 .nav-link {
@@ -536,9 +541,13 @@ h3 {
     font-size: 0.88rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    padding: 8px 16px;
+    padding: 8px 14px;
     border-radius: var(--radius-full);
     transition: color var(--transition), background-color var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
 }
 
 .nav-link:hover {
@@ -558,15 +567,18 @@ h3 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    max-width: 36px;
     border-radius: var(--radius-full);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
-    margin-left: 4px;
     box-shadow: var(--shadow-sm);
     cursor: pointer;
+    flex-shrink: 0;
+    box-sizing: border-box;
     transition: background-color var(--transition), border-color var(--transition), transform var(--transition), color var(--transition);
 }
 
@@ -2081,14 +2093,23 @@ input.is-invalid, textarea.is-invalid {
 .nav-status-widget {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: var(--surface);
     border: 1px solid var(--border);
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: var(--radius-full);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
     font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    width: 145px;
+    min-width: 145px;
+    max-width: 145px;
+    height: 36px;
+    flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .status-beacon {
@@ -2098,6 +2119,7 @@ input.is-invalid, textarea.is-invalid {
     background: var(--success);
     box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
     animation: beaconPulse 2s infinite;
+    flex-shrink: 0;
 }
 
 @keyframes beaconPulse {
@@ -2110,6 +2132,7 @@ input.is-invalid, textarea.is-invalid {
 .palette-trigger-nav {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: var(--surface-hover);
     border: 1px solid var(--border);
@@ -2119,6 +2142,13 @@ input.is-invalid, textarea.is-invalid {
     font-size: 0.85rem;
     cursor: pointer;
     transition: all var(--transition);
+    white-space: nowrap;
+    width: 108px;
+    min-width: 108px;
+    max-width: 108px;
+    height: 36px;
+    flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .palette-trigger-nav:hover {
@@ -2128,6 +2158,7 @@ input.is-invalid, textarea.is-invalid {
 }
 
 .palette-trigger-kbd {
+    display: inline-block;
     background: var(--bg);
     border: 1px solid var(--border);
     padding: 2px 6px;
@@ -2135,6 +2166,7 @@ input.is-invalid, textarea.is-invalid {
     font-size: 0.75rem;
     font-family: var(--font-mono);
     color: var(--text-subtle);
+    line-height: 1;
 }
 
 /* 5. Spotlight Command Palette Modal */
@@ -3082,10 +3114,6 @@ body.cinematic-mode .site-header {
     .nav-panel {
         gap: 6px;
     }
-    
-    .palette-trigger-kbd {
-        display: none;
-    }
 }
 
 @media (max-width: 960px) {
@@ -3126,7 +3154,7 @@ body.cinematic-mode .site-header {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
     :root {
         --header-height: 64px;
     }
@@ -3169,6 +3197,9 @@ body.cinematic-mode .site-header {
     
     .nav-status-widget {
         width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        height: 42px;
         justify-content: center;
         padding: 8px 12px;
         margin-bottom: 4px;
@@ -3184,20 +3215,16 @@ body.cinematic-mode .site-header {
     }
 
     .theme-toggle,
-    .palette-trigger-nav,
-    .cinematic-toggle-nav,
-    .sound-toggle-nav {
+    .palette-trigger-nav {
         width: 100%;
+        min-width: 100%;
+        max-width: 100%;
         justify-content: center;
         padding: 12px 16px;
         font-size: 0.9rem;
         border-radius: var(--radius-md);
         min-height: 44px;
         margin-left: 0;
-    }
-
-    .palette-trigger-kbd {
-        display: inline-block;
     }
     
     .stats-strip {
