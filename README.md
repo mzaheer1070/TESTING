@@ -65,6 +65,7 @@ Portfolio/
 ├── about.html
 ├── projects.html
 ├── contact.html
+├── favicon.svg
 ├── README.md
 │
 ├── css/
@@ -106,6 +107,7 @@ Portfolio/
 | **v2.1.0** | Add Weather Dashboard with live API integration and 5-day forecast                  |
 | **v2.0.0** | Add Firebase Firestore contact form with form validation                            |
 | **v1.0.0** | Initial portfolio release with GitHub Pages deployment                              |
+
 ---
 
 ## 🚀 Run Locally
@@ -144,4 +146,3 @@ http://localhost:8000
 Suggestions and improvements are welcome. Feel free to open an issue or share feedback about the project.
 
 ⭐ If you find this project interesting, consider giving it a star!
-git
