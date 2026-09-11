@@ -1266,6 +1266,7 @@ h3 {
     gap: 32px;
     align-items: start;
     margin-bottom: 48px;
+    min-width: 0;
 }
 
 .profile-panel {
@@ -1279,6 +1280,7 @@ h3 {
     gap: 20px;
     position: sticky;
     top: calc(var(--header-height) + 24px);
+    min-width: 0;
 }
 
 .profile-avatar-wrap {
@@ -1302,20 +1304,23 @@ h3 {
 
 .profile-badge-active {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
     background: #000000;
     color: var(--primary);
     border: 2px solid var(--primary);
-    padding: 3px 8px;
+    padding: 3px 10px;
     border-radius: var(--radius-full);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 700;
     font-family: var(--font-mono);
     display: flex;
     align-items: center;
     gap: 5px;
     box-shadow: var(--shadow-md);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
 }
 
 .profile-badge-active .beacon-dot {
@@ -1378,22 +1383,34 @@ h3 {
 
 .profile-meta-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     font-size: 0.86rem;
     color: var(--text-muted);
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .profile-meta-icon {
     color: var(--primary);
     font-size: 0.95rem;
     flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .profile-actions-col {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
+}
+
+.profile-actions-col .btn {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    padding: 12px 16px;
+    font-size: 0.86rem;
 }
 
 .detail-panel {
@@ -1405,6 +1422,8 @@ h3 {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    min-width: 0;
+    overflow-wrap: break-word;
 }
 
 .tabs {
@@ -1427,6 +1446,7 @@ h3 {
     border: 1px solid var(--border);
     cursor: pointer;
     transition: all var(--transition);
+    white-space: nowrap;
 }
 
 .tab-button:hover {
@@ -1509,6 +1529,61 @@ h3 {
     font-size: 0.88rem;
     color: var(--text-muted);
     line-height: 1.6;
+}
+
+/* Dual Column Cards (Languages & Core Interests) */
+.about-dual-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+    min-width: 0;
+}
+
+/* Competencies Category Cards */
+.about-competencies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 14px;
+    margin-top: 12px;
+    min-width: 0;
+}
+
+.about-competency-card {
+    background: var(--surface-hover);
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    transition: border-color var(--transition);
+    min-width: 0;
+}
+
+.about-competency-card:hover {
+    border-color: var(--primary);
+}
+
+.about-competency-card strong {
+    font-size: 0.88rem;
+    color: var(--primary);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.about-competency-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* Project Actions in Tab 3 */
+.about-project-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 /* Categorized Tech Badges */
@@ -1699,14 +1774,24 @@ h3 {
 .skill-meter-header {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
     font-weight: 600;
     font-size: 0.92rem;
+}
+
+.skill-meter-header span:first-child {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
 }
 
 .skill-meter-header span:last-child {
     font-family: var(--font-mono);
     color: var(--primary);
     font-weight: 700;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
 }
 
 .meter-bar {
@@ -3324,6 +3409,89 @@ body.cinematic-mode .site-header {
     }
 }
 
+@media (max-width: 768px) {
+    .page-hero {
+        padding: 36px 0 24px;
+    }
+
+    .page-hero h1 {
+        font-size: clamp(1.75rem, 6.5vw, 2.3rem);
+        line-height: 1.18;
+        word-break: break-word;
+    }
+
+    .page-hero p {
+        font-size: 0.96rem;
+        line-height: 1.6;
+    }
+
+    .about-layout {
+        gap: 24px;
+        margin-bottom: 36px;
+    }
+
+    .profile-panel {
+        padding: 22px 18px;
+        gap: 18px;
+    }
+
+    .detail-panel {
+        padding: 22px 18px;
+        gap: 20px;
+    }
+
+    .about-dual-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .about-bento-section {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 640px) {
+    .tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 6px;
+        padding-bottom: 10px;
+        scrollbar-width: none;
+    }
+
+    .tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-button {
+        flex-shrink: 0;
+        padding: 8px 14px;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+    }
+
+    .about-competencies-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .about-project-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .about-project-actions .btn {
+        width: 100%;
+        text-align: center;
+        white-space: normal;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 480px) {
     .container {
         width: calc(100% - 24px);
@@ -3382,8 +3550,102 @@ body.cinematic-mode .site-header {
         font-size: 16px; /* Prevents auto-zoom on iOS inputs */
     }
 
+    .about-layout {
+        gap: 18px;
+        margin-bottom: 28px;
+    }
+
+    .profile-panel {
+        padding: 18px 14px;
+        gap: 16px;
+    }
+
+    .profile-avatar-wrap {
+        width: 150px;
+        height: 150px;
+    }
+
+    .profile-badge-active {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        bottom: -5px;
+    }
+
+    .profile-info h2 {
+        font-size: 1.25rem;
+    }
+
+    .profile-stats-mini {
+        padding: 10px 0;
+        gap: 4px;
+    }
+
+    .mini-stat-num {
+        font-size: 1rem;
+    }
+
+    .mini-stat-label {
+        font-size: 0.66rem;
+    }
+
+    .profile-meta-item {
+        font-size: 0.82rem;
+        gap: 8px;
+    }
+
+    .detail-panel {
+        padding: 18px 14px;
+        gap: 16px;
+    }
+
+    .tab-panel h2 {
+        font-size: 1.2rem;
+    }
+
+    .tab-panel p {
+        font-size: 0.88rem;
+    }
+
+    .philosophy-card {
+        padding: 14px 12px;
+        gap: 10px;
+    }
+
+    .philosophy-num {
+        font-size: 1rem;
+    }
+
+    .skill-meter-header {
+        font-size: 0.84rem;
+    }
+
     .about-bento-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .about-bento-card {
+        padding: 18px 16px;
+        gap: 10px;
+    }
+
+    .about-bento-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1.4rem;
+    }
+
+    .about-cta-banner {
+        padding: 20px 16px;
+        margin-top: 32px;
+    }
+
+    .about-cta-text h3 {
+        font-size: 1.15rem;
+    }
+
+    .about-cta-text p {
+        font-size: 0.88rem;
     }
 }
 
