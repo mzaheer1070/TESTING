@@ -243,6 +243,20 @@ body[data-theme="light"] .forecast-switch input {
     .hourly-timeline {
         grid-auto-columns: 84px;
     }
+
+    .weather-top-bar {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .weather-back-link {
+        font-size: 0.76rem;
+        padding: 5px 10px;
+    }
+
+    .weather-badge {
+        display: none;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {

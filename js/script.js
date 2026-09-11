@@ -3,6 +3,18 @@
  * Lightweight, accessible, performant vanilla JavaScript
  */
 
+// Name this portfolio hub window so child standalone apps can switch focus back to it
+window.name = "zaheer_portfolio_hub";
+
+// Ensure any project launch links retain opener so the app can return to this portfolio tab
+document.addEventListener("click", (e) => {
+    const link = e.target && e.target.closest ? e.target.closest('a[href*="projects/"]') : null;
+    if (link && link.target === "_blank") {
+        window.name = "zaheer_portfolio_hub";
+        link.rel = "opener";
+    }
+}, true);
+
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ==========================================================================
@@ -1417,10 +1429,10 @@ function setupCommandPalette() {
         }},
         
         // Projects Direct Launch
-        { title: "Weather Dashboard Pro (Launch Site)", category: "Live Applications", icon: "🌤️", action: () => window.open("projects/weather-dashboard/index.html", "_blank", "noopener,noreferrer") },
-        { title: "API Status Dashboard (Launch Site)", category: "Live Applications", icon: "📊", action: () => window.open("projects/api-dashboard/index.html", "_blank", "noopener,noreferrer") },
-        { title: "Todo Application (Launch Site)", category: "Live Applications", icon: "✅", action: () => window.open("projects/todo-app/index.html", "_blank", "noopener,noreferrer") },
-        { title: "Minimal Weather App (Launch Site)", category: "Live Applications", icon: "🌡️", action: () => window.open("projects/weather-app/index.html", "_blank", "noopener,noreferrer") },
+        { title: "Weather Dashboard Pro (Launch Site)", category: "Live Applications", icon: "🌤️", action: () => { window.name = "zaheer_portfolio_hub"; window.open("projects/weather-dashboard/index.html", "_blank"); } },
+        { title: "API Status Dashboard (Launch Site)", category: "Live Applications", icon: "📊", action: () => { window.name = "zaheer_portfolio_hub"; window.open("projects/api-dashboard/index.html", "_blank"); } },
+        { title: "Todo Application (Launch Site)", category: "Live Applications", icon: "✅", action: () => { window.name = "zaheer_portfolio_hub"; window.open("projects/todo-app/index.html", "_blank"); } },
+        { title: "Minimal Weather App (Launch Site)", category: "Live Applications", icon: "🌡️", action: () => { window.name = "zaheer_portfolio_hub"; window.open("projects/weather-app/index.html", "_blank"); } },
         
         // Interactive Atmosphere & Effects
         { title: "Toggle Cinematic Director's Cut (21:9)", category: "Atmosphere", icon: "🎬", action: () => {

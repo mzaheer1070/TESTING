@@ -38,9 +38,13 @@
 
     <main class="container">
         <nav class="weather-top-bar" aria-label="Portfolio Return Bridge">
-            <a class="weather-back-link" href="../../projects.html">← All Projects</a>
-            <span class="weather-badge">Standalone Live App</span>
-            <a class="weather-back-link" href="../../index.html">Portfolio Home →</a>
+            <a class="weather-back-link" id="weatherBackToPortfolio" href="../../projects.html" data-portfolio-return="back" title="Return to Portfolio Tab">
+                <span aria-hidden="true">←</span> Back to Portfolio
+            </a>
+            <span class="weather-badge">🌤️ Weather Dashboard Pro</span>
+            <a class="weather-back-link" id="weatherHomePortfolio" href="../../index.html" data-portfolio-return="../../index.html" title="Switch to Portfolio Home Tab">
+                Portfolio Home <span aria-hidden="true">→</span>
+            </a>
         </nav>
 
         <header class="header">
@@ -238,6 +242,7 @@
         <p>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a></p>
     </footer>
 
+    <script src="../../js/portfolio-links.js"></script>
     <script src="js/autocomplete.js"></script>
     <script src="js/sound.js"></script>
     <script src="js/weather-effects.js"></script>

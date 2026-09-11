@@ -1097,6 +1097,28 @@
     renderQuickCities();
     setTheme('dark');
 
+    // Portfolio tab return hook
+    const returnLinks = document.querySelectorAll('.weather-back-link');
+    returnLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetUrl = link.getAttribute('data-portfolio-return') || link.getAttribute('href') || '../../projects.html';
+            if (typeof window.returnToPortfolioTab === 'function') {
+                window.returnToPortfolioTab(targetUrl);
+            } else if (window.opener && !window.opener.closed) {
+                try {
+                    if (targetUrl && targetUrl !== 'back') {
+                        window.opener.location.href = targetUrl;
+                    }
+                    window.opener.focus();
+                } catch (err) {}
+                window.close();
+            } else {
+                window.location.href = targetUrl === 'back' ? '../../projects.html' : targetUrl;
+            }
+        });
+    });
+
     // Default load London on first run if no active search
     searchCity('London');
 })();

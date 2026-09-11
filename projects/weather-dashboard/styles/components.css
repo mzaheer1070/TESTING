@@ -1061,7 +1061,7 @@ body[data-theme="light"] .pollutant-pill {
 
 .weather-back-link {
     color: var(--text);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -1069,12 +1069,23 @@ body[data-theme="light"] .pollutant-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: transform 0.2s ease, color 0.2s ease;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
 }
 
 .weather-back-link:hover {
     color: var(--accent);
+    background: rgba(99, 102, 241, 0.18);
+    border-color: rgba(99, 102, 241, 0.4);
     transform: translateX(-3px);
+}
+
+#weatherHomePortfolio:hover {
+    transform: translateX(3px);
 }
 
 .weather-badge {
