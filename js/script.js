@@ -6,12 +6,11 @@
 // Name this portfolio hub window so child standalone apps can switch focus back to it
 window.name = "zaheer_portfolio_hub";
 
-// Ensure any project launch links retain opener so the app can return to this portfolio tab
+// Ensure project links are safe with noopener noreferrer
 document.addEventListener("click", (e) => {
     const link = e.target && e.target.closest ? e.target.closest('a[href*="projects/"]') : null;
     if (link && link.target === "_blank") {
-        window.name = "zaheer_portfolio_hub";
-        link.rel = "opener";
+        link.rel = "noopener noreferrer";
     }
 }, true);
 
@@ -648,6 +647,17 @@ function copyToClipboard(text, successMsg = "Copied to clipboard!") {
     });
 }
 
+// Global unobtrusive event listener for copy email buttons
+document.addEventListener("click", (e) => {
+    const copyBtn = e.target && e.target.closest ? e.target.closest("[data-copy-email]") : null;
+    if (copyBtn) {
+        e.preventDefault();
+        const email = copyBtn.getAttribute("data-copy-email") || "mzaheer1070@gmail.com";
+        const msg = copyBtn.getAttribute("data-copy-msg") || `Developer email copied: ${email}`;
+        copyToClipboard(email, msg);
+    }
+});
+
 /* ==========================================================================
    THEME TOGGLE SYSTEM
    ========================================================================== */
@@ -875,18 +885,19 @@ function setupCounters() {
 
     const runCounter = (counter) => {
         const target = Number(counter.dataset.countTo);
+        const suffix = counter.dataset.countSuffix || "";
         const duration = prefersReducedMotion ? 1 : 1100;
         const startTime = performance.now();
 
         const tick = (currentTime) => {
             const progress = Math.min((currentTime - startTime) / duration, 1);
             const easeProgress = 1 - Math.pow(1 - progress, 3);
-            counter.textContent = Math.round(target * easeProgress);
+            counter.textContent = Math.round(target * easeProgress) + suffix;
 
             if (progress < 1) {
                 requestAnimationFrame(tick);
             } else {
-                counter.textContent = target;
+                counter.textContent = target + suffix;
             }
         };
 

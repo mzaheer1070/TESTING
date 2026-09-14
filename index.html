@@ -4,22 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Muhammad Zaheer - Computer Science Student at National University of Technology (NUTECH), Islamabad. Software development, machine learning, and modern web applications.">
-    <title>Muhammad Zaheer | Computer Science Student &amp; Developer</title>
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <title>Muhammad Zaheer | Computer Science Student & Developer</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Muhammad Zaheer Portfolio">
+    <meta property="og:title" content="Muhammad Zaheer | Computer Science Student & Developer">
+    <meta property="og:description" content="Personal portfolio and resume of Muhammad Zaheer, CS Student at NUTECH Islamabad specializing in software development, machine learning, and modern web engineering.">
     <meta property="og:url" content="https://mzaheer1070.github.io/Portfolio/">
-    <meta property="og:title" content="Muhammad Zaheer | Computer Science Student &amp; Developer">
-    <meta property="og:description" content="CS student at NUTECH, Islamabad. Building intelligent software, ML pipelines, and modern web applications. Open to internships in Software Development, AI/ML, and Data Science.">
-    <meta property="og:image" content="https://mzaheer1070.github.io/Portfolio/Images/MEss.jpeg">
+    <meta property="og:image" content="Images/muhammad-zaheer.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Muhammad Zaheer | Computer Science Student & Developer">
+    <meta name="twitter:description" content="Personal portfolio and resume of Muhammad Zaheer, CS Student at NUTECH Islamabad specializing in software development, machine learning, and modern web engineering.">
+    <meta name="twitter:image" content="Images/muhammad-zaheer.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
-    <style>
-        .nav-github-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;color:inherit;opacity:.65;border-radius:8px;transition:opacity .2s}
-        .nav-github-link:hover{opacity:1}
-    </style>
 </head>
 <body data-page="home">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -38,7 +47,7 @@
         </button>
 
         <div class="nav-panel" id="primary-navigation">
-            <div class="nav-status-widget" aria-label="Current developer local time &amp; availability">
+            <div class="nav-status-widget" aria-label="Current developer local time & availability">
                 <span class="status-beacon" aria-hidden="true"></span>
                 <span data-live-clock>--:--:-- UTC+5</span>
             </div>
@@ -48,14 +57,19 @@
             <a class="nav-link" href="projects.html">Projects</a>
             <a class="nav-link" href="contact.html">Contact</a>
 
+            <div class="nav-social-links" aria-label="Social Profiles">
+                <a class="nav-social-link" href="https://github.com/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" title="GitHub - @mzaheer1070">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a class="nav-social-link" href="https://linkedin.com/in/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" title="LinkedIn Profile">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
+
             <button class="palette-trigger-nav" type="button" data-open-palette aria-label="Open Command Search (Ctrl+K)">
                 <span>🔍 Search</span>
                 <span class="palette-trigger-kbd">⌘K</span>
             </button>
-
-            <a class="nav-github-link" href="https://github.com/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            </a>
 
             <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle Light / Dark Mode" title="Toggle Light / Dark Mode">
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -95,7 +109,7 @@
             <div class="role-line">
                 <span>Specializing in</span>
                 <span class="typed-role-wrapper">
-                    <span class="typed-role" data-roles="Computer Science Student|Python &amp; C/C++ Dev|AI &amp; Machine Learning|Responsive Web Apps">Computer Science Student</span>
+                    <span class="typed-role" data-roles="Computer Science Student|Python & C/C++ Dev|AI & Machine Learning|Responsive Web Apps">Computer Science Student</span>
                     <span class="typed-cursor" aria-hidden="true"></span>
                 </span>
             </div>
@@ -106,13 +120,19 @@
                     <span>📥</span>
                     <strong>Download Resume (PDF)</strong>
                 </a>
-                <a class="btn secondary" href="https://github.com/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                    GitHub
-                </a>
-                <button class="btn secondary" type="button" onclick="copyToClipboard('mzaheer1070@gmail.com', 'Developer email copied: mzaheer1070@gmail.com')">
+                <button class="btn secondary" type="button" data-copy-email="mzaheer1070@gmail.com" aria-label="Copy Muhammad Zaheer's email address">
                     📋 Copy Email
                 </button>
+                <div class="hero-social-pill">
+                    <a class="social-icon-btn" href="https://github.com/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" title="View GitHub (@mzaheer1070)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        <span>GitHub</span>
+                    </a>
+                    <a class="social-icon-btn" href="https://linkedin.com/in/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" title="Connect on LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -122,7 +142,7 @@
                 <span class="hud-corner hud-corner-tr" aria-hidden="true"></span>
                 <span class="hud-corner hud-corner-bl" aria-hidden="true"></span>
                 <span class="hud-corner hud-corner-br" aria-hidden="true"></span>
-                <img src="Images/MEss.jpeg" alt="Muhammad Zaheer - Developer portrait" width="380" height="456" onerror="if(this.src.indexOf('images/')===-1){this.src='images/MEss.jpeg';}">
+                <img src="Images/muhammad-zaheer.jpg" alt="Muhammad Zaheer - Developer portrait" width="380" height="456" onerror="if(this.src.indexOf('MEss.jpeg')===-1){this.src='Images/MEss.jpeg';}">
             </div>
         </div>
     </section>
@@ -133,51 +153,103 @@
             <div class="stats-strip">
                 <article class="stat-card" data-reveal>
                     <strong class="stat-number" data-count-to="4">0</strong>
-                    <span class="stat-label">Live Projects Hosted</span>
-                    <span class="stat-desc">Interactive web, API &amp; utility apps</span>
+                    <span class="stat-label">Live Hosted Apps</span>
+                    <span class="stat-desc">Weather Pro, API Prober, Todo & Utilities</span>
                 </article>
                 <article class="stat-card" data-reveal>
-                    <strong class="stat-number" data-count-to="5">0</strong>
-                    <span class="stat-label">Core Tech Stacks</span>
-                    <span class="stat-desc">Web, Python/ML, C/C++, Mobile &amp; Databases</span>
+                    <strong class="stat-number" data-count-to="15" data-count-suffix="+">0</strong>
+                    <span class="stat-label">CS Courses & Labs</span>
+                    <span class="stat-desc">DSA, OOP, ML, Databases & Web Systems</span>
                 </article>
                 <article class="stat-card" data-reveal>
-                    <strong class="stat-number" data-count-to="3">0</strong>
-                    <span class="stat-label">Languages Spoken</span>
-                    <span class="stat-desc">Urdu (native), English (B2), Punjabi (native)</span>
+                    <strong class="stat-number" data-count-to="150" data-count-suffix="+">0</strong>
+                    <span class="stat-label">AI & UHRS Tasks</span>
+                    <span class="stat-desc">Data preprocessing, verification & evaluation</span>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section class="section-tight" aria-label="Technical skills">
+    <!-- Core Technical Skills Section -->
+    <section class="section-tight" aria-label="Core Technical Skills">
         <div class="container">
             <div class="section-header" data-reveal>
-                <span class="eyebrow">Tech Stack</span>
-                <h2>Skills &amp; Technologies</h2>
-                <p class="lead-text">Core technical competencies across programming, data, web, and mobile development.</p>
+                <span class="eyebrow">Technical Stack</span>
+                <h2>Core Technical Competencies</h2>
+                <p class="lead-text">Academic foundation and practical experience across systems, machine learning, and modern web architectures.</p>
             </div>
-            <div class="about-competencies-grid" data-reveal>
-                <div class="about-competency-card">
-                    <strong>Languages</strong>
-                    <p>Python &middot; C &middot; C++ &middot; SQL &middot; Kotlin &middot; JavaScript</p>
+
+            <div class="home-skills-grid" data-reveal>
+                <div class="skill-card">
+                    <div class="skill-card-icon" aria-hidden="true">🐍</div>
+                    <strong class="skill-card-title">Python & ML Foundations</strong>
+                    <p class="skill-card-desc">Data preprocessing, algorithmic pipelines, feature normalization, NumPy, and Pandas workflows.</p>
+                    <div class="skill-pill-wrap">
+                        <span class="skill-pill">Python</span>
+                        <span class="skill-pill">NumPy</span>
+                        <span class="skill-pill">Pandas</span>
+                        <span class="skill-pill">ML Kit</span>
+                    </div>
                 </div>
-                <div class="about-competency-card">
-                    <strong>Web &amp; Cloud</strong>
-                    <p>HTML5 &middot; CSS3 &middot; JavaScript &middot; Firebase &middot; GitHub Pages</p>
+
+                <div class="skill-card">
+                    <div class="skill-card-icon" aria-hidden="true">⚡</div>
+                    <strong class="skill-card-title">C / C++ & Core CS</strong>
+                    <p class="skill-card-desc">Data Structures & Algorithms, Object-Oriented Programming, and low-level memory efficiency.</p>
+                    <div class="skill-pill-wrap">
+                        <span class="skill-pill">C++</span>
+                        <span class="skill-pill">DSA</span>
+                        <span class="skill-pill">OOP</span>
+                        <span class="skill-pill">Problem Solving</span>
+                    </div>
                 </div>
-                <div class="about-competency-card">
-                    <strong>AI &amp; Data Science</strong>
-                    <p>Data Preprocessing &middot; Model Training &middot; Visualization &middot; NumPy</p>
+
+                <div class="skill-card">
+                    <div class="skill-card-icon" aria-hidden="true">🌐</div>
+                    <strong class="skill-card-title">Modern Web Development</strong>
+                    <p class="skill-card-desc">Responsive layouts, ES6+ JavaScript, client state management, Canvas API, and modern CSS.</p>
+                    <div class="skill-pill-wrap">
+                        <span class="skill-pill">JavaScript ES6+</span>
+                        <span class="skill-pill">HTML5</span>
+                        <span class="skill-pill">CSS3</span>
+                        <span class="skill-pill">Canvas API</span>
+                    </div>
                 </div>
-                <div class="about-competency-card">
-                    <strong>Databases</strong>
-                    <p>MySQL &middot; MongoDB &middot; Neo4j &middot; Firestore</p>
+
+                <div class="skill-card">
+                    <div class="skill-card-icon" aria-hidden="true">🗄️</div>
+                    <strong class="skill-card-title">Databases & Cloud</strong>
+                    <p class="skill-card-desc">Relational & NoSQL database schema design, SQL querying, MySQL, MongoDB, and Firebase integration.</p>
+                    <div class="skill-pill-wrap">
+                        <span class="skill-pill">SQL</span>
+                        <span class="skill-pill">MySQL</span>
+                        <span class="skill-pill">MongoDB</span>
+                        <span class="skill-pill">Firebase</span>
+                    </div>
                 </div>
-                <div class="about-competency-card">
-                    <strong>Tools &amp; Platforms</strong>
-                    <p>Git &middot; Linux &middot; Docker &middot; VS Code &middot; GitHub Actions</p>
+
+                <div class="skill-card">
+                    <div class="skill-card-icon" aria-hidden="true">🛠️</div>
+                    <strong class="skill-card-title">Developer Tooling & Systems</strong>
+                    <p class="skill-card-desc">Git version control, Linux command-line environments, REST API integration, and latency benchmarking.</p>
+                    <div class="skill-pill-wrap">
+                        <span class="skill-pill">Git / GitHub</span>
+                        <span class="skill-pill">Linux</span>
+                        <span class="skill-pill">REST APIs</span>
+                        <span class="skill-pill">DevTools</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-card-icon" aria-hidden="true">🎯</div>
+                    <strong class="skill-card-title">AI Tasks & Quality Audits</strong>
+                    <p class="skill-card-desc">150+ UHRS tasks in search relevance, multilingual query verification, and data quality audits.</p>
+                    <div class="skill-pill-wrap">
+                        <span class="skill-pill">UHRS</span>
+                        <span class="skill-pill">Data Labeling</span>
+                        <span class="skill-pill">Quality Audits</span>
+                        <span class="skill-pill">Model Eval</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -195,10 +267,10 @@
             <div class="home-project-links" data-reveal>
                 <div class="home-project-card">
                     <div class="home-project-card-header">
-                        <span class="project-tag">Open-Meteo &amp; AQI</span>
+                        <span class="project-tag">Open-Meteo & AQI</span>
                     </div>
                     <strong>Weather Dashboard Pro</strong>
-                    <span>Real-time weather analytics, AQI pollutants, UV index, &deg;C/&deg;F unit switching, and 8-day forecasts.</span>
+                    <span>Real-time weather analytics, AQI pollutants, UV index, °C/°F unit switching, and 8-day forecasts.</span>
                     <div class="card-actions-row">
                         <a class="btn primary btn-launch-sm" href="projects/weather-dashboard/index.html" target="_blank" rel="noopener noreferrer">Launch Site ↗</a>
                     </div>
@@ -248,7 +320,6 @@
             <a class="footer-link" href="about.html">About</a>
             <a class="footer-link" href="projects.html">Projects</a>
             <a class="footer-link" href="contact.html">Contact</a>
-            <a class="footer-link" href="https://github.com/mzaheer1070" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </div>
         <p class="footer-copy">&copy; 2026 Muhammad Zaheer. Computer Science Student, National University of Technology (NUTECH).</p>
     </div>

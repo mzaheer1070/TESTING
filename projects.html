@@ -5,21 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Explore live web projects — Weather Dashboard, API Status Dashboard, Todo App, and Weather App.">
     <title>Projects | Portfolio</title>
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Muhammad Zaheer Portfolio">
+    <meta property="og:title" content="Projects | Muhammad Zaheer">
+    <meta property="og:description" content="Explore live web projects — Weather Dashboard, API Status Dashboard, Todo App, and Weather App developed by Muhammad Zaheer.">
     <meta property="og:url" content="https://mzaheer1070.github.io/Portfolio/projects.html">
-    <meta property="og:title" content="Projects | Muhammad Zaheer's Portfolio">
-    <meta property="og:description" content="Explore live web projects — Weather Dashboard Pro, API Status Dashboard, Todo App, and more.">
-    <meta property="og:image" content="https://mzaheer1070.github.io/Portfolio/Images/MEss.jpeg">
+    <meta property="og:image" content="Images/muhammad-zaheer.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Projects | Muhammad Zaheer">
+    <meta name="twitter:description" content="Explore live web projects — Weather Dashboard, API Status Dashboard, Todo App, and Weather App developed by Muhammad Zaheer.">
+    <meta name="twitter:image" content="Images/muhammad-zaheer.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
-    <style>
-        .nav-github-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;color:inherit;opacity:.65;border-radius:8px;transition:opacity .2s}
-        .nav-github-link:hover{opacity:1}
-    </style>
 </head>
 <body data-page="projects">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -38,7 +46,7 @@
         </button>
 
         <div class="nav-panel" id="primary-navigation">
-            <div class="nav-status-widget" aria-label="Current developer local time &amp; availability">
+            <div class="nav-status-widget" aria-label="Current developer local time & availability">
                 <span class="status-beacon" aria-hidden="true"></span>
                 <span data-live-clock>--:--:-- UTC+5</span>
             </div>
@@ -48,14 +56,19 @@
             <a class="nav-link is-active" href="projects.html">Projects</a>
             <a class="nav-link" href="contact.html">Contact</a>
 
+            <div class="nav-social-links" aria-label="Social Profiles">
+                <a class="nav-social-link" href="https://github.com/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" title="GitHub - @mzaheer1070">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a class="nav-social-link" href="https://linkedin.com/in/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" title="LinkedIn Profile">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
+
             <button class="palette-trigger-nav" type="button" data-open-palette aria-label="Open Command Search (Ctrl+K)">
                 <span>🔍 Search</span>
                 <span class="palette-trigger-kbd">⌘K</span>
             </button>
-
-            <a class="nav-github-link" href="https://github.com/mzaheer1070" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            </a>
 
             <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle Light / Dark Mode" title="Toggle Light / Dark Mode">
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -92,7 +105,7 @@
             <div class="filter-bar" aria-label="Filter projects by category" data-reveal>
                 <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All Projects</button>
                 <button class="filter-button" type="button" data-filter="weather" aria-pressed="false">Weather Apps</button>
-                <button class="filter-button" type="button" data-filter="api" aria-pressed="false">APIs &amp; Monitoring</button>
+                <button class="filter-button" type="button" data-filter="api" aria-pressed="false">APIs & Monitoring</button>
                 <button class="filter-button" type="button" data-filter="productivity" aria-pressed="false">Productivity</button>
             </div>
 
@@ -113,13 +126,13 @@
                 <article class="project-card" data-category="weather" data-reveal>
                     <div class="project-thumb project-thumb--weather">
                         <span class="project-thumb-icon" aria-hidden="true">🌤️</span>
-                        <span class="project-thumb-badge">Open-Meteo &amp; AQI</span>
+                        <span class="project-thumb-badge">Open-Meteo & AQI</span>
                     </div>
                     <div class="project-body">
-                        <span class="project-tag">Project 1 &middot; Weather &amp; Atmospheric Health</span>
+                        <span class="project-tag">Project 1 · Weather & Atmospheric Health</span>
                         <h2 class="project-title">Weather Dashboard Pro</h2>
                         <p class="project-desc">
-                            Real-time atmospheric analytics with live Air Quality Index (AQI PM2.5, NO&#x2082;, Ozone), UV index, &deg;C/&deg;F unit conversion, 8-day forecasts, and spatial soundscapes.
+                            Real-time atmospheric analytics with live Air Quality Index (AQI PM2.5, NO₂, Ozone), UV index, °C/°F unit conversion, 8-day forecasts, and spatial soundscapes.
                         </p>
                         <ul class="project-tech-list" aria-label="Technologies used">
                             <li class="project-tech-pill">Open-Meteo API</li>
@@ -137,10 +150,10 @@
                 <article class="project-card" data-category="api" data-reveal>
                     <div class="project-thumb project-thumb--dashboard">
                         <span class="project-thumb-icon" aria-hidden="true">📊</span>
-                        <span class="project-thumb-badge">Fetch &amp; Prober</span>
+                        <span class="project-thumb-badge">Fetch & Prober</span>
                     </div>
                     <div class="project-body">
-                        <span class="project-tag">Project 2 &middot; Real-time HTTP Prober</span>
+                        <span class="project-tag">Project 2 · Real-time HTTP Prober</span>
                         <h2 class="project-title">API Status Dashboard</h2>
                         <p class="project-desc">
                             Real-time REST endpoint monitor probing public APIs (GitHub, JSONPlaceholder) to display live HTTP status codes, millisecond latency, and payload states.
@@ -164,7 +177,7 @@
                         <span class="project-thumb-badge">Local Storage</span>
                     </div>
                     <div class="project-body">
-                        <span class="project-tag">Project 3 &middot; Productivity &amp; State Management</span>
+                        <span class="project-tag">Project 3 · Productivity & State Management</span>
                         <h2 class="project-title">Todo Application</h2>
                         <p class="project-desc">
                             Task management application featuring client-side persistence, real-time status filtering (All, Active, Completed), and item counts.
@@ -187,7 +200,7 @@
                         <span class="project-thumb-badge">Live API</span>
                     </div>
                     <div class="project-body">
-                        <span class="project-tag">Project 4 &middot; Minimal Weather Utility</span>
+                        <span class="project-tag">Project 4 · Minimal Weather Utility</span>
                         <h2 class="project-title">Weather App</h2>
                         <p class="project-desc">
                             Streamlined, fast city weather checker providing instant temperature, climate condition summaries, and quick unit switching.
@@ -214,7 +227,6 @@
             <a class="footer-link" href="about.html">About</a>
             <a class="footer-link" href="projects.html">Projects</a>
             <a class="footer-link" href="contact.html">Contact</a>
-            <a class="footer-link" href="https://github.com/mzaheer1070" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </div>
         <p class="footer-copy">&copy; 2026 Muhammad Zaheer. Computer Science Student, National University of Technology (NUTECH).</p>
     </div>
