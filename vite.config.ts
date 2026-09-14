@@ -1,8 +1,48 @@
 import path from 'path';
-import {defineConfig} from 'vite';
+import fs from 'fs';
+import {defineConfig, Plugin} from 'vite';
+
+function copyDirRecursive(src: string, dest: string) {
+  if (!fs.existsSync(src)) return;
+  if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyDirRecursive(srcPath, destPath);
+    } else {
+      if (entry.name === 'index.html' && fs.existsSync(destPath)) continue;
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+function copyStaticAssetsPlugin(): Plugin {
+  return {
+    name: 'copy-static-legacy-assets',
+    closeBundle() {
+      const rootDir = __dirname;
+      const distDir = path.resolve(rootDir, 'dist');
+      if (!fs.existsSync(distDir)) return;
+
+      copyDirRecursive(path.resolve(rootDir, 'js'), path.resolve(distDir, 'js'));
+      copyDirRecursive(path.resolve(rootDir, 'projects'), path.resolve(distDir, 'projects'));
+
+      const rootFiles = ['favicon.svg', 'Muhammad_Zaheer_Resume.pdf'];
+      for (const file of rootFiles) {
+        const src = path.resolve(rootDir, file);
+        const dest = path.resolve(distDir, file);
+        if (fs.existsSync(src)) {
+          fs.copyFileSync(src, dest);
+        }
+      }
+    },
+  };
+}
 
 export default defineConfig(() => {
   return {
+    plugins: [copyStaticAssetsPlugin()],
     build: {
       rollupOptions: {
         input: {

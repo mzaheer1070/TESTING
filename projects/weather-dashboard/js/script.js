@@ -856,20 +856,23 @@
         renderFeatures(data, rawTemp, rawWind, rawRain, scene);
         renderForecast(daily);
 
+        const weatherDetail = {
+            scene,
+            daytime: dom.body.dataset.daytime,
+            period: dom.body.dataset.period,
+            celestial: dom.body.dataset.celestial,
+            windSpeed: rawWind,
+            precipitation: rawRain,
+            weatherCode: Number(current.weather_code),
+            cloudCover: clouds,
+            latitude: Number(latitude),
+            longitude: Number(longitude),
+            city: `${city}${country ? `, ${country}` : ''}`
+        };
+        window.__lastWeatherDetail = weatherDetail;
+
         document.dispatchEvent(new CustomEvent('weatherchange', {
-            detail: {
-                scene,
-                daytime: dom.body.dataset.daytime,
-                period: dom.body.dataset.period,
-                celestial: dom.body.dataset.celestial,
-                windSpeed: rawWind,
-                precipitation: rawRain,
-                weatherCode: Number(current.weather_code),
-                cloudCover: clouds,
-                latitude: Number(latitude),
-                longitude: Number(longitude),
-                city: `${city}${country ? `, ${country}` : ''}`
-            }
+            detail: weatherDetail
         }));
     }
 

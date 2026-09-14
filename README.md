@@ -41,7 +41,7 @@ This is a personal portfolio website featuring web development projects, API int
 ### Backend / Services
 
 * Firebase Firestore
-* OpenWeatherMap API
+* Open-Meteo API (High-precision weather & geocoding)
 * Public REST APIs
 
 ### Development Tools
@@ -66,6 +66,7 @@ Portfolio/
 ├── projects.html
 ├── contact.html
 ├── favicon.svg
+├── Muhammad_Zaheer_Resume.pdf
 ├── README.md
 │
 ├── css/
@@ -77,6 +78,7 @@ Portfolio/
 │   └── portfolio-links.js
 │
 ├── Images/
+│   ├── muhammad-zaheer.jpg
 │   └── MEss.jpeg
 │
 ├── projects/

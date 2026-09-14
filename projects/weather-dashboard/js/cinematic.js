@@ -214,4 +214,8 @@
 
     selectBaseLayer();
     loadWeatherOverlays();
+
+    if (window.__lastWeatherDetail && Number.isFinite(window.__lastWeatherDetail.latitude) && Number.isFinite(window.__lastWeatherDetail.longitude)) {
+        updateMap(window.__lastWeatherDetail.latitude, window.__lastWeatherDetail.longitude, window.__lastWeatherDetail.city);
+    }
 })();

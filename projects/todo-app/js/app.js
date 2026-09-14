@@ -51,8 +51,12 @@ form.addEventListener("submit", (event) => {
     const text = input.value.trim();
     if (!text) return;
 
+    const taskId = (window.crypto && typeof window.crypto.randomUUID === "function")
+        ? window.crypto.randomUUID()
+        : "todo-" + Date.now() + "-" + Math.random().toString(36).slice(2, 9);
+
     tasks.unshift({
-        id: crypto.randomUUID(),
+        id: taskId,
         text,
         done: false
     });

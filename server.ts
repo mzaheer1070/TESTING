@@ -83,9 +83,9 @@ async function startServer() {
         parts: [{ text: m.content || "" }],
       }));
 
-      // Task mapping per instructions: general tasks use gemini-3.5-flash
+      // Task mapping per instructions: general text tasks use gemini-3.8-flash
       const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
+        model: "gemini-3.8-flash",
         contents: formattedContents,
         config: {
           systemInstruction: SYSTEM_INSTRUCTION,
