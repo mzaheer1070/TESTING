@@ -29,14 +29,12 @@
     function applyPortfolioLinks() {
         const base = portfolioBase();
 
-        // Ensure data-root-href elements have proper relative hrefs
         document.querySelectorAll("[data-root-href]").forEach((element) => {
             const target = element.getAttribute("data-root-href");
             if (!target) return;
             element.setAttribute("href", `${base}${target}`);
         });
 
-        // Ensure back-links have proper relative hrefs
         document.querySelectorAll(".weather-back-link, [data-portfolio-return], .back-link").forEach((element) => {
             const target = element.getAttribute("data-portfolio-return") || element.getAttribute("href");
             if (target && target !== "back") {
@@ -47,9 +45,27 @@
         });
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", applyPortfolioLinks);
-    } else {
+    // Weather Dashboard Pro enhancement layer. Keeping this here lets the
+    // weather page stay modular without changing its large core script.
+    function loadWeatherEnhancements() {
+        if (!window.location.pathname.toLowerCase().includes("projects/weather-dashboard")) return;
+        if (document.querySelector('script[data-weather-enhancements]')) return;
+
+        const script = document.createElement("script");
+        script.src = "js/premium-enhancements.js";
+        script.defer = true;
+        script.dataset.weatherEnhancements = "true";
+        document.head.appendChild(script);
+    }
+
+    function init() {
         applyPortfolioLinks();
+        loadWeatherEnhancements();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
     }
 })();
