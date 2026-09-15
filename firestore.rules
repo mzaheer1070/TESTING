@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /contacts/{document} {
+      // Contact submissions are public writes, but only with the exact
+      // fields and safe value types/lengths used by the portfolio form.
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'name',
+          'email',
+          'message',
+          'timestamp'
+        ])
+        && request.resource.data.name is string
+        && request.resource.data.email is string
+        && request.resource.data.message is string
+        && request.resource.data.timestamp is timestamp
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.name.size() <= 100
+        && request.resource.data.email.size() >= 3
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.message.size() >= 10
+        && request.resource.data.message.size() <= 500;
+
+      // Contact messages must never be publicly readable, modified, or deleted.
+      allow read, update, delete: if false;
+    }
+  }
+}
