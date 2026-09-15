@@ -1,0 +1,61 @@
+/* Premium weather cards use the same visual language as the dashboard. */
+#premiumWeatherFeatures .premium-panel {
+    color: var(--text);
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.04));
+    box-shadow: inset 0 1px rgba(255,255,255,.10), 0 10px 28px rgba(0,0,0,.10);
+}
+
+#premiumWeatherFeatures .premium-badge,
+#premiumWeatherFeatures .insight-pill,
+#premiumWeatherFeatures .hour-card,
+#premiumWeatherFeatures .insight-main {
+    color: var(--text);
+    border-color: rgba(255,255,255,.16);
+    background: linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.04));
+    box-shadow: inset 0 1px rgba(255,255,255,.08), 0 8px 22px rgba(0,0,0,.08);
+}
+
+#premiumWeatherFeatures .premium-badge {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+    background: color-mix(in srgb, var(--accent) 11%, transparent);
+}
+
+#premiumWeatherFeatures .hour-card:hover,
+#premiumWeatherFeatures .hour-card.now {
+    border-color: color-mix(in srgb, var(--accent) 58%, transparent);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 16%, transparent), 0 12px 28px rgba(0,0,0,.12);
+}
+
+#premiumWeatherFeatures .premium-kicker {
+    color: var(--accent);
+}
+
+body[data-theme="light"] #premiumWeatherFeatures .premium-panel,
+body[data-theme="light"] #premiumWeatherFeatures .premium-badge,
+body[data-theme="light"] #premiumWeatherFeatures .insight-pill,
+body[data-theme="light"] #premiumWeatherFeatures .hour-card,
+body[data-theme="light"] #premiumWeatherFeatures .insight-main {
+    border-color: rgba(65,87,160,.22);
+    background: linear-gradient(135deg, rgba(255,255,255,.68), rgba(255,255,255,.34));
+    box-shadow: inset 0 1px rgba(255,255,255,.75), 0 18px 45px rgba(24,45,90,.14);
+}
+
+body[data-theme="light"] #premiumWeatherFeatures .premium-badge {
+    color: var(--accent);
+    border-color: rgba(65,87,160,.22);
+    background: rgba(82,104,199,.08);
+}
+
+body[data-theme="light"] #premiumWeatherFeatures .hour-card.now,
+body[data-theme="light"] #premiumWeatherFeatures .hour-card:hover {
+    border-color: rgba(65,87,160,.4);
+    box-shadow: 0 0 24px rgba(82,104,199,.12), 0 14px 30px rgba(24,45,90,.12);
+}
+
+#premiumWeatherFeatures .trend-svg stop:first-child { stop-color: var(--accent); }
+#premiumWeatherFeatures .trend-svg stop:last-child { stop-color: var(--accent); }
+#premiumWeatherFeatures .trend-svg polyline:first-of-type { stroke: var(--accent); }
+#premiumWeatherFeatures .trend-svg polyline:nth-of-type(2) { stroke: color-mix(in srgb, var(--accent) 72%, #67d9ff); }
+#premiumWeatherFeatures .trend-svg circle { stroke: var(--accent); }
