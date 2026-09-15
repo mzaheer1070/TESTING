@@ -1045,6 +1045,8 @@ body[data-theme="light"] .pollutant-pill {
 
 /* Unified Navigation Bridge in Weather Dashboard */
 .weather-top-bar {
+    position: relative;
+    z-index: 50;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1060,6 +1062,8 @@ body[data-theme="light"] .pollutant-pill {
 }
 
 .weather-back-link {
+    position: relative;
+    z-index: 51;
     color: var(--text);
     font-size: 0.86rem;
     font-weight: 700;
