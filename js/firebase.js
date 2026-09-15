@@ -11,11 +11,9 @@ const firebaseConfig = {
   appId: "1:501356088445:web:470b722431621db00c7514"
 };
 
-// Initialize Firebase & Firestore
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Form submission handler
 const contactForm = document.getElementById("contactForm");
 if (contactForm) {
     contactForm.addEventListener("submit", async (e) => {
@@ -27,11 +25,13 @@ if (contactForm) {
         const statusDiv = contactForm.querySelector(".form-status");
         const submitBtn = contactForm.querySelector("button[type='submit']");
         const charCount = contactForm.querySelector("[data-char-count]");
+        const messageError = contactForm.querySelector('[data-error-for="message"]');
 
         const name = nameInput ? nameInput.value.trim() : "";
         const email = emailInput ? emailInput.value.trim() : "";
         const message = messageInput ? messageInput.value.trim() : "";
 
+        // Keep browser-side validation and Firestore submission rules identical.
         if (!name || !email || !message) {
             if (statusDiv) {
                 statusDiv.className = "form-status status-error";
@@ -40,19 +40,35 @@ if (contactForm) {
             return;
         }
 
+        if (message.length < 10) {
+            if (messageError) {
+                messageError.textContent = "Message must be at least 10 characters long.";
+            }
+            if (messageInput) {
+                messageInput.setCustomValidity("Message must be at least 10 characters long.");
+                messageInput.focus();
+            }
+            if (statusDiv) {
+                statusDiv.className = "form-status status-error";
+                statusDiv.textContent = "Please write at least 10 characters in your message.";
+            }
+            return;
+        }
+
+        if (messageError) messageError.textContent = "";
+        if (messageInput) messageInput.setCustomValidity("");
+
         try {
             if (statusDiv) {
                 statusDiv.className = "form-status status-loading";
                 statusDiv.textContent = "Sending your message to Firestore...";
             }
-            if (submitBtn) {
-                submitBtn.disabled = true;
-            }
+            if (submitBtn) submitBtn.disabled = true;
 
             await addDoc(collection(db, "contacts"), {
-                name: name,
-                email: email,
-                message: message,
+                name,
+                email,
+                message,
                 timestamp: new Date()
             });
 
@@ -62,9 +78,9 @@ if (contactForm) {
             }
 
             contactForm.reset();
-            if (charCount) {
-                charCount.textContent = "0 / 500";
-            }
+            if (charCount) charCount.textContent = "0 / 500";
+            if (messageError) messageError.textContent = "";
+            if (messageInput) messageInput.setCustomValidity("");
         } catch (error) {
             console.error("Firestore submission error:", error);
             if (statusDiv) {
@@ -72,9 +88,19 @@ if (contactForm) {
                 statusDiv.textContent = "Failed to deliver message. Please try again or email directly.";
             }
         } finally {
-            if (submitBtn) {
-                submitBtn.disabled = false;
-            }
+            if (submitBtn) submitBtn.disabled = false;
         }
     });
+
+    // Clear the minimum-length error as soon as the user reaches the requirement.
+    const messageInput = document.getElementById("message");
+    const messageError = contactForm.querySelector('[data-error-for="message"]');
+    if (messageInput) {
+        messageInput.addEventListener("input", () => {
+            if (messageInput.value.trim().length >= 10) {
+                messageInput.setCustomValidity("");
+                if (messageError) messageError.textContent = "";
+            }
+        });
+    }
 }
