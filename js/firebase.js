@@ -1,14 +1,20 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp,
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-// Firebase configuration
+// Firebase web API keys are expected to be present in client-side apps.
+// Access control is enforced by Firestore Security Rules in firestore.rules.
 const firebaseConfig = {
-  apiKey: "AIzaSyAiLRpNFC6khivuyKQHpSwa7I6iO43n4rs",
-  authDomain: "weba2-7a1f0.firebaseapp.com",
-  projectId: "weba2-7a1f0",
-  storageBucket: "weba2-7a1f0.firebasestorage.app",
-  messagingSenderId: "501356088445",
-  appId: "1:501356088445:web:470b722431621db00c7514"
+    apiKey: "AIzaSyAiLRpNFC6khivuyKQHpSwa7I6iO43n4rs",
+    authDomain: "weba2-7a1f0.firebaseapp.com",
+    projectId: "weba2-7a1f0",
+    storageBucket: "weba2-7a1f0.firebasestorage.app",
+    messagingSenderId: "501356088445",
+    appId: "1:501356088445:web:470b722431621db00c7514",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -31,12 +37,27 @@ if (contactForm) {
         const email = emailInput ? emailInput.value.trim() : "";
         const message = messageInput ? messageInput.value.trim() : "";
 
-        // Keep browser-side validation and Firestore submission rules identical.
-        if (!name || !email || !message) {
+        const setError = (text) => {
             if (statusDiv) {
                 statusDiv.className = "form-status status-error";
-                statusDiv.textContent = "Please fill in all required fields before submitting.";
+                statusDiv.textContent = text;
             }
+        };
+
+        if (!name || !email || !message) {
+            setError("Please fill in all required fields before submitting.");
+            return;
+        }
+
+        if (name.length < 2 || name.length > 100) {
+            setError("Name must be between 2 and 100 characters.");
+            if (nameInput) nameInput.focus();
+            return;
+        }
+
+        if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setError("Please enter a valid email address.");
+            if (emailInput) emailInput.focus();
             return;
         }
 
@@ -48,10 +69,13 @@ if (contactForm) {
                 messageInput.setCustomValidity("Message must be at least 10 characters long.");
                 messageInput.focus();
             }
-            if (statusDiv) {
-                statusDiv.className = "form-status status-error";
-                statusDiv.textContent = "Please write at least 10 characters in your message.";
-            }
+            setError("Please write at least 10 characters in your message.");
+            return;
+        }
+
+        if (message.length > 500) {
+            setError("Message must be 500 characters or fewer.");
+            if (messageInput) messageInput.focus();
             return;
         }
 
@@ -61,7 +85,7 @@ if (contactForm) {
         try {
             if (statusDiv) {
                 statusDiv.className = "form-status status-loading";
-                statusDiv.textContent = "Sending your message to Firestore...";
+                statusDiv.textContent = "Sending your message...";
             }
             if (submitBtn) submitBtn.disabled = true;
 
@@ -69,7 +93,7 @@ if (contactForm) {
                 name,
                 email,
                 message,
-                timestamp: new Date()
+                timestamp: serverTimestamp(),
             });
 
             if (statusDiv) {
@@ -83,10 +107,7 @@ if (contactForm) {
             if (messageInput) messageInput.setCustomValidity("");
         } catch (error) {
             console.error("Firestore submission error:", error);
-            if (statusDiv) {
-                statusDiv.className = "form-status status-error";
-                statusDiv.textContent = "Failed to deliver message. Please try again or email directly.";
-            }
+            setError("Failed to deliver message. Please try again or email directly.");
         } finally {
             if (submitBtn) submitBtn.disabled = false;
         }
