@@ -42,6 +42,7 @@ jobs:
             --exclude './package.json' \
             --exclude './bun.lock' \
             --exclude './generate_resume_pdf.js' \
+            --exclude './firestore.rules' \
             --exclude './node_modules/' \
             --exclude './tsconfig*.json'
 
