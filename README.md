@@ -1,127 +1,93 @@
-# Portfolio
+# Muhammad Zaheer Portfolio
 
-> A modern, high-performance, and responsive portfolio website showcasing web applications, API tooling, and interactive projects.
+> A modern, responsive portfolio website showcasing web applications, API tooling, interactive projects, and a Firebase-powered contact form.
 
-🔗 **Live Demo:** https://mzaheer1070.github.io/Portfolio/
+🔗 **Live Demo:** https://mzaheer1070.github.io/TESTING/
 
 ---
 
 ## 📌 About
 
-This is a personal portfolio website featuring web development projects, API integrations, live dashboards, and a functional contact system powered by Firebase Firestore.
-
----
+This is a personal portfolio website featuring web development projects, API integrations, live dashboards, interactive UI effects, and a functional contact system powered by Firebase Firestore.
 
 ## ✨ Features
 
-| Feature                  | Description                                               |
-| ------------------------ | --------------------------------------------------------- |
-| 🎨 Modern UI & Design    | Fluid HSL design tokens with polished dark/light theme    |
-| 🔤 Google Typography     | Plus Jakarta Sans & JetBrains Mono for crisp readability  |
-| 📱 Responsive Layout     | Fully optimized across mobile, tablet, and widescreen     |
-| 🔥 Firebase Contact Form | Contact messages stored securely using Firestore          |
-| 🌤️ Weather Dashboard    | Real-time weather data with geolocation & 5-day forecast  |
-| 📊 API Dashboard         | Real HTTP API monitoring with response status and latency |
-| ✅ Todo Application       | Task management with browser persistence                  |
-| 📂 Project Showcase      | Organized collection of live standalone projects          |
-| 🏷️ Version Control      | Semantic versioning with Git tags                         |
-| 🚀 CI/CD Deployment      | Automatic deployment using GitHub Actions                 |
-
----
+| Feature | Description |
+| --- | --- |
+| 🎨 Modern UI & Design | Responsive dark/light portfolio interface with animated interactions |
+| 📱 Responsive Layout | Optimized for mobile, tablet, and desktop screens |
+| 🔥 Firebase Contact Form | Contact messages stored through Firestore with restrictive security rules |
+| 🌤️ Weather Dashboard | Real-time weather, air quality, forecasts, maps, and cinematic effects |
+| 📊 API Dashboard | Real HTTP endpoint monitoring with status and latency reporting |
+| ✅ Todo Application | Client-side task management with browser persistence |
+| 📂 Project Showcase | Standalone live applications linked from the portfolio |
+| 🏷️ Version Control | Semantic versioning and Git-based history |
+| 🚀 CI/CD Deployment | Automatic GitHub Pages deployment through GitHub Actions |
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 
-* HTML5 (Semantic & Accessible)
-* CSS3 (Vanilla CSS, HSL Tokens, Glassmorphism, Responsive Grid/Flex)
-* JavaScript (ES6+ Modules, IntersectionObserver, Animations)
+* HTML5 semantic markup
+* Vanilla CSS with responsive Grid/Flexbox layouts
+* JavaScript (ES6+)
 * Google Fonts (Plus Jakarta Sans & JetBrains Mono)
 
-### Backend / Services
+### Services & APIs
 
 * Firebase Firestore
-* Open-Meteo API (High-precision weather & geocoding)
+* Open-Meteo weather and geocoding APIs
 * Public REST APIs
 
-### Development Tools
+### Development & Hosting
 
 * Git & GitHub
-* GitHub Actions (CI/CD)
-* VS Code / GitHub Codespaces
-
-### Hosting
-
+* GitHub Actions
 * GitHub Pages
-
----
 
 ## 📁 Project Structure
 
-```
-Portfolio/
-│
+```text
+TESTING/
 ├── index.html
 ├── about.html
 ├── projects.html
 ├── contact.html
 ├── favicon.svg
 ├── Muhammad_Zaheer_Resume.pdf
+├── firestore.rules
 ├── README.md
-│
 ├── css/
-│   └── style.css
-│
 ├── js/
 │   ├── script.js
 │   ├── firebase.js
 │   └── portfolio-links.js
-│
-├── Images/
-│   ├── muhammad-zaheer.jpg
-│   └── MEss.jpeg
-│
-├── projects/
-│   ├── weather-app/
-│   ├── weather-dashboard/
-│   ├── todo-app/
-│   ├── api-dashboard/
-│   └── shared/
-│
-└── .github/
-    └── workflows/
-        └── static.yml
+├── images/
+└── projects/
+    ├── weather-app/
+    ├── weather-dashboard/
+    ├── todo-app/
+    ├── api-dashboard/
+    └── shared/
 ```
 
----
+## 🔒 Security
 
-## 🏷️ Version History
-
-| Version    | Release Notes                                                                |
-| ---------- | ---------------------------------------------------------------------------- |
-| **v3.3.0** | Improve weather dashboard location detection, refine city suggestions, and enhance local testing workflow |
-| **v3.2.0** | Migrate weather dashboard to Open-Meteo API, soundscapes, GPS-friendly location names, and refined light theme |
-| **v3.1.0** | Add live weather-scene animations to the dashboard |
-| **v3.0.0** | Major UI redesign, HSL dark/light design system, Google typography, privacy updates, and MEss profile |
-| **v2.1.3** | Fix: Use OpenWeatherMap reverse geocoding for accurate city detection               |
-| **v2.1.2** | Update projects page - reorder projects and open Weather Dashboard in new tab       |
-| **v2.1.1** | Fix: Correct geolocation to display Islamabad instead of Allahabad                  |
-| **v2.1.0** | Add Weather Dashboard with live API integration and 5-day forecast                  |
-| **v2.0.0** | Add Firebase Firestore contact form with form validation                            |
-| **v1.0.0** | Initial portfolio release with GitHub Pages deployment                              |
-
----
+* Firestore contact submissions are create-only.
+* Submitted contact records are not publicly readable, editable, or deletable.
+* Firestore rules validate field names, types, and value lengths server-side.
+* Firebase web configuration is intentionally client-visible; Firestore Security Rules provide the access control.
 
 ## 🚀 Run Locally
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/mzaheer1070/Portfolio.git
-cd Portfolio
+git clone https://github.com/mzaheer1070/TESTING.git
+cd TESTING
 ```
 
-Start a local server:
+Start a local static server:
 
 ```bash
 python3 -m http.server 8000
@@ -129,22 +95,22 @@ python3 -m http.server 8000
 
 Open:
 
-```
+```text
 http://localhost:8000
 ```
 
----
+## 🏷️ Version History
 
-## 🔒 Security
-
-* Firestore rules restrict database access.
-* Contact submissions are create-only.
-* Visitors cannot read, update, or delete submitted messages.
-
----
+| Version | Release Notes |
+| --- | --- |
+| **v3.3.0** | Improve weather dashboard location detection, city suggestions, and local testing workflow |
+| **v3.2.0** | Migrate weather dashboard to Open-Meteo, add soundscapes, GPS-friendly location names, and refined light theme |
+| **v3.1.0** | Add live weather-scene animations |
+| **v3.0.0** | Major UI redesign, dark/light design system, Google typography, privacy updates, and profile refresh |
+| **v2.1.0** | Add Weather Dashboard with live API integration |
+| **v2.0.0** | Add Firebase Firestore contact form with validation |
+| **v1.0.0** | Initial portfolio release with GitHub Pages deployment |
 
 ## 🤝 Feedback
 
 Suggestions and improvements are welcome. Feel free to open an issue or share feedback about the project.
-
-⭐ If you find this project interesting, consider giving it a star!
