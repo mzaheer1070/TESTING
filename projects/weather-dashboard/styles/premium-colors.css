@@ -1,6 +1,12 @@
 /* Premium weather cards use the same visual language as the dashboard. */
 /* Hide the legacy feature group; the premium intelligence system replaces it. */
-#weatherFeatures {
+#weatherFeatures,
+#weatherFeatures .hourly-feature,
+#weatherFeatures .hourly-controls,
+#weatherFeatures .hourly-timeline,
+.hourly-feature,
+.hourly-controls,
+.hourly-timeline {
     display: none !important;
 }
 
