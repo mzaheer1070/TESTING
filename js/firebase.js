@@ -1,25 +1,21 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    serverTimestamp,
-} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-// Firebase web API keys are expected to be present in client-side apps.
-// Access control is enforced by Firestore Security Rules in firestore.rules.
+// Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAiLRpNFC6khivuyKQHpSwa7I6iO43n4rs",
-    authDomain: "weba2-7a1f0.firebaseapp.com",
-    projectId: "weba2-7a1f0",
-    storageBucket: "weba2-7a1f0.firebasestorage.app",
-    messagingSenderId: "501356088445",
-    appId: "1:501356088445:web:470b722431621db00c7514",
+  apiKey: "AIzaSyAiLRpNFC6khivuyKQHpSwa7I6iO43n4rs",
+  authDomain: "weba2-7a1f0.firebaseapp.com",
+  projectId: "weba2-7a1f0",
+  storageBucket: "weba2-7a1f0.firebasestorage.app",
+  messagingSenderId: "501356088445",
+  appId: "1:501356088445:web:470b722431621db00c7514"
 };
 
+// Initialize Firebase & Firestore
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Form submission handler
 const contactForm = document.getElementById("contactForm");
 if (contactForm) {
     contactForm.addEventListener("submit", async (e) => {
@@ -31,69 +27,49 @@ if (contactForm) {
         const statusDiv = contactForm.querySelector(".form-status");
         const submitBtn = contactForm.querySelector("button[type='submit']");
         const charCount = contactForm.querySelector("[data-char-count]");
-        const messageError = contactForm.querySelector('[data-error-for="message"]');
 
         const name = nameInput ? nameInput.value.trim() : "";
         const email = emailInput ? emailInput.value.trim() : "";
         const message = messageInput ? messageInput.value.trim() : "";
 
-        const setError = (text) => {
+        // Check required fields
+        if (!name || !email || !message) {
             if (statusDiv) {
                 statusDiv.className = "form-status status-error";
-                statusDiv.textContent = text;
+                statusDiv.textContent = "Please fill in all required fields before submitting.";
             }
-        };
-
-        if (!name || !email || !message) {
-            setError("Please fill in all required fields before submitting.");
             return;
         }
 
-        if (name.length < 2 || name.length > 100) {
-            setError("Name must be between 2 and 100 characters.");
-            if (nameInput) nameInput.focus();
-            return;
-        }
-
-        if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            setError("Please enter a valid email address.");
-            if (emailInput) emailInput.focus();
-            return;
-        }
-
+        // Validate message length (minimum 10 characters)
         if (message.length < 10) {
-            if (messageError) {
-                messageError.textContent = "Message must be at least 10 characters long.";
+            if (statusDiv) {
+                statusDiv.className = "form-status status-error";
+                statusDiv.textContent = "Your message must be at least 10 characters long.";
             }
             if (messageInput) {
-                messageInput.setCustomValidity("Message must be at least 10 characters long.");
                 messageInput.focus();
+                messageInput.classList.add("is-invalid");
+                const errorElem = contactForm.querySelector('[data-error-for="message"]');
+                if (errorElem) errorElem.textContent = "Message should be at least 10 characters.";
             }
-            setError("Please write at least 10 characters in your message.");
             return;
         }
-
-        if (message.length > 500) {
-            setError("Message must be 500 characters or fewer.");
-            if (messageInput) messageInput.focus();
-            return;
-        }
-
-        if (messageError) messageError.textContent = "";
-        if (messageInput) messageInput.setCustomValidity("");
 
         try {
             if (statusDiv) {
                 statusDiv.className = "form-status status-loading";
-                statusDiv.textContent = "Sending your message...";
+                statusDiv.textContent = "Sending your message to Firestore...";
             }
-            if (submitBtn) submitBtn.disabled = true;
+            if (submitBtn) {
+                submitBtn.disabled = true;
+            }
 
             await addDoc(collection(db, "contacts"), {
-                name,
-                email,
-                message,
-                timestamp: serverTimestamp(),
+                name: name,
+                email: email,
+                message: message,
+                timestamp: new Date()
             });
 
             if (statusDiv) {
@@ -102,26 +78,19 @@ if (contactForm) {
             }
 
             contactForm.reset();
-            if (charCount) charCount.textContent = "0 / 500";
-            if (messageError) messageError.textContent = "";
-            if (messageInput) messageInput.setCustomValidity("");
+            if (charCount) {
+                charCount.textContent = "0 / 500";
+            }
         } catch (error) {
             console.error("Firestore submission error:", error);
-            setError("Failed to deliver message. Please try again or email directly.");
+            if (statusDiv) {
+                statusDiv.className = "form-status status-error";
+                statusDiv.textContent = "Failed to deliver message. Please try again or email directly.";
+            }
         } finally {
-            if (submitBtn) submitBtn.disabled = false;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+            }
         }
     });
-
-    // Clear the minimum-length error as soon as the user reaches the requirement.
-    const messageInput = document.getElementById("message");
-    const messageError = contactForm.querySelector('[data-error-for="message"]');
-    if (messageInput) {
-        messageInput.addEventListener("input", () => {
-            if (messageInput.value.trim().length >= 10) {
-                messageInput.setCustomValidity("");
-                if (messageError) messageError.textContent = "";
-            }
-        });
-    }
 }

@@ -865,6 +865,10 @@
             precipitation: rawRain,
             weatherCode: Number(current.weather_code),
             cloudCover: clouds,
+            humidity: Number(current.relative_humidity_2m) || 0,
+            visibility: Number(current.visibility) || 10000,
+            uvIndex: Number(daily?.uv_index_max?.[0]) || 0,
+            isDay: current.is_day !== undefined ? Number(current.is_day) : 1,
             latitude: Number(latitude),
             longitude: Number(longitude),
             city: `${city}${country ? `, ${country}` : ''}`
@@ -899,11 +903,15 @@
         }
     }
 
-    function useLocation() {
+    function useLocation(fallbackToDefault = false) {
         if (locationLocked) return;
 
         if (!navigator.geolocation) {
-            showError('Geolocation is not supported.');
+            if (fallbackToDefault) {
+                searchCity('London');
+            } else {
+                showError('Geolocation is not supported.');
+            }
             return;
         }
 
@@ -929,6 +937,9 @@
                     dom.empty.classList.add('hidden');
                 } catch (error) {
                     showError(error.message);
+                    if (fallbackToDefault) {
+                        searchCity('London');
+                    }
                 } finally {
                     setLoading(false);
                     locationLocked = false;
@@ -939,11 +950,15 @@
                 locationLocked = false;
                 dom.location.disabled = false;
 
-                showError(
-                    error.code === 1
-                        ? 'Location access was denied. Please allow location permission.'
-                        : 'Unable to determine your location.'
-                );
+                if (fallbackToDefault) {
+                    searchCity('London');
+                } else {
+                    showError(
+                        error.code === 1
+                            ? 'Location access was denied. Please allow location permission.'
+                            : 'Unable to determine your location.'
+                    );
+                }
             },
             {
                 enableHighAccuracy: false,
@@ -1109,6 +1124,10 @@
         }
     });
 
-    // Default load London on first run if no active search
-    searchCity('London');
+    // Automatically trigger user location detection on load; smoothly falls back to London if denied or unavailable
+    if (navigator.geolocation) {
+        useLocation(true);
+    } else {
+        searchCity('London');
+    }
 })();

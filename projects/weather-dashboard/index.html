@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#101a35">
+    <meta name="theme-color" content="#030712">
     <title>Weather Dashboard Pro</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
     <link rel="alternate icon" href="../../favicon.svg">
 
+    <!-- Fonts matching portfolio -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/components.css">
     <link rel="stylesheet" href="styles/scenes.css">
     <link rel="stylesheet" href="styles/responsive.css">
-    <link rel="stylesheet" href="styles/premium-colors.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
@@ -86,6 +90,7 @@
                     title="Use my location" aria-label="Use my current location">📍</button>
             </div>
 
+            <!-- Quick Favorites & Preset Cities -->
             <div class="quick-cities-bar" id="quickCitiesBar" aria-label="Favorite and quick access cities">
                 <div class="quick-cities-label">
                     <span>⚡ Quick Access</span>
@@ -251,6 +256,5 @@
     <script src="js/sound.js"></script>
     <script src="js/weather-effects.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/premium-enhancements.js"></script>
 </body>
 </html>

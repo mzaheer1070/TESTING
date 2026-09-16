@@ -19,6 +19,9 @@
     let cloudCover = 0;
     let weatherCode = 0;
     let isDaytime = true;
+    let humidity = 50;
+    let visibility = 10000;
+    let uvIndex = 0;
 
     // 3D Mouse Parallax Coordinates
     let mouseX = width / 2;
@@ -40,8 +43,8 @@
     let activeLightningBolt = null;
 
     // Particle Object Pool
-    const MAX_PARTICLES = 280;
-    const MAX_SPLASHES = 60;
+    const MAX_PARTICLES = 360;
+    const MAX_SPLASHES = 75;
     const particles = [];
     const splashes = [];
 
@@ -80,26 +83,28 @@
         });
     }
 
-    // Base particle counts per scene
+    // Base particle counts per scene - distinct intensities
     const SCENE_PARTICLE_TARGETS = {
         idle: 35,
         sun: 45,
         clouds: 30,
         fog: 50,
-        drizzle: 75,
-        shower: 140,
-        rain: 180,
-        thunder: 220,
-        snow: 130
+        light_drizzle: 45, // subtle misty sprinkles
+        drizzle: 85,       // gentle steady drizzle
+        shower: 175,       // brisk passing showers
+        rain: 230,         // steady rain
+        thunder: 330,      // torrential thunderstorm downpour
+        snow: 140
     };
 
     function normaliseScene(nextScene, code) {
         const c = Number(code);
-        if (c >= 80 && c <= 82) return 'shower';
         if (c >= 95) return 'thunder';
-        if (c >= 71 && c <= 77) return 'snow';
+        if (c === 51) return 'light_drizzle';
+        if (c >= 52 && c <= 55) return 'drizzle';
+        if (c >= 80 && c <= 82) return 'shower';
         if (c >= 61 && c <= 65) return 'rain';
-        if (c >= 51 && c <= 55) return 'drizzle';
+        if (c >= 71 && c <= 77) return 'snow';
         if (c === 45 || c === 48) return 'fog';
         if (c === 2 || c === 3) return 'clouds';
         if (c === 0 || c === 1) return 'sun';
@@ -121,9 +126,29 @@
     }
 
     function reseedParticles() {
+        let baseCount = SCENE_PARTICLE_TARGETS[currentScene] || 40;
+        const isRain = ['light_drizzle', 'drizzle', 'shower', 'rain', 'thunder'].includes(currentScene);
+
+        if (isRain) {
+            // Physically scale particle count based on real precipitation volume (mm/h)
+            if (precipitation > 0) {
+                const rainMultiplier = Math.min(1.8, Math.max(0.65, 0.65 + Math.log10(precipitation + 1) * 0.85));
+                baseCount = Math.round(baseCount * rainMultiplier);
+            }
+        } else if (currentScene === 'fog') {
+            // Lower visibility means denser rolling mist particles
+            if (visibility < 10000) {
+                const visRatio = Math.max(0.1, visibility / 10000);
+                baseCount = Math.round(40 + (1 - visRatio) * 55);
+            }
+        } else if (currentScene === 'sun') {
+            // Golden atmospheric motes scale with UV / brightness
+            baseCount = Math.min(65, Math.round(35 + uvIndex * 3));
+        }
+
         const targetCount = Math.min(
             MAX_PARTICLES,
-            Math.round((SCENE_PARTICLE_TARGETS[currentScene] || 40) * adaptiveScale)
+            Math.round(baseCount * adaptiveScale)
         );
 
         for (let i = 0; i < MAX_PARTICLES; i++) {
@@ -146,17 +171,52 @@
         p.rotation = Math.random() * Math.PI * 2;
         p.rotSpeed = (Math.random() - 0.5) * 2.5;
 
-        const isRain = ['drizzle', 'shower', 'rain', 'thunder'].includes(currentScene);
+        const isRain = ['light_drizzle', 'drizzle', 'shower', 'rain', 'thunder'].includes(currentScene);
 
         if (isRain) {
-            const baseLen = currentScene === 'drizzle' ? 10 : currentScene === 'thunder' ? 26 : 18;
-            p.length = (baseLen + Math.random() * 12) * p.z;
-            p.size = (0.7 + p.z * 1.3);
-            p.alpha = 0.25 + p.z * 0.55;
+            let baseLen = 18;
+            let baseSpeed = 540;
+            let sizeScale = 1.0;
+            let alphaBase = 0.25;
 
-            const baseSpeed = currentScene === 'drizzle' ? 380 : currentScene === 'shower' ? 680 : currentScene === 'thunder' ? 920 : 540;
-            p.vy = baseSpeed * (0.55 + p.z * 0.65);
-            p.vx = (windSpeed * 3.8 + (Math.random() - 0.5) * 15) * p.z;
+            // Dynamically scale drop size & speed with precipitation volume
+            const precipFactor = precipitation > 0 ? Math.min(2.0, Math.max(0.6, Math.sqrt(precipitation) * 0.85)) : 1.0;
+
+            if (currentScene === 'light_drizzle') {
+                baseLen = 5 + Math.random() * 5;     // Tiny fine mist drops
+                baseSpeed = 220 + Math.random() * 60; // Gentle drifting descent
+                sizeScale = 0.7;
+                alphaBase = 0.18;
+            } else if (currentScene === 'drizzle') {
+                baseLen = 10 + Math.random() * 7;    // Soft thin streaks
+                baseSpeed = 340 + Math.random() * 80;
+                sizeScale = 0.85;
+                alphaBase = 0.22;
+            } else if (currentScene === 'shower') {
+                baseLen = 22 + Math.random() * 12;   // Swift distinct raindrops
+                baseSpeed = 720 + Math.random() * 120;
+                sizeScale = 1.15;
+                alphaBase = 0.35;
+            } else if (currentScene === 'thunder') {
+                baseLen = 34 + Math.random() * 16;   // Torrential, elongated storm streaks
+                baseSpeed = 1050 + Math.random() * 180;
+                sizeScale = 1.45;
+                alphaBase = 0.45;
+            } else {
+                // Regular steady rain
+                baseLen = 17 + Math.random() * 10;
+                baseSpeed = 560 + Math.random() * 90;
+                sizeScale = 1.0;
+                alphaBase = 0.28;
+            }
+
+            p.length = baseLen * p.z * (0.85 + precipFactor * 0.25);
+            p.size = (0.6 + p.z * 1.2) * sizeScale * Math.min(1.4, 0.9 + precipFactor * 0.15);
+            p.alpha = Math.min(0.95, (alphaBase + p.z * 0.55) * Math.min(1.3, 0.85 + precipFactor * 0.2));
+            p.vy = baseSpeed * (0.6 + p.z * 0.6) * Math.min(1.3, 0.9 + precipFactor * 0.15);
+            // Real physical horizontal wind push
+            const windFactor = currentScene === 'thunder' ? 4.6 : 3.4;
+            p.vx = (windSpeed * windFactor + (Math.random() - 0.5) * 15) * p.z;
         } else if (currentScene === 'snow') {
             p.size = (1.5 + Math.random() * 3.5) * p.z;
             p.alpha = 0.35 + p.z * 0.6;
@@ -207,7 +267,7 @@
     }
 
     function updateParticles(dt) {
-        const isRain = ['drizzle', 'shower', 'rain', 'thunder'].includes(currentScene);
+        const isRain = ['light_drizzle', 'drizzle', 'shower', 'rain', 'thunder'].includes(currentScene);
 
         // Update 3D parallax position with smooth damping
         currentParallaxX += (targetParallaxX - currentParallaxX) * 0.05;
@@ -251,7 +311,9 @@
 
                 // Ground splash physics
                 if (p.y >= height - 10) {
-                    if (Math.random() < (currentScene === 'thunder' ? 0.45 : 0.25)) {
+                    const splashProbability = currentScene === 'thunder' ? 0.65 : currentScene === 'shower' ? 0.45 : currentScene === 'rain' ? 0.35 : 0.08;
+                    const dynamicSplashProb = Math.min(0.85, splashProbability * (0.8 + (precipitation || 1) * 0.15));
+                    if (Math.random() < dynamicSplashProb) {
                         spawnSplash(p.x, height - 6, p.z);
                     }
                     initParticle(p, false);
@@ -308,7 +370,7 @@
         }
 
         // 3. Render 3D Depth-Sorted Particles
-        const isRain = ['drizzle', 'shower', 'rain', 'thunder'].includes(currentScene);
+        const isRain = ['light_drizzle', 'drizzle', 'shower', 'rain', 'thunder'].includes(currentScene);
 
         if (isRain) {
             render3DRain();
@@ -382,13 +444,23 @@
             ctx.lineTo(renderX + dx, renderY + dy);
 
             // Shading: Foreground drops have specular highlight, distant drops are translucent
-            if (p.z > 0.75) {
+            if (currentScene === 'light_drizzle') {
+                ctx.strokeStyle = `rgba(180, 220, 255, ${p.alpha * 0.65})`;
+                ctx.lineWidth = Math.max(0.5, p.size * 0.8);
+            } else if (currentScene === 'drizzle') {
+                ctx.strokeStyle = `rgba(195, 230, 255, ${p.alpha * 0.75})`;
+                ctx.lineWidth = Math.max(0.65, p.size * 0.9);
+            } else if (p.z > 0.75) {
                 ctx.strokeStyle = currentScene === 'thunder'
-                    ? `rgba(235, 248, 255, ${p.alpha})`
+                    ? `rgba(240, 250, 255, ${p.alpha})`
+                    : currentScene === 'shower'
+                    ? `rgba(225, 245, 255, ${p.alpha})`
                     : `rgba(215, 238, 255, ${p.alpha})`;
                 ctx.lineWidth = p.size;
             } else if (p.z > 0.45) {
-                ctx.strokeStyle = `rgba(185, 222, 255, ${p.alpha * 0.8})`;
+                ctx.strokeStyle = currentScene === 'thunder'
+                    ? `rgba(200, 230, 255, ${p.alpha * 0.85})`
+                    : `rgba(185, 222, 255, ${p.alpha * 0.8})`;
                 ctx.lineWidth = p.size * 0.85;
             } else {
                 ctx.strokeStyle = `rgba(150, 195, 240, ${p.alpha * 0.5})`;
@@ -592,9 +664,24 @@
         // Sky flash
         ambientFlash = 1.0;
 
+        // Strobe screen flash element
+        const flashEl = document.getElementById('lightningFlash');
+        if (flashEl) {
+            flashEl.style.opacity = '0.92';
+            setTimeout(() => {
+                flashEl.style.opacity = '0.18';
+                setTimeout(() => {
+                    flashEl.style.opacity = '0.78';
+                    setTimeout(() => {
+                        flashEl.style.opacity = '0';
+                    }, 140);
+                }, 70);
+            }, 90);
+        }
+
         // Screen micro-shake
         document.body.classList.add('camera-rumble');
-        setTimeout(() => document.body.classList.remove('camera-rumble'), 220);
+        setTimeout(() => document.body.classList.remove('camera-rumble'), 240);
 
         if (activeLightningBolt) {
             activeLightningBolt.remove();
@@ -666,34 +753,62 @@
     // Dynamic Cloud Details & 3D Shading
     function updateCloudDetails() {
         const clouds = document.querySelectorAll('.sky-cloud');
-        if (!clouds.length) return;
-
         const cover = Math.max(0, Math.min(100, Number(cloudCover) || 0));
         const coverFactor = cover / 100;
-        const isCloudy = ['clouds', 'fog', 'rain', 'shower', 'drizzle', 'snow', 'thunder'].includes(currentScene);
+        const isCloudy = ['clouds', 'fog', 'rain', 'shower', 'drizzle', 'light_drizzle', 'snow', 'thunder'].includes(currentScene);
 
-        const baseOpacity = isCloudy ? Math.min(0.96, 0.2 + coverFactor * 0.76) : coverFactor * 0.35;
+        const baseOpacity = isCloudy ? Math.min(0.96, 0.25 + coverFactor * 0.72) : coverFactor * 0.38;
+
+        // Dynamic cloud drift speed driven by actual wind velocity (km/h)
+        const driftDuration = Math.max(18, Math.min(110, Math.round(95 - Math.min(75, windSpeed * 1.3))));
 
         clouds.forEach((cloud, index) => {
-            const layerOpacity = Math.max(0, Math.min(1, baseOpacity * (1 - index * 0.1)));
+            const layerOpacity = Math.max(0, Math.min(1, baseOpacity * (1 - index * 0.12)));
             cloud.style.opacity = String(layerOpacity);
+            cloud.style.animationDuration = `${driftDuration * (1 + index * 0.3)}s`;
 
             if (currentScene === 'thunder') {
-                cloud.style.filter = 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6)) brightness(0.65) saturate(0.8)';
+                cloud.style.filter = 'drop-shadow(0 22px 45px rgba(0, 0, 0, 0.75)) brightness(0.6) saturate(0.75)';
             } else if (currentScene === 'rain' || currentScene === 'shower') {
-                cloud.style.filter = 'drop-shadow(0 16px 32px rgba(0, 0, 0, 0.4)) brightness(0.8) saturate(0.85)';
+                cloud.style.filter = 'drop-shadow(0 18px 36px rgba(0, 0, 0, 0.5)) brightness(0.78) saturate(0.85)';
             } else {
                 cloud.style.filter = 'drop-shadow(0 14px 28px rgba(0, 0, 0, 0.2))';
             }
         });
+
+        // Dynamic Solar Rays
+        const rays = document.querySelector('.sky-rays');
+        if (rays) {
+            if (currentScene === 'sun' && isDaytime) {
+                // Dim sun rays when clouds are present
+                const rayOpacity = Math.max(0.12, 0.95 - (cover / 100) * 0.82);
+                rays.style.opacity = String(rayOpacity);
+            } else {
+                rays.style.opacity = '0';
+            }
+        }
+
+        // Dynamic Fog Density
+        const fogLayers = document.querySelectorAll('.sky-fog');
+        if (fogLayers.length) {
+            const fogOpacity = currentScene === 'fog'
+                ? Math.min(0.95, Math.max(0.35, 1.0 - (visibility / 15000)))
+                : (currentScene === 'drizzle' || currentScene === 'light_drizzle' ? 0.25 : 0);
+            fogLayers.forEach(fog => {
+                fog.style.opacity = String(fogOpacity);
+            });
+        }
     }
 
-    function setScene(nextScene, nextWindSpeed = 0, nextPrecipitation = 0, nextCloudCover = 0, code = 0) {
+    function setScene(nextScene, nextWindSpeed = 0, nextPrecipitation = 0, nextCloudCover = 0, code = 0, nextHumidity = 50, nextVisibility = 10000, nextUvIndex = 0) {
         currentScene = normaliseScene(nextScene, code);
         windSpeed = Number(nextWindSpeed) || 0;
         precipitation = Number(nextPrecipitation) || 0;
         cloudCover = Number(nextCloudCover) || 0;
         weatherCode = Number(code) || 0;
+        humidity = Number(nextHumidity) || 50;
+        visibility = Number(nextVisibility) || 10000;
+        uvIndex = Number(nextUvIndex) || 0;
         isDaytime = document.body.dataset.daytime !== 'night';
 
         document.body.dataset.scene = currentScene;
@@ -716,7 +831,10 @@
             detail.windSpeed,
             detail.precipitation,
             detail.cloudCover,
-            detail.weatherCode
+            detail.weatherCode,
+            detail.humidity,
+            detail.visibility,
+            detail.uvIndex
         );
     });
 

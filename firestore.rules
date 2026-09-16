@@ -2,29 +2,30 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /contacts/{document} {
-      // Contact submissions are public writes, but only with the exact
-      // fields and safe value types/lengths used by the portfolio form.
-      allow create: if
-        request.resource.data.keys().hasOnly([
-          'name',
-          'email',
-          'message',
-          'timestamp'
-        ])
-        && request.resource.data.name is string
-        && request.resource.data.email is string
-        && request.resource.data.message is string
-        && request.resource.data.timestamp is timestamp
-        && request.resource.data.name.size() >= 2
-        && request.resource.data.name.size() <= 100
-        && request.resource.data.email.size() >= 3
-        && request.resource.data.email.size() <= 254
-        && request.resource.data.message.size() >= 10
-        && request.resource.data.message.size() <= 500;
-
-      // Contact messages must never be publicly readable, modified, or deleted.
+    
+    // Contact Form Submissions
+    match /contacts/{contactId} {
+      // Prevent anyone from reading, editing, or deleting messages
       allow read, update, delete: if false;
+
+      // Only allow creation with strict payload validation matching contact form constraints
+      allow create: if request.resource.data.keys().hasAll(['name', 'email', 'message', 'timestamp'])
+                    && request.resource.data.keys().hasOnly(['name', 'email', 'message', 'timestamp'])
+                    && request.resource.data.name is string 
+                    && request.resource.data.name.size() >= 1 
+                    && request.resource.data.name.size() <= 100
+                    && request.resource.data.email is string 
+                    && request.resource.data.email.size() <= 120
+                    && request.resource.data.email.matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')
+                    && request.resource.data.message is string 
+                    && request.resource.data.message.size() >= 10 
+                    && request.resource.data.message.size() <= 500
+                    && request.resource.data.timestamp is timestamp;
+    }
+
+    // Default deny for all other collections
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }
